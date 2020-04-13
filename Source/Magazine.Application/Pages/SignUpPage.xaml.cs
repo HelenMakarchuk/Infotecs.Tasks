@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace Magazine.Application.Pages
 {
@@ -7,6 +8,11 @@ namespace Magazine.Application.Pages
         public SignUpPage()
         {
             InitializeComponent();
+        }
+
+        private void SignUpButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

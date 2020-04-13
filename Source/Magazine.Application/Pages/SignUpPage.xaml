@@ -9,10 +9,6 @@
       Title="SignUpPage">
 
     <Grid>
-
-    </Grid>
-
-    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="2*"/>
@@ -20,9 +16,20 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-    </Grid>-->
+
+        <Border Grid.Column="1" Grid.Row="1" Background="#FFFFFF" Padding="20" BorderBrush="LightGray" BorderThickness="1">
+            <StackPanel>
+                <TextBlock Style="{StaticResource HeaderTextBlockStyle}">Infotecs Magazine</TextBlock>
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}">Login</TextBlock>
+                <TextBox Style="{StaticResource LogInTextBoxStyle}"></TextBox>
+                <TextBlock Style="{StaticResource BaseTextBlockStyle}">Password</TextBlock>
+                <PasswordBox Style="{StaticResource LogInPasswordBoxStyle}"></PasswordBox>
+                <Button Name="SignUpButton" Style="{StaticResource LogInButtonStyle}" Click="SignUpButton_Click">Sign Up</Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+
 </Page>

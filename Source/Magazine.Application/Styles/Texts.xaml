@@ -4,6 +4,7 @@
 
     <!--#region TextBlock -->
     <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0, 5" />
     </Style>
 
     <Style x:Key="HeaderTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
