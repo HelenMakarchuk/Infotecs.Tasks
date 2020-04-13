@@ -9,6 +9,17 @@
       Title="ArticlePage">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
 
+        <Border Grid.Column="0" Background="#FFFFFF" BorderBrush="LightGray" BorderThickness="1">
+           
+        </Border>
+
+        <Border Grid.Column="1" Background="#FAFAFA" BorderBrush="LightGray" BorderThickness="1">
+
+        </Border>
     </Grid>
 </Page>
