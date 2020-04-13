@@ -1,0 +1,44 @@
+﻿<Page x:Class="Magazine.Application.Pages.LogInPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Magazine.Application.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LogInPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="1" Grid.Row="1" Background="#FFFFFF" Padding="20" BorderBrush="LightGray" BorderThickness="1">
+            <StackPanel>
+                <TextBlock Style="{StaticResource HeaderTextBlockStyle}">Infotecs Magazine</TextBlock>
+                <TextBox Style="{StaticResource LogInTextBoxStyle}"></TextBox>
+                <PasswordBox Style="{StaticResource LogInPasswordBoxStyle}"></PasswordBox>               
+                <Button Name="LogInButton" Style="{StaticResource LogInButtonStyle}" Click="LogInButton_Click">Log In</Button>
+            </StackPanel>
+        </Border>
+        
+        <Border Grid.Column="1" Grid.Row="2" Padding="10" Margin="0, 20, 0, 0" Background="#FFFFFF" BorderBrush="LightGray" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Don't have an account?" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource BaseTextBlockStyle}" Margin="5, 0, 0, 0">
+                    <Hyperlink x:Name="SignUpButton" Click="SignUpButton_Click">
+                        Sign up
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
