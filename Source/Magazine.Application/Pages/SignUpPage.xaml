@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Magazine.Application.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SignUpPage">
+      Title="SignUpPage"
+      Loaded="OnLoad">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,9 +25,9 @@
             <StackPanel>
                 <TextBlock Style="{StaticResource HeaderTextBlockStyle}">Infotecs Magazine</TextBlock>
                 <TextBlock Style="{StaticResource BaseTextBlockStyle}">Login</TextBlock>
-                <TextBox Style="{StaticResource LogInTextBoxStyle}"></TextBox>
+                <TextBox Name="Login" Style="{StaticResource LogInTextBoxStyle}"></TextBox>
                 <TextBlock Style="{StaticResource BaseTextBlockStyle}">Password</TextBlock>
-                <PasswordBox Style="{StaticResource LogInPasswordBoxStyle}"></PasswordBox>
+                <PasswordBox Name="Password" Style="{StaticResource LogInPasswordBoxStyle}"></PasswordBox>
                 <Button Name="SignUpButton" Style="{StaticResource LogInButtonStyle}" Click="SignUpButton_Click">Sign Up</Button>
             </StackPanel>
         </Border>

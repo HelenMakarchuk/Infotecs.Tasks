@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:Magazine.Application.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="LogInPage">
+      Title="LogInPage" 
+      Loaded="OnLoad">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,8 +25,9 @@
         <Border Grid.Column="1" Grid.Row="1" Background="#FFFFFF" Padding="20" BorderBrush="LightGray" BorderThickness="1">
             <StackPanel>
                 <TextBlock Style="{StaticResource HeaderTextBlockStyle}">Infotecs Magazine</TextBlock>
-                <TextBox Style="{StaticResource LogInTextBoxStyle}"></TextBox>
-                <PasswordBox Style="{StaticResource LogInPasswordBoxStyle}"></PasswordBox>               
+                <TextBox Name="Login" Style="{StaticResource LogInTextBoxStyle}" Text="{Binding CurrentUser.Login}" />
+                <TextBox Name="Login2" Style="{StaticResource LogInTextBoxStyle}" Text="{Binding CurrentUser2.Login, Mode=OneWay}" />
+                <PasswordBox Name="Password" Style="{StaticResource LogInPasswordBoxStyle}" />
                 <Button Name="LogInButton" Style="{StaticResource LogInButtonStyle}" Click="LogInButton_Click">Log In</Button>
             </StackPanel>
         </Border>
