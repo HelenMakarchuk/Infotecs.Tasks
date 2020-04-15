@@ -27,4 +27,17 @@
         </Setter>
     </Style>
 
+    <Style x:Key="EditButtonStyle" TargetType="Button">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="4, 15" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="/Images/Edit.png" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

@@ -16,5 +16,9 @@
     <ProjectReference Include="..\Magazine.Domain\Magazine.Domain.csproj" />
     <ProjectReference Include="..\Magazine.Infrastracture\Magazine.Infrastracture.csproj" />
   </ItemGroup>
+  
+ <ItemGroup>
+	<Resource Include="Images\Edit.png" />
+  </ItemGroup>
 
 </Project>

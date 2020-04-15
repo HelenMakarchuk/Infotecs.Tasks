@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Magazine.Application.ViewModels"
+      xmlns:local="clr-namespace:Magazine.Application"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ArticlePage"
@@ -14,7 +14,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="24"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.4*" />
@@ -23,13 +23,11 @@
                 <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
 
-            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Background="#FFFFFF" BorderBrush="LightGray" BorderThickness="1">
-                <ListBox ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}">
+            <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Background="#FFFFFF" BorderBrush="LightGray" BorderThickness="0, 0, 1, 0" Margin="0" Padding="0">
+                <ListBox ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}" BorderThickness="0" Margin="0" Padding="0">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="5">
-                                <TextBlock FontSize="18" Text="{Binding Path=Title}" />
-                            </StackPanel>
+                            <TextBlock Margin="0" Padding="0" FontSize="14" Text="{Binding Title}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -50,6 +48,10 @@
                     <Button Name="DeleteArticleButton" Click="DeleteArticleButton_Click" HorizontalAlignment="Left"  BorderThickness="0" Margin="0" Padding="4" VerticalAlignment="Stretch" Background="Transparent">Delete Article</Button>
                 </ComboBoxItem>
             </ComboBox>
+
+            <Button Name="EditArticleTitleButton" Click="EditArticleTitleButton_Click" Grid.Column="2" Grid.Row="1" Style="{StaticResource EditButtonStyle}" />
+            <Button Name="EditArticleTeaserButton" Click="EditArticleTeaserButton_Click" Grid.Column="2" Grid.Row="2" Style="{StaticResource EditButtonStyle}" />
+            <Button Name="EditArticleBodyButton" Click="EditArticleBodyButton_Click" Grid.Column="2" Grid.Row="3" Style="{StaticResource EditButtonStyle}" />
         </Grid>
     </Border>
 </Page>

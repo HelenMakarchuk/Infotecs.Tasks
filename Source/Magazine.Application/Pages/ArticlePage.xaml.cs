@@ -35,5 +35,20 @@ namespace Magazine.Application.Pages
         {
             throw new NotImplementedException();
         }
+
+        private void EditArticleTitleButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void EditArticleBodyButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void EditArticleTeaserButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
