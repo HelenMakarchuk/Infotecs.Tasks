@@ -22,7 +22,10 @@ namespace Magazine.Application.Pages
         void OnLoad(object sender, RoutedEventArgs e)
         {
             DataContext = _viewModel;
-            //R1.Height = new GridLength() {  };
+
+            Login.Text = "";
+            Password.Password = "";
+            MessageBlock.Text = "";
         }
 
         void LogInButton_Click(object sender, RoutedEventArgs e)

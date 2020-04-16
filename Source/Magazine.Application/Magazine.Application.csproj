@@ -19,6 +19,7 @@
   
  <ItemGroup>
 	<Resource Include="Images\Edit.png" />
+	<Resource Include="Images\Save.png" />
   </ItemGroup>
 
 </Project>

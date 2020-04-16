@@ -1,6 +1,6 @@
 ﻿using Magazine.Application.Contracts.Provider;
+using Magazine.Application.Contracts.Service;
 using Magazine.Domain.Contracts.ViewModel;
-using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 
 namespace Magazine.Application.ViewModels
@@ -9,27 +9,18 @@ namespace Magazine.Application.ViewModels
     {
         IHashProvider _passwordProvider;
         IUnitOfWork _unitOfWork;
+        IAuthenticationService _authenticationService;
 
-        public SignUpViewModel(IHashProvider passwordProvider,
+        public SignUpViewModel(IAuthenticationService authenticationService,
                                IUnitOfWork unitOfWork)
         {
-            _passwordProvider = passwordProvider;
+            _authenticationService = authenticationService;
             _unitOfWork = unitOfWork;
         }
 
         public bool TrySignUp(string login, string password)
         {
-            if (_unitOfWork.UserRepository.FirstOrDefault(u => u.Login == login) != null)
-                return false;
-
-            var user = new User();
-            user.Login = login;
-            user.Salt = _passwordProvider.GetSalt();
-            user.Password = _passwordProvider.GetHash(password, user.Salt);
-
-            _unitOfWork.UserRepository.Add(user);
-            _unitOfWork.Commit();
-            return true;
+            return _authenticationService.TrySignUp(login, password);
         }
     }
 }

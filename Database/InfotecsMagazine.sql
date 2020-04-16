@@ -22,7 +22,7 @@ CREATE TABLE public.article
 	body VARCHAR(60000) NOT NULL,
 	CONSTRAINT chk_article_body CHECK (LENGTH(Body) >= 2000),
 	userId INT NOT NULL,
-	CONSTRAINT fk_article_userId_user_id FOREIGN KEY (userId) REFERENCES public.user (id)
+	CONSTRAINT fk_article_userid_user_id FOREIGN KEY (userId) REFERENCES public.user (id)
 );
 
 CREATE TABLE public.comment
@@ -31,8 +31,8 @@ CREATE TABLE public.comment
 	CONSTRAINT pk_comment PRIMARY KEY (id),
 	body VARCHAR(6000) NOT NULL,
 	CONSTRAINT chk_comment_body CHECK (LENGTH(TRIM(Body)) > 0),
-	articleId INT NOT NULL,
-	CONSTRAINT fk_comment_articleId_article_id FOREIGN KEY (articleId) REFERENCES public.article (id),
-	userId INT NOT NULL,
-	CONSTRAINT fk_comment_userId_user_Id FOREIGN KEY (userId) REFERENCES public.user (id)
+	articleid INT NOT NULL,
+	CONSTRAINT fk_comment_articleid_article_id FOREIGN KEY (articleid) REFERENCES public.article (id),
+	userid INT NOT NULL,
+	CONSTRAINT fk_comment_userid_user_id FOREIGN KEY (userid) REFERENCES public.user (id)
 );

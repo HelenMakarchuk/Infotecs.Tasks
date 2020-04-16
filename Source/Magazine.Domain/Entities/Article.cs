@@ -5,6 +5,16 @@ namespace Magazine.Domain.Entities
 {
     public class Article : IEntity
     {
+        public Article() { }
+
+        public Article(string title, string body, int userId, byte[] teaser = null) 
+        {
+            Title = title;
+            Body = body;
+            Teaser = teaser;
+            UserId = userId;
+        }
+
         public int Id { get; set; }
 
         public string Title { get; set; }

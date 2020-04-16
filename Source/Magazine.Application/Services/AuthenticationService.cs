@@ -10,7 +10,6 @@ namespace Magazine.Application.Services
     {
         IHashProvider _hashProvider;
         IUnitOfWork _unitOfWork;
-        User _user;
 
         public AuthenticationService(IUnitOfWork unitOfWork,
                                      IHashProvider hashProvider)
@@ -19,7 +18,8 @@ namespace Magazine.Application.Services
             _hashProvider = hashProvider;
         }
 
-        public bool IsLoggedIn => _user != null;
+        public User User { get; private set; }
+        public bool IsLoggedIn => User != null;
 
         public bool TrySignUp(string login, string password)
         {
@@ -33,7 +33,8 @@ namespace Magazine.Application.Services
 
             _unitOfWork.UserRepository.Add(user);
             _unitOfWork.Commit();
-            return true;
+
+            return TryLogIn(login, password);
         }
 
         public bool TryLogIn(string login, string password)
@@ -49,13 +50,13 @@ namespace Magazine.Application.Services
             if (StringComparer.Ordinal.Compare(currentHash, user.Password) != 0)
                 return false;
 
-            _user = user;
+            User = user;
             return true;
         }
 
         public void LogOut()
         {
-            _user = null;
+            User = null;
         }
     }
 }

@@ -26,6 +26,19 @@
         <Setter Property="Background" Value="#FAFAFA" />
         <Setter Property="Foreground" Value="#262626" />
     </Style>
+
+    <Style x:Key="EditTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="IsReadOnly" Value="False" />
+    </Style>
+
+    <Style x:Key="ReadOnlyTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="IsReadOnly" Value="True" />
+    </Style>
     <!--#endregion-->
 
     <!--#region PasswordBox -->

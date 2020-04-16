@@ -22,6 +22,9 @@ namespace Magazine.Application.Pages
         void OnLoad(object sender, RoutedEventArgs e)
         {
             DataContext = _viewModel;
+
+            Login.Text = "";
+            Password.Password = "";
         }
 
         void SignUpButton_Click(object sender, RoutedEventArgs e)

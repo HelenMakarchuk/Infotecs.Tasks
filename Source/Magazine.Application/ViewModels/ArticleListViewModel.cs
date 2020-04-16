@@ -6,11 +6,11 @@ using System.IO;
 
 namespace Magazine.Application.ViewModels
 {
-    class ArticleViewModel : IArticleViewModel
+    class ArticleListViewModel : IArticleListViewModel
     {
         IUnitOfWork _unitOfWork;
 
-        public ArticleViewModel(IUnitOfWork unitOfWork)
+        public ArticleListViewModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
 

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
+using Magazine.Application.Contracts.ViewModel;
 using Magazine.Application.Pages;
 using Magazine.Application.Providers;
 using Magazine.Application.Services;
@@ -24,16 +25,19 @@ namespace Magazine.Application.DI
 
             builder.RegisterType<LogInPage>().As<LogInPage>().SingleInstance();
             builder.RegisterType<SignUpPage>().As<SignUpPage>().SingleInstance();
-            builder.RegisterType<ArticlePage>().As<ArticlePage>().SingleInstance();
+            builder.RegisterType<NewArticlePage>().As<NewArticlePage>().SingleInstance();
+            builder.RegisterType<ArticleListPage>().As<ArticleListPage>().SingleInstance();
 
             builder.RegisterType<ApplicationViewModel>().As<IApplicationViewModel>().SingleInstance();
             builder.RegisterType<LogInViewModel>().As<ILogInViewModel>().SingleInstance();
             builder.RegisterType<SignUpViewModel>().As<ISignUpViewModel>().SingleInstance();
-            builder.RegisterType<ArticleViewModel>().As<IArticleViewModel>().SingleInstance();
+            builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().SingleInstance();
+            builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().SingleInstance();
 
             builder.RegisterType<Context>().As<DbContext>().SingleInstance();
 
             builder.RegisterType<Repository<User>>().As<IRepository<User>>().SingleInstance();
+            builder.RegisterType<Repository<Article>>().As<IRepository<Article>>().SingleInstance();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
 

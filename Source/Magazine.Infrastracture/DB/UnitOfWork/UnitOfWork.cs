@@ -12,10 +12,12 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
         bool disposed = false;
 
         public UnitOfWork(DbContext context,
-                        IRepository<User> userRepository)
+                          IRepository<User> userRepository,
+                          IRepository<Article> articleRepository)
         {
             _context = context;
             UserRepository = userRepository;
+            ArticleRepository = articleRepository;
         }
 
         ~UnitOfWork()
@@ -24,6 +26,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
         }
 
         public IRepository<User> UserRepository { get; }
+        public IRepository<Article> ArticleRepository { get; }
 
         public void Commit()
         {
