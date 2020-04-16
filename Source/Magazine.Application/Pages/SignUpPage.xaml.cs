@@ -17,17 +17,30 @@ namespace Magazine.Application.Pages
         }
 
         public event EventHandler<RoutedEventArgs> OnSignedUp;
+        public event EventHandler<RoutedEventArgs> OnLogIn;
 
         void OnLoad(object sender, RoutedEventArgs e)
         {
             DataContext = _viewModel;
         }
 
-        public void SignUpButton_Click(object sender, RoutedEventArgs e)
+        void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.SignUp(Login.Text, Password.Password);
+            if (!_viewModel.TrySignUp(Login.Text, Password.Password))
+            {
+                MessageBlock.Text = "User with the same login exists";
+                MessageBlock.Height = Double.NaN;
+                MessageBlockBorder.Visibility = Visibility.Visible;
+                MessageBlockBorder.Margin = new Thickness(0, 20, 0, 5);
+                return;
+            }
 
             OnSignedUp.Invoke(sender, e);
+        }
+
+        void LogInButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnLogIn.Invoke(sender, e);
         }
     }
 }

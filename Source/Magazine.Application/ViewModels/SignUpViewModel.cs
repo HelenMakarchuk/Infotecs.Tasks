@@ -7,18 +7,21 @@ namespace Magazine.Application.ViewModels
 {
     class SignUpViewModel : ISignUpViewModel
     {
-        IPasswordProvider _passwordProvider;
+        IHashProvider _passwordProvider;
         IUnitOfWork _unitOfWork;
 
-        public SignUpViewModel(IPasswordProvider passwordProvider,
-                                IUnitOfWork unitOfWork)
+        public SignUpViewModel(IHashProvider passwordProvider,
+                               IUnitOfWork unitOfWork)
         {
             _passwordProvider = passwordProvider;
             _unitOfWork = unitOfWork;
         }
 
-        public void SignUp(string login, string password)
+        public bool TrySignUp(string login, string password)
         {
+            if (_unitOfWork.UserRepository.FirstOrDefault(u => u.Login == login) != null)
+                return false;
+
             var user = new User();
             user.Login = login;
             user.Salt = _passwordProvider.GetSalt();
@@ -26,6 +29,7 @@ namespace Magazine.Application.ViewModels
 
             _unitOfWork.UserRepository.Add(user);
             _unitOfWork.Commit();
+            return true;
         }
     }
 }

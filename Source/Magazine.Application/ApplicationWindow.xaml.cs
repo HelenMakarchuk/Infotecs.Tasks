@@ -12,9 +12,9 @@ namespace Magazine.Application
         SignUpPage _signUpPage { get; set; }
 
         public ApplicationWindow(ArticlePage articlePage,
-                                LogInPage logInPage,
-                                SignUpPage signUpPage,
-                                IApplicationViewModel viewModel)
+                                 LogInPage logInPage,
+                                 SignUpPage signUpPage,
+                                 IApplicationViewModel viewModel)
         {
             InitializeComponent();
 
@@ -24,12 +24,14 @@ namespace Magazine.Application
             _viewModel = viewModel;
 
             _logInPage.OnSignUp += (sender, e) => CurrentPage.NavigationService.Navigate(_signUpPage);
+            _logInPage.OnLoggedIn += (sender, e) => CurrentPage.NavigationService.Navigate(_articlePage);
             _signUpPage.OnSignedUp += (sender, e) => CurrentPage.NavigationService.Navigate(_articlePage);
+            _signUpPage.OnLogIn += (sender, e) => CurrentPage.NavigationService.Navigate(_logInPage);
         }
 
         void OnLoad(object sender, RoutedEventArgs e)
         {
-            CurrentPage.NavigationService.Navigate(_signUpPage);
+            CurrentPage.NavigationService.Navigate(_logInPage);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
+using Magazine.Infrastracture.Contracts.UnitOfWork;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,8 +8,12 @@ namespace Magazine.Application.ViewModels
 {
     class ArticleViewModel : IArticleViewModel
     {
-        public ArticleViewModel()
+        IUnitOfWork _unitOfWork;
+
+        public ArticleViewModel(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
+
             FileStream fs = new FileStream(@"C:\Users\helen\Downloads\Winter.jpg", FileMode.Open);
             byte[] a = new byte[fs.Length];
             fs.Read(a, 0, a.Length);

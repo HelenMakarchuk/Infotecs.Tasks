@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Magazine.Application.Contracts.Provider;
+using Magazine.Application.Contracts.Service;
 using Magazine.Application.Pages;
 using Magazine.Application.Providers;
+using Magazine.Application.Services;
 using Magazine.Application.ViewModels;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
@@ -35,7 +37,8 @@ namespace Magazine.Application.DI
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
 
-            builder.RegisterType<PasswordProvider>().As<IPasswordProvider>().SingleInstance();
+            builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
+            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().SingleInstance();
         }
     }
 }

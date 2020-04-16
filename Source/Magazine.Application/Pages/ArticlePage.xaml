@@ -33,9 +33,9 @@
                 </ListBox>
             </Border>
 
-            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding SelectedArticle.Title}" />
+            <TextBox Margin="5" IsReadOnly="True" Grid.Column="1" Grid.Row="1" Text="{Binding SelectedArticle.Title}" />
             <Image Grid.Column="1" Grid.Row="2" Source="{Binding SelectedArticle.Teaser}" />
-            <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SelectedArticle.Body}" />
+            <TextBox Margin="5" IsReadOnly="True" Grid.Column="1" Grid.Row="3" Text="{Binding SelectedArticle.Body}" />
 
             <ComboBox Background="Blue" BorderThickness="0" Margin="0" Padding="0" Grid.Column="2" Grid.Row="0">
                 <ComboBoxItem BorderThickness="0" Margin="0" Padding="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">

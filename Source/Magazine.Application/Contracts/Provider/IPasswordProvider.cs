@@ -1,6 +1,6 @@
 ﻿namespace Magazine.Application.Contracts.Provider
 {
-    public interface IPasswordProvider
+    public interface IHashProvider
     {
         string GetSalt();
         string GetHash(string password, bool addSalt = true);

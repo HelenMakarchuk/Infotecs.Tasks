@@ -2,6 +2,6 @@
 {
     public interface ISignUpViewModel : IViewModel
     {
-        void SignUp(string login, string password);
+        bool TrySignUp(string login, string password);
     }
 }

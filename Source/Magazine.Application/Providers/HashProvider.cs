@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Magazine.Application.Providers
 {
-    public class PasswordProvider : IPasswordProvider
+    public class HashProvider : IHashProvider
     {
         public string GetSalt()
         {
