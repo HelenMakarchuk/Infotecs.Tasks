@@ -20,6 +20,9 @@ using Serilog;
 
 namespace Magazine.Tests.DI
 {
+    /// <summary>
+    /// Модуль контейнера зависимостей для тестов.
+    /// </summary>
     class TestModule : Module
     {
         protected override void Load(ContainerBuilder builder)
@@ -31,7 +34,6 @@ namespace Magazine.Tests.DI
             builder.RegisterType<NewArticlePage>().As<NewArticlePage>().InstancePerLifetimeScope();
             builder.RegisterType<ArticleListPage>().As<ArticleListPage>().InstancePerLifetimeScope();
 
-            builder.RegisterType<ApplicationViewModel>().As<IApplicationViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<LogInViewModel>().As<ILogInViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<SignUpViewModel>().As<ISignUpViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().InstancePerLifetimeScope();

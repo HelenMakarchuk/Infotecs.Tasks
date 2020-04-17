@@ -19,6 +19,9 @@ using Serilog;
 
 namespace Magazine.Application.DI
 {
+    /// <summary>
+    /// Модуль контейнера зависимостей для приложения.
+    /// </summary>
     class AppModule : Module
     {
         protected override void Load(ContainerBuilder builder)
@@ -30,7 +33,6 @@ namespace Magazine.Application.DI
             builder.RegisterType<NewArticlePage>().As<NewArticlePage>().SingleInstance();
             builder.RegisterType<ArticleListPage>().As<ArticleListPage>().SingleInstance();
 
-            builder.RegisterType<ApplicationViewModel>().As<IApplicationViewModel>().SingleInstance();
             builder.RegisterType<LogInViewModel>().As<ILogInViewModel>().SingleInstance();
             builder.RegisterType<SignUpViewModel>().As<ISignUpViewModel>().SingleInstance();
             builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().SingleInstance();

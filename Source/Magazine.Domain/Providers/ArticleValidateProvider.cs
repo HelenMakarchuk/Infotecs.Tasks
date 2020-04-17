@@ -5,7 +5,7 @@ using System;
 namespace Magazine.Domain.Providers
 {
     /// <summary>
-    /// Валидатор статьи.
+    /// Валидатор сущности "Статья".
     /// </summary>
     public class ArticleValidateProvider : IArticleValidateProvider
     {

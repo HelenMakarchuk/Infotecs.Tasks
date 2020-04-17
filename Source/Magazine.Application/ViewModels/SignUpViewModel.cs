@@ -5,6 +5,9 @@ using Serilog;
 
 namespace Magazine.Application.ViewModels
 {
+    /// <summary>
+    /// Класс бизнес-логики для страницы создания нового пользователя приложения <see cref="SignUpPage"/>.
+    /// </summary>
     public class SignUpViewModel : ISignUpViewModel
     {
         IUnitOfWork _unitOfWork;
@@ -20,6 +23,12 @@ namespace Magazine.Application.ViewModels
             _logger = logger;
         }
 
+        /// <summary>
+        /// Регистрация нового пользователя приложения.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        /// <returns>Возвращается True если регистрация выполнена, иначе False.</returns>
         public bool TrySignUp(string login, string password)
         {
             return _authenticationService.TrySignUp(login, password);

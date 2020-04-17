@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace Magazine.Application.ViewModels
 {
+    /// <summary>
+    /// Класс бизнес-логики для страницы отображения статей <see cref="ArticleListPage"/>.
+    /// </summary>
     public class ArticleListViewModel : IArticleListViewModel
     {
         IUnitOfWork _unitOfWork;
@@ -26,6 +29,9 @@ namespace Magazine.Application.ViewModels
         public List<Article> Articles { get; set; }
         public Article SelectedArticle { get; set; }
 
+        /// <summary>
+        /// Загрузка данных для страницы отображения статей <see cref="ArticleListPage"/>
+        /// </summary>
         public void LoadData()
         {
             var previousArticle = SelectedArticle;
@@ -33,11 +39,18 @@ namespace Magazine.Application.ViewModels
             SelectedArticle = previousArticle ?? Articles.FirstOrDefault();
         }
 
+        /// <summary>
+        /// Загрузка данных выбранной статьи из списка статей.
+        /// </summary>
+        /// <param name="id"></param>
         public void LoadArticle(int id)
         {
             SelectedArticle = _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.User).SingleOrDefault(a => a.Id == id);
         }
 
+        /// <summary>
+        /// Удаление текущей статьи.
+        /// </summary>
         public void DeleteSelectedArticle()
         {
             _unitOfWork.ArticleRepository.Remove(SelectedArticle.Id);
@@ -47,6 +60,9 @@ namespace Magazine.Application.ViewModels
             LoadData();
         }
 
+        /// <summary>
+        /// Обновление текущей статьи.
+        /// </summary>
         public void UpdateArticle()
         {
             _unitOfWork.ArticleRepository.Update(SelectedArticle);

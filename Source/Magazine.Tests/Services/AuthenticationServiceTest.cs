@@ -6,6 +6,9 @@ using Xunit;
 
 namespace Magazine.Tests.Services
 {
+	/// <summary>
+	/// Тест сервиса аутентификации <see cref="AuthenticationService"/>
+	/// </summary>
 	public class AuthenticationServiceTest
 	{
 		IContainer _container;

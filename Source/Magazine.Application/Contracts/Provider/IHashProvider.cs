@@ -1,5 +1,8 @@
 ﻿namespace Magazine.Application.Contracts.Provider
 {
+    /// <summary>
+    /// Интерфейс генератора хеша.
+    /// </summary>
     public interface IHashProvider
     {
         string GetSalt();

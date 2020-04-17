@@ -6,6 +6,9 @@ using System;
 
 namespace Magazine.Infrastracture.DB.UnitOfWork
 {
+    /// <summary>
+    /// Класс реализует паттерн UnitOfWork.
+    /// </summary>
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         DbContext _context;

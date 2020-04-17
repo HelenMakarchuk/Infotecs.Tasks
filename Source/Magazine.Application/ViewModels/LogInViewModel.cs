@@ -5,6 +5,9 @@ using Serilog;
 
 namespace Magazine.Application.ViewModels
 {
+    /// <summary>
+    /// Класс бизнес-логики для страницы входа в приложение <see cref="LogInPage"/>.
+    /// </summary>
     public class LogInViewModel : ILogInViewModel
     {
         IAuthenticationService _authenticationService;
@@ -20,6 +23,12 @@ namespace Magazine.Application.ViewModels
             _logger = logger;
         }
 
+        /// <summary>
+        /// Аутентификация пользователя.
+        /// </summary>
+        /// <param name="login">Логин пользователя.</param>
+        /// <param name="password">Пароль пользователя.</param>
+        /// <returns>Возвращается True если аутентификация выполнена, иначе False.</returns>
         public bool TryLogIn(string login, string password)
         {
             return _authenticationService.TryLogIn(login, password);

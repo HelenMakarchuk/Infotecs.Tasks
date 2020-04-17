@@ -7,6 +7,10 @@ using System.Linq.Expressions;
 
 namespace Magazine.Infrastracture.Contracts.Repository
 {
+    /// <summary>
+    /// Интерфейс обобщенного репозитория для работы с сущностями БД.
+    /// </summary>
+    /// <typeparam name="T">Тип сущности БД.</typeparam>
     public interface IRepository<T> where T : class, IEntity
     {
         bool Any(Expression<Func<T, bool>> predicate);

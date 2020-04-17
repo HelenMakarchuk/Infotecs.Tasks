@@ -10,9 +10,9 @@ using System.Linq.Expressions;
 namespace Magazine.Infrastracture.DB.Repositories
 {
     /// <summary>
-    /// Репозиторий для работы с сущностями БД
+    /// Обобщенный репозиторий для работы с сущностями БД.
     /// </summary>
-    /// <typeparam name="T">Тип сущности в БД</typeparam>
+    /// <typeparam name="T">Тип сущности БД.</typeparam>
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         protected DbContext _context;

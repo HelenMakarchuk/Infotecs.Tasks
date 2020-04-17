@@ -62,7 +62,7 @@ namespace Magazine.Application.Services
         /// </summary>
         /// <param name="login">Логин пользователя.</param>
         /// <param name="password">Пароль пользователя.</param>
-        /// <returns>Возвращается True если аутентификация пройдена, иначе False.</returns>
+        /// <returns>Возвращается True если аутентификация выполнена, иначе False.</returns>
         public bool TryLogIn(string login, string password)
         {
             var user = _unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login);

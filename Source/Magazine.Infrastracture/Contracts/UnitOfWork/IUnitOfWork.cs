@@ -3,6 +3,9 @@ using Magazine.Infrastracture.Contracts.Repository;
 
 namespace Magazine.Infrastracture.Contracts.UnitOfWork
 {
+    /// <summary>
+    /// Интерфейс класса, реализующего паттерн UnitOfWork <see cref="UnitOfWork"/>.
+    /// </summary>
     public interface IUnitOfWork
     {
         IRepository<User> UserRepository { get; }

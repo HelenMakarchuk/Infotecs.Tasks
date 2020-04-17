@@ -1,15 +1,16 @@
 ﻿using Magazine.Application.Contracts.Service;
 using Magazine.Application.Pages;
-using Magazine.Domain.Contracts.ViewModel;
 using Serilog;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Magazine.Application
 {
+    /// <summary>
+    /// Основное окно приложения.
+    /// </summary>
     public partial class ApplicationWindow : Window
     {
-        IApplicationViewModel _viewModel;
         LogInPage _logInPage;
         SignUpPage _signUpPage;
         NewArticlePage _newArticlePage;
@@ -21,7 +22,6 @@ namespace Magazine.Application
                                  SignUpPage signUpPage,
                                  NewArticlePage newArticlePage,
                                  ArticleListPage articleListPage,
-                                 IApplicationViewModel viewModel,
                                  IAuthenticationService authenticationService,
                                  ILogger logger)
         {
@@ -31,7 +31,6 @@ namespace Magazine.Application
             _signUpPage = signUpPage;
             _newArticlePage = newArticlePage;
             _articleListPage = articleListPage;
-            _viewModel = viewModel;
             _authenticationService = authenticationService;
             _logger = logger;
 
@@ -44,6 +43,9 @@ namespace Magazine.Application
             _newArticlePage.OnClosed += (sender, e) => CurrentPage.NavigationService.Navigate(_articleListPage);
         }
 
+        /// <summary>
+        /// Обработчик события загрузки окна.
+        /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
             var startPage = _authenticationService.IsLoggedIn ? (Page)_articleListPage : _logInPage;

@@ -33,9 +33,19 @@ namespace Magazine.Application.Pages
             _logger = logger;
         }
 
+        /// <summary>
+        /// Событие создания новой статьи.
+        /// </summary>
         public event EventHandler<RoutedEventArgs> OnAddArticle;
+
+        /// <summary>
+        /// Событие выхода текущего пользователя из приложения и перехода на страницу аутентификации.
+        /// </summary>
         public event EventHandler<RoutedEventArgs> OnLoggedOut;
 
+        /// <summary>
+        /// Обработчик события загрузки страницы.
+        /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
             if (!_authenticationService.IsLoggedIn)
@@ -48,11 +58,17 @@ namespace Magazine.Application.Pages
             DataContext = _viewModel;
         }
 
+        /// <summary>
+        /// Обработчик события перехода на страницу создания новой статьи.
+        /// </summary>
         void AddArticleButton_Click(object sender, RoutedEventArgs e)
         {
             OnAddArticle.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Обработчик события удаления текущей статьи.
+        /// </summary>
         void DeleteArticleButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this article?", "", MessageBoxButton.YesNoCancel);
@@ -69,7 +85,10 @@ namespace Magazine.Application.Pages
             }
         }
 
-        private void EditArticleTitleButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Обработчик события редактирования заголовка статьи.
+        /// </summary>
+        void EditArticleTitleButton_Click(object sender, RoutedEventArgs e)
         {
             if (TitleTextBox.Style == (Style)this.FindResource("EditTextBoxStyle"))
             {
@@ -91,7 +110,10 @@ namespace Magazine.Application.Pages
             EditArticleTitleButton.Background = EditArticleTitleButton.Background == (ImageBrush)this.FindResource("EditImageBrush") ? (ImageBrush)this.FindResource("SaveImageBrush") : (ImageBrush)this.FindResource("EditImageBrush");
         }
 
-        private void EditArticleBodyButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Обработчик события редактирования контента статьи.
+        /// </summary>
+        void EditArticleBodyButton_Click(object sender, RoutedEventArgs e)
         {
             if (BodyTextBox.Style == (Style)this.FindResource("EditTextBoxStyle"))
             {
@@ -113,19 +135,28 @@ namespace Magazine.Application.Pages
             EditArticleBodyButton.Background = EditArticleBodyButton.Background == (ImageBrush)this.FindResource("EditImageBrush") ? (ImageBrush)this.FindResource("SaveImageBrush") : (ImageBrush)this.FindResource("EditImageBrush");
         }
 
-        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Обработчик события выхода текущего пользователя из приложения и перехода на страницу аутентификации.
+        /// </summary>
+        void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
             _authenticationService.LogOut();
 
             OnLoggedOut.Invoke(sender, e);
         }
 
-        private void ArticleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Обработчик события выбора статьи из списка статей.
+        /// </summary>
+        void ArticleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ArticleListBox.SelectedItem != null)
                 _viewModel.LoadArticle(((Article)ArticleListBox.SelectedItem).Id);
         }
 
+        /// <summary>
+        /// Отображение сообщения пользователю.
+        /// </summary>
         void ShowMessage(string text)
         {
             MessageBlock.Text = text;
@@ -134,6 +165,9 @@ namespace Magazine.Application.Pages
             MessageBlockBorder.Margin = new Thickness(0, 0, 0, 20);
         }
 
+        /// <summary>
+        /// Скрытие сообщения.
+        /// </summary>
         void HideMessage()
         {
             MessageBlock.Text = "";

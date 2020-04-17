@@ -2,6 +2,9 @@
 
 namespace Magazine.Application.Contracts.Service
 {
+    /// <summary>
+    /// Интерфейс сервиса аутентификации.
+    /// </summary>
     public interface IAuthenticationService
     {
         public User User { get; }

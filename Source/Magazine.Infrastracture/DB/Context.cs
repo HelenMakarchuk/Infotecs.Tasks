@@ -5,6 +5,9 @@ using System.Configuration;
 
 namespace Magazine.Infrastracture.DB
 {
+    /// <summary>
+    /// Контекст основной БД приложения
+    /// </summary>
     public class Context : DbContext
     {
         public Context()

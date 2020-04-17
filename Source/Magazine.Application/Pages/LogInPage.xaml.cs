@@ -23,15 +23,28 @@ namespace Magazine.Application.Pages
             _logger = logger;
         }
 
+        /// <summary>
+        /// Событие перехода на страницу регистрации нового пользователя.
+        /// </summary>
         public event EventHandler<RoutedEventArgs> OnSignUp;
+
+        /// <summary>
+        /// Событие завершения аутентификации пользователя.
+        /// </summary>
         public event EventHandler<RoutedEventArgs> OnLoggedIn;
 
+        /// <summary>
+        /// Обработчик события загрузки страницы.
+        /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
             ClearData();
             DataContext = _viewModel;
         }
 
+        /// <summary>
+        /// Обработчик события начала выполнения аутентификации пользователя.
+        /// </summary>
         void LogInButton_Click(object sender, RoutedEventArgs e)
         {
             if (!_viewModel.TryLogIn(Login.Text, Password.Password))
@@ -43,11 +56,17 @@ namespace Magazine.Application.Pages
             OnLoggedIn.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Обработчик события перехода на страницу регистрации нового пользователя.
+        /// </summary>
         void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
             OnSignUp.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Очистка данных страницы.
+        /// </summary>
         void ClearData()
         {
             Login.Text = "";
@@ -55,6 +74,9 @@ namespace Magazine.Application.Pages
             HideMessage();
         }
 
+        /// <summary>
+        /// Отображение сообщения пользователю.
+        /// </summary>
         void ShowMessage(string text)
         {
             MessageBlock.Text = text;
@@ -63,6 +85,9 @@ namespace Magazine.Application.Pages
             MessageBlockBorder.Margin = new Thickness(0, 20, 0, 5);
         }
 
+        /// <summary>
+        /// Скрытие сообщения.
+        /// </summary>
         void HideMessage()
         {
             MessageBlock.Text = "";

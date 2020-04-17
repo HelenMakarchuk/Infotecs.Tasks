@@ -3,6 +3,9 @@ using System;
 
 namespace Core.DI
 {
+    /// <summary>
+    /// Класс конфигурации контейнера зависимостей.
+    /// </summary>
     public static class AutofacConfig
     {
         public static IContainer Configure(params Module[] modules)

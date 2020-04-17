@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Magazine.Infrastracture.DB.EntityConfigurations
 {
+    /// <summary>
+    /// Конфигурация БД сущности "Статья" <see cref="Article"/>.
+    /// </summary>
     public class ArticleConfiguration : IEntityTypeConfiguration<Article>
     {
         public void Configure(EntityTypeBuilder<Article> builder)

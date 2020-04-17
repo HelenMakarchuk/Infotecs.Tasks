@@ -4,7 +4,10 @@ using System.ComponentModel;
 
 namespace Magazine.Domain.Contracts.ViewModel
 {
-    public interface IArticleListViewModel : IViewModel, INotifyPropertyChanged
+    /// <summary>
+    /// Интерфейс класса бизнес-логики <see cref="ArticleListViewModel"/> для страницы отображения статей <see cref="ArticleListPage"/>.
+    /// </summary>
+    public interface IArticleListViewModel : INotifyPropertyChanged
     {
         List<Article> Articles { get; set; }
         Article SelectedArticle { get; set; }

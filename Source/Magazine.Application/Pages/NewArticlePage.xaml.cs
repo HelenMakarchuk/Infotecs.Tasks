@@ -27,8 +27,14 @@ namespace Magazine.Application.Pages
             _logger = logger;
         }
 
+        /// <summary>
+        /// Событие закрытия страницы.
+        /// </summary>
         public event EventHandler<RoutedEventArgs> OnClosed;
 
+        /// <summary>
+        /// Обработчик события загрузки страницы.
+        /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
             if (!_authenticationService.IsLoggedIn)
@@ -40,11 +46,17 @@ namespace Magazine.Application.Pages
             DataContext = _viewModel;
         }
 
+        /// <summary>
+        /// Обработчик события отмены создания новой статьи.
+        /// </summary>
         void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             OnClosed.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Обработчик события сохранения новой статьи.
+        /// </summary>
         void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Save(Title.Text, Body.Text, _authenticationService.User.Id);
@@ -52,11 +64,17 @@ namespace Magazine.Application.Pages
             OnClosed.Invoke(sender, e);
         }
 
+        /// <summary>
+        /// Обработчик события выбора картинки-тизера для статьи.
+        /// </summary>
         void ChooseTeaserButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Next release feature !");
         }
 
+        /// <summary>
+        /// Отображение сообщения пользователю.
+        /// </summary>
         void ShowMessage(string text)
         {
             MessageBlock.Text = text;
@@ -65,6 +83,9 @@ namespace Magazine.Application.Pages
             MessageBlockBorder.Margin = new Thickness(0, 5, 0, 5);
         }
 
+        /// <summary>
+        /// Скрытие сообщения.
+        /// </summary>
         void HideMessage()
         {
             MessageBlock.Text = "";
