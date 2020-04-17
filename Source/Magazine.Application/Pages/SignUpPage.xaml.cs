@@ -6,6 +6,9 @@ using System.Windows.Controls;
 
 namespace Magazine.Application.Pages
 {
+    /// <summary>
+    /// Страница создания нового пользователя приложения.
+    /// </summary>
     public partial class SignUpPage : Page
     {
         ISignUpViewModel _viewModel;

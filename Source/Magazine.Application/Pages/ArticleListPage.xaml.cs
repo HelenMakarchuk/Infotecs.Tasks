@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace Magazine.Application.Pages
 {
+    /// <summary>
+    /// Страница отображает список статей и контент выбранной статьи.
+    /// </summary>
     public partial class ArticleListPage : Page
     {
         IArticleListViewModel _viewModel;

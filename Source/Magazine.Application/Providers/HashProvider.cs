@@ -19,15 +19,25 @@ namespace Magazine.Application.Providers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Генерация соли.
+        /// </summary>
+        /// <returns>Строка в формате Base64.</returns>
         public string GetSalt()
         {
             return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         }
 
-        public string GetHash(string password, bool addSalt = true)
+        /// <summary>
+        /// Генерация хеша.
+        /// </summary>
+        /// <param name="input">Входная строка.</param>
+        /// <param name="addSalt">Признак добавления соли.</param>
+        /// <returns>Хеш на основе алгоритма хеширования SHA-256.</returns>
+        public string GetHash(string input, bool addSalt = true)
         {
             var hashBytes = SHA256.Create().ComputeHash
-                (Encoding.UTF8.GetBytes(addSalt ? password + GetSalt() : password));
+                (Encoding.UTF8.GetBytes(addSalt ? input + GetSalt() : input));
 
             return hashBytes.Aggregate
                 (new StringBuilder(),
@@ -35,9 +45,15 @@ namespace Magazine.Application.Providers
                 totalResult => totalResult.ToString());
         }
 
-        public string GetHash(string password, string salt)
+        /// <summary>
+        /// Генерация хеша.
+        /// </summary>
+        /// <param name="input">Входная строка.</param>
+        /// <param name="salt">Соль.</param>
+        /// <returns>Хеш на основе алгоритма хеширования SHA-256.</returns>
+        public string GetHash(string input, string salt)
         {
-            return GetHash(password + salt, false);
+            return GetHash(input + salt, false);
         }
     }
 }

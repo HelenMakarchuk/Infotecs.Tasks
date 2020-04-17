@@ -6,6 +6,9 @@ using System.Windows.Controls;
 
 namespace Magazine.Application.Pages
 {
+    /// <summary>
+    /// Страница входа в приложение.
+    /// </summary>
     public partial class LogInPage : Page
     {
         ILogInViewModel _viewModel;

@@ -7,6 +7,9 @@ using System;
 
 namespace Magazine.Application.Services
 {
+    /// <summary>
+    /// Сервис аутентификации пользователя приложения.
+    /// </summary>
     public class AuthenticationService : IAuthenticationService
     {
         IHashProvider _hashProvider;
@@ -22,9 +25,22 @@ namespace Magazine.Application.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Текущий пользователь приложения.
+        /// </summary>
         public User User { get; private set; }
+
+        /// <summary>
+        /// Признак того, что текущий пользователь прошел аутентификацию.
+        /// </summary>
         public bool IsLoggedIn => User != null;
 
+        /// <summary>
+        /// Регистрация нового пользователя приложения.
+        /// </summary>
+        /// <param name="login">Логин.</param>
+        /// <param name="password">Пароль.</param>
+        /// <returns>Возвращается True если регистрация выполнена, иначе False.</returns>
         public bool TrySignUp(string login, string password)
         {
             if (_unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login) != null)
@@ -41,6 +57,12 @@ namespace Magazine.Application.Services
             return TryLogIn(login, password);
         }
 
+        /// <summary>
+        /// Аутентификация пользователя.
+        /// </summary>
+        /// <param name="login">Логин пользователя.</param>
+        /// <param name="password">Пароль пользователя.</param>
+        /// <returns>Возвращается True если аутентификация пройдена, иначе False.</returns>
         public bool TryLogIn(string login, string password)
         {
             var user = _unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login);
@@ -58,6 +80,9 @@ namespace Magazine.Application.Services
             return true;
         }
 
+        /// <summary>
+        /// Выход текущего пользователя из приложения и переход на страницу входа в приложение.
+        /// </summary>
         public void LogOut()
         {
             User = null;

@@ -7,6 +7,9 @@ using System.Windows.Controls;
 
 namespace Magazine.Application.Pages
 {
+    /// <summary>
+    /// Страница создания новой статьи.
+    /// </summary>
     public partial class NewArticlePage : Page
     {
         INewArticleViewModel _viewModel;
