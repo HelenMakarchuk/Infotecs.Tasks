@@ -74,7 +74,10 @@ namespace Magazine.Application.Services
             var currentHash = _hashProvider.GetHash(password, user.Salt);
 
             if (StringComparer.Ordinal.Compare(currentHash, user.Password) != 0)
+            {
+                _logger.Warning($"Login attempt of user {login}");
                 return false;
+            }
 
             User = user;
             _logger.Information($"New login of user {User.Login}");

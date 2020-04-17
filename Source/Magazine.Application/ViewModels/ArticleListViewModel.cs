@@ -3,6 +3,7 @@ using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -56,6 +57,8 @@ namespace Magazine.Application.ViewModels
             _unitOfWork.ArticleRepository.Remove(SelectedArticle.Id);
             _unitOfWork.Commit();
 
+            _logger.Debug($"Article \"{SelectedArticle.Title.Substring(0, Math.Min(SelectedArticle.Title.Length, 10))}\" deleted");
+
             SelectedArticle = null;
             LoadData();
         }
@@ -67,6 +70,8 @@ namespace Magazine.Application.ViewModels
         {
             _unitOfWork.ArticleRepository.Update(SelectedArticle);
             _unitOfWork.Commit();
+
+            _logger.Debug($"Article \"{SelectedArticle.Title.Substring(0, Math.Min(SelectedArticle.Title.Length, 10))}\" updated");
 
             LoadData();
         }
