@@ -24,7 +24,7 @@ namespace Magazine.Domain.Providers
         /// Длина контента менее 2000 символов.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Превышена максимальная длина контента.
+        /// Длина контента больше 60000 символов.
         /// </exception>
         public void ValidateBody(string body)
         {
@@ -43,7 +43,7 @@ namespace Magazine.Domain.Providers
         /// Заголовок не указан или содержит только пробелы.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Превышена максимальная длина заголовка.
+        /// Длина заголовка больше 80 символов.
         /// </exception>
         public void ValidateTitle(string title)
         {
