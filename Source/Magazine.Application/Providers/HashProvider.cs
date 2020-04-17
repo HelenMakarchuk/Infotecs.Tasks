@@ -7,6 +7,9 @@ using System.Text;
 
 namespace Magazine.Application.Providers
 {
+    /// <summary>
+    /// Генератор хеша.
+    /// </summary>
     public class HashProvider : IHashProvider
     {
         ILogger _logger;

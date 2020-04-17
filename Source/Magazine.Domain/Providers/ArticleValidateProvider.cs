@@ -4,6 +4,9 @@ using System;
 
 namespace Magazine.Domain.Providers
 {
+    /// <summary>
+    /// Валидатор статьи.
+    /// </summary>
     public class ArticleValidateProvider : IArticleValidateProvider
     {
         ILogger _logger;
@@ -13,6 +16,16 @@ namespace Magazine.Domain.Providers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Валидация контента статьи.
+        /// </summary>
+        /// <param name="body">Контент статьи.</param>
+        /// <exception cref="ArgumentException">
+        /// Длина контента менее 2000 символов.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Превышена максимальная длина контента.
+        /// </exception>
         public void ValidateBody(string body)
         {
             if (body.Length < 2000)
@@ -22,6 +35,16 @@ namespace Magazine.Domain.Providers
                 throw new ArgumentException("Body maximum length exceeded");
         }
 
+        /// <summary>
+        /// Валидация заголовка статьи.
+        /// </summary>
+        /// <param name="title">Заголовок статьи.</param>
+        /// <exception cref="ArgumentException">
+        /// Заголовок не указан или содержит только пробелы.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Превышена максимальная длина заголовка.
+        /// </exception>
         public void ValidateTitle(string title)
         {
             if (String.IsNullOrWhiteSpace(title))

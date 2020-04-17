@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Infotecs.Magazine.Infrastracture</AssemblyName>
+    <RootNamespace>Infotecs.Magazine.Infrastracture</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Out\Debug\Magazine.Infrastracture</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\Out\Release\Magazine.Infrastracture</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

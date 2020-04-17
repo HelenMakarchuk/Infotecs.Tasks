@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
+    <AssemblyName>Infotecs.Magazine.Tests</AssemblyName>
+    <RootNamespace>Infotecs.Magazine.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
