@@ -77,6 +77,7 @@ namespace Magazine.Application.Services
                 return false;
 
             User = user;
+            _logger.Information($"New login of user {User.Login}");
             return true;
         }
 
@@ -85,6 +86,7 @@ namespace Magazine.Application.Services
         /// </summary>
         public void LogOut()
         {
+            _logger.Information($"Logout of user {User.Login}");
             User = null;
         }
     }

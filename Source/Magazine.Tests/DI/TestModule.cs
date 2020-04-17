@@ -16,7 +16,6 @@ using Magazine.Infrastracture.DB;
 using Magazine.Infrastracture.DB.Repositories;
 using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 
 namespace Magazine.Tests.DI
 {
@@ -49,11 +48,6 @@ namespace Magazine.Tests.DI
             builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().InstancePerLifetimeScope();
 
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
-
-            builder.Register((c, p) => new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Hour)
-                .CreateLogger()).As<ILogger>().InstancePerLifetimeScope();
         }
     }
 }
