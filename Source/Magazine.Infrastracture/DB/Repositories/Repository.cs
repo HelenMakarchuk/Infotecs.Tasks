@@ -2,6 +2,7 @@
 using Magazine.Infrastracture.Contracts.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,7 +11,7 @@ namespace Magazine.Infrastracture.DB.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {
-        DbContext _context;
+        protected DbContext _context;
         protected DbSet<T> _entities;
 
         public Repository(DbContext context)
@@ -22,6 +23,11 @@ namespace Magazine.Infrastracture.DB.Repositories
         public EntityEntry<T> Add(T entity)
         {
             return _entities.Add(entity);
+        }
+
+        public IQueryable<TReturn> Select<TReturn>(Expression<Func<T, TReturn>> selector)
+        {
+            return _entities.Select(selector);
         }
 
         public bool Any(Expression<Func<T, bool>> predicate)
@@ -44,15 +50,24 @@ namespace Magazine.Infrastracture.DB.Repositories
             return _entities.FirstOrDefault(predicate);
         }
 
+        public T SingleOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return _entities.SingleOrDefault(predicate);
+        }
+
         public EntityEntry<T> Remove(int id)
         {
             return _entities.Remove(Find(id));
         }
 
-        public IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
+        public IIncludableQueryable<T, TProperty> Include<TProperty>(Expression<Func<T, TProperty>> navigationPropertyPath)
         {
-            IQueryable<T> query = _entities.AsNoTracking();
-            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            return _entities.Include(navigationPropertyPath);
+        }
+
+        public EntityEntry<T> Update(T entity)
+        {
+            return _entities.Update(entity);
         }
     }
 }

@@ -2,20 +2,24 @@
 using Magazine.Application.Contracts.Service;
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
+using Serilog;
 using System;
 
 namespace Magazine.Application.Services
 {
-    class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         IHashProvider _hashProvider;
         IUnitOfWork _unitOfWork;
+        ILogger _logger;
 
         public AuthenticationService(IUnitOfWork unitOfWork,
-                                     IHashProvider hashProvider)
+                                     IHashProvider hashProvider,
+                                     ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _hashProvider = hashProvider;
+            _logger = logger;
         }
 
         public User User { get; private set; }
@@ -23,7 +27,7 @@ namespace Magazine.Application.Services
 
         public bool TrySignUp(string login, string password)
         {
-            if (_unitOfWork.UserRepository.FirstOrDefault(u => u.Login == login) != null)
+            if (_unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login) != null)
                 return false;
 
             var user = new User();
@@ -39,7 +43,7 @@ namespace Magazine.Application.Services
 
         public bool TryLogIn(string login, string password)
         {
-            var user = _unitOfWork.UserRepository.FirstOrDefault(u => u.Login == login);
+            var user = _unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login);
 
             if (user == null)
                 return false;

@@ -1,21 +1,23 @@
-﻿using Magazine.Application.Contracts.Provider;
-using Magazine.Application.Contracts.Service;
+﻿using Magazine.Application.Contracts.Service;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
+using Serilog;
 
 namespace Magazine.Application.ViewModels
 {
-    class SignUpViewModel : ISignUpViewModel
+    public class SignUpViewModel : ISignUpViewModel
     {
-        IHashProvider _passwordProvider;
         IUnitOfWork _unitOfWork;
         IAuthenticationService _authenticationService;
+        ILogger _logger;
 
         public SignUpViewModel(IAuthenticationService authenticationService,
-                               IUnitOfWork unitOfWork)
+                               IUnitOfWork unitOfWork,
+                               ILogger logger)
         {
             _authenticationService = authenticationService;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public bool TrySignUp(string login, string password)

@@ -1,6 +1,7 @@
 ﻿using Magazine.Application.Contracts.Service;
 using Magazine.Application.Pages;
 using Magazine.Domain.Contracts.ViewModel;
+using Serilog;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,13 +15,15 @@ namespace Magazine.Application
         NewArticlePage _newArticlePage;
         ArticleListPage _articleListPage;
         IAuthenticationService _authenticationService;
+        ILogger _logger;
 
         public ApplicationWindow(LogInPage logInPage,
                                  SignUpPage signUpPage,
                                  NewArticlePage newArticlePage,
                                  ArticleListPage articleListPage,
                                  IApplicationViewModel viewModel,
-                                 IAuthenticationService authenticationService)
+                                 IAuthenticationService authenticationService,
+                                 ILogger logger)
         {
             InitializeComponent();
 
@@ -30,6 +33,7 @@ namespace Magazine.Application
             _articleListPage = articleListPage;
             _viewModel = viewModel;
             _authenticationService = authenticationService;
+            _logger = logger;
 
             _logInPage.OnSignUp += (sender, e) => CurrentPage.NavigationService.Navigate(_signUpPage);
             _logInPage.OnLoggedIn += (sender, e) => CurrentPage.NavigationService.Navigate(_articleListPage);

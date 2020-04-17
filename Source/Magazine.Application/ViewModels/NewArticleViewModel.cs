@@ -1,16 +1,20 @@
 ﻿using Magazine.Application.Contracts.ViewModel;
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
+using Serilog;
 
 namespace Magazine.Application.ViewModels
 {
-    class NewArticleViewModel : INewArticleViewModel
+    public class NewArticleViewModel : INewArticleViewModel
     {
         IUnitOfWork _unitOfWork;
+        ILogger _logger;
 
-        public NewArticleViewModel(IUnitOfWork unitOfWork)
+        public NewArticleViewModel(IUnitOfWork unitOfWork,
+                                   ILogger logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public void Save(string title, string body, int userId, byte[] teaser = null)

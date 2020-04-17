@@ -6,14 +6,16 @@ using Magazine.Application.Pages;
 using Magazine.Application.Providers;
 using Magazine.Application.Services;
 using Magazine.Application.ViewModels;
+using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
-using Magazine.Domain.Entities;
+using Magazine.Domain.Providers;
 using Magazine.Infrastracture.Contracts.Repository;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Magazine.Infrastracture.DB;
 using Magazine.Infrastracture.DB.Repositories;
 using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Magazine.Application.DI
 {
@@ -36,13 +38,19 @@ namespace Magazine.Application.DI
 
             builder.RegisterType<Context>().As<DbContext>().SingleInstance();
 
-            builder.RegisterType<Repository<User>>().As<IRepository<User>>().SingleInstance();
-            builder.RegisterType<Repository<Article>>().As<IRepository<Article>>().SingleInstance();
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).SingleInstance();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
 
             builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
+            builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().SingleInstance();
+
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().SingleInstance();
+
+            builder.Register((c, p) => new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Hour)
+                .CreateLogger()).As<ILogger>().SingleInstance();
         }
     }
 }

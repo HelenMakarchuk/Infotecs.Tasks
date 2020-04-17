@@ -2,7 +2,7 @@
 
 namespace Magazine.Application.ViewModels
 {
-    class ApplicationViewModel : IApplicationViewModel
+    public class ApplicationViewModel : IApplicationViewModel
     {
     }
 }

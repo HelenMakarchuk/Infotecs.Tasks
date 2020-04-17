@@ -45,8 +45,8 @@
             <TextBlock Grid.Row="3" VerticalAlignment="Center" Margin="0, 5">Body</TextBlock>
             <TextBox Name="Body" Grid.Row="4" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" />
 
-            <Border Grid.Row="5" Name="MessageBlockBorder" Visibility="Visible" BorderThickness="0" Padding="0" Margin="0, 5">
-                <TextBlock Name="MessageBlock" Foreground="#f44336" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Border Grid.Row="5" Name="MessageBlockBorder" Visibility="Hidden" BorderThickness="0" Padding="0" Margin="0">
+                <TextBlock Height="0" Name="MessageBlock" Foreground="#f44336" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Border>
 
             <Grid Grid.Row="6" Margin="0, 0, 0, 20">

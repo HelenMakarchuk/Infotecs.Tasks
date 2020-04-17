@@ -1,4 +1,5 @@
 ﻿using Magazine.Application.Contracts.Provider;
+using Serilog;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
@@ -8,6 +9,13 @@ namespace Magazine.Application.Providers
 {
     public class HashProvider : IHashProvider
     {
+        ILogger _logger;
+
+        public HashProvider(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public string GetSalt()
         {
             return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
