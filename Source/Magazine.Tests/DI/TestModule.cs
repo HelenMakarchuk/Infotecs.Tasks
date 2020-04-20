@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using Magazine.Application;
 using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
@@ -10,12 +12,8 @@ using Magazine.Application.ViewModels;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Providers;
-using Magazine.Infrastracture.Contracts.Repository;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
-using Magazine.Infrastracture.DB;
-using Magazine.Infrastracture.DB.Repositories;
-using Magazine.Infrastracture.DB.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
+using Magazine.Infrastracture.DB.EntityConfigurations;
+using NHibernate;
 using Serilog;
 
 namespace Magazine.Tests.DI
@@ -39,16 +37,23 @@ namespace Magazine.Tests.DI
             builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().InstancePerLifetimeScope();
 
-            builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>().UseInMemoryDatabase("TestContext").Options)).As<DbContext>().InstancePerLifetimeScope();
-
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
-
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
-
             builder.RegisterType<HashProvider>().As<IHashProvider>().InstancePerLifetimeScope();
             builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().InstancePerLifetimeScope();
 
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
+
+            builder.Register((c, p) => Fluently.Configure()
+                .Database
+                (
+                    SQLiteConfiguration.Standard.InMemory()
+                )
+                .Mappings(m =>
+                {
+                    m.FluentMappings.AddFromAssemblyOf<ArticleMap>();
+                    m.FluentMappings.AddFromAssemblyOf<UserMap>();
+                    m.FluentMappings.AddFromAssemblyOf<CommentMap>();
+                })
+                .BuildSessionFactory()).As<ISessionFactory>().InstancePerLifetimeScope();
 
             builder.Register((c, p) => new LoggerConfiguration()
                 .MinimumLevel.Verbose()

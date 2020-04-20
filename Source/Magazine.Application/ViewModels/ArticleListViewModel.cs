@@ -1,9 +1,8 @@
 ﻿using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
+using NHibernate;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -17,22 +16,22 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class ArticleListViewModel : IArticleListViewModel
     {
-        IUnitOfWork _unitOfWork;
+        ISessionFactory _sessionFactory;
         IArticleValidateProvider _validateProvider;
         ILogger _logger;
 
-        public ArticleListViewModel(IUnitOfWork unitOfWork,
+        public ArticleListViewModel(ISessionFactory sessionFactory,
                                     IArticleValidateProvider validateProvider,
                                     ILogger logger)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
             _validateProvider = validateProvider;
             _logger = logger;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<Article> Articles { get; set; }
+        public IList<Article> Articles { get; set; }
         public Article SelectedArticle { get; set; }
 
         /// <summary>
@@ -40,9 +39,12 @@ namespace Magazine.Application.ViewModels
         /// </summary>
         public void LoadData()
         {
-            var previousArticle = SelectedArticle;
-            Articles = _unitOfWork.ArticleRepository.Select(a => new Article() { Id = a.Id, Title = a.Title }).ToList();
-            SelectedArticle = previousArticle ?? Articles.FirstOrDefault();
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var previousArticle = SelectedArticle;
+                Articles = session.QueryOver<Article>().Select(a => new Article() { Id = a.Id, Title = a.Title }).List();
+                SelectedArticle = previousArticle ?? Articles.FirstOrDefault();
+            }
         }
 
         /// <summary>
@@ -51,7 +53,10 @@ namespace Magazine.Application.ViewModels
         /// <param name="id"></param>
         public void LoadArticle(int id)
         {
-            SelectedArticle = _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.User).SingleOrDefault(a => a.Id == id);
+            using (var session = _sessionFactory.OpenSession())
+            {
+                SelectedArticle = session.QueryOver<Article>().Where(a => a.Id == id).Fetch(SelectMode.Fetch, a => a.Comments).Fetch(SelectMode.Fetch, c => c.User).SingleOrDefault();
+            }
         }
 
         /// <summary>
@@ -59,8 +64,12 @@ namespace Magazine.Application.ViewModels
         /// </summary>
         public void DeleteSelectedArticle()
         {
-            _unitOfWork.ArticleRepository.Remove(SelectedArticle.Id);
-            _unitOfWork.Commit();
+            using (var session = _sessionFactory.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                session.Delete(SelectedArticle.Id);
+                transaction.Commit();
+            }
 
             _logger.Debug("Article \"{Title}\" deleted.", SelectedArticle.Title);
 
@@ -75,8 +84,12 @@ namespace Magazine.Application.ViewModels
         {
             _validateProvider.Validate(SelectedArticle);
 
-            _unitOfWork.ArticleRepository.Update(SelectedArticle);
-            _unitOfWork.Commit();
+            using (var session = _sessionFactory.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                session.Update(SelectedArticle);
+                transaction.Commit();
+            }
 
             _logger.Debug("Article \"{Title}\" updated.", SelectedArticle.Title);
 

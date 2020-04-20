@@ -1,6 +1,6 @@
 ﻿using Magazine.Application.Contracts.Service;
 using Magazine.Domain.Contracts.ViewModel;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
+using NHibernate;
 using Serilog;
 using System.ComponentModel;
 
@@ -11,16 +11,16 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class SignUpViewModel : ISignUpViewModel
     {
-        IUnitOfWork _unitOfWork;
+        ISessionFactory _sessionFactory;
         IAuthenticationService _authenticationService;
         ILogger _logger;
 
         public SignUpViewModel(IAuthenticationService authenticationService,
-                               IUnitOfWork unitOfWork,
+                               ISessionFactory sessionFactory,
                                ILogger logger)
         {
             _authenticationService = authenticationService;
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
             _logger = logger;
         }
 

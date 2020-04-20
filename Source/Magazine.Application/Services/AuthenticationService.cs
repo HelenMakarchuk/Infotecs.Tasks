@@ -1,7 +1,7 @@
 ﻿using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
 using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
+using NHibernate;
 using Serilog;
 using System;
 
@@ -13,14 +13,14 @@ namespace Magazine.Application.Services
     public class AuthenticationService : IAuthenticationService
     {
         IHashProvider _hashProvider;
-        IUnitOfWork _unitOfWork;
+        ISessionFactory _sessionFactory;
         ILogger _logger;
 
-        public AuthenticationService(IUnitOfWork unitOfWork,
+        public AuthenticationService(ISessionFactory sessionFactory,
                                      IHashProvider hashProvider,
                                      ILogger logger)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
             _hashProvider = hashProvider;
             _logger = logger;
         }
@@ -43,16 +43,20 @@ namespace Magazine.Application.Services
         /// <returns>Возвращается True если регистрация выполнена, иначе False.</returns>
         public bool TrySignUp(string login, string password)
         {
-            if (_unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login) != null)
-                return false;
+            using (var session = _sessionFactory.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                if (session.QueryOver<User>().Where(u => u.Login == login).SingleOrDefault() != null)
+                    return false;
 
-            var user = new User();
-            user.Login = login;
-            user.Salt = _hashProvider.GetSalt();
-            user.Password = _hashProvider.GetHash(password, user.Salt);
+                var user = new User();
+                user.Login = login;
+                user.Salt = _hashProvider.GetSalt();
+                user.Password = _hashProvider.GetHash(password, user.Salt);
 
-            _unitOfWork.UserRepository.Add(user);
-            _unitOfWork.Commit();
+                session.Save(user);
+                transaction.Commit();
+            }
 
             return TryLogIn(login, password);
         }
@@ -65,22 +69,26 @@ namespace Magazine.Application.Services
         /// <returns>Возвращается True если аутентификация выполнена, иначе False.</returns>
         public bool TryLogIn(string login, string password)
         {
-            var user = _unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login);
-
-            if (user == null)
-                return false;
-
-            var dbHash = user.Password;
-            var currentHash = _hashProvider.GetHash(password, user.Salt);
-
-            if (StringComparer.Ordinal.Compare(currentHash, user.Password) != 0)
+            using (var session = _sessionFactory.OpenSession())
             {
-                _logger.Warning("Login attempt of {Login}.", login);
-                return false;
+                var user = session.QueryOver<User>().Where(u => u.Login == login).SingleOrDefault();
+
+                if (user == null)
+                    return false;
+
+                var dbHash = user.Password;
+                var currentHash = _hashProvider.GetHash(password, user.Salt);
+
+                if (StringComparer.Ordinal.Compare(currentHash, user.Password) != 0)
+                {
+                    _logger.Warning("Login attempt of {Login}.", login);
+                    return false;
+                }
+
+                User = user;
+                _logger.Information("New login of {Login}.", User.Login);
             }
 
-            User = user;
-            _logger.Information("New login of {Login}.", User.Login);
             return true;
         }
 

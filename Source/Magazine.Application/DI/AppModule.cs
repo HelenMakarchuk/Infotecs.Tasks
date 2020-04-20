@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
@@ -9,13 +11,10 @@ using Magazine.Application.ViewModels;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Providers;
-using Magazine.Infrastracture.Contracts.Repository;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
-using Magazine.Infrastracture.DB;
-using Magazine.Infrastracture.DB.Repositories;
-using Magazine.Infrastracture.DB.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
+using Magazine.Infrastracture.DB.EntityConfigurations;
+using NHibernate;
 using Serilog;
+using System.Configuration;
 
 namespace Magazine.Application.DI
 {
@@ -38,16 +37,24 @@ namespace Magazine.Application.DI
             builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().SingleInstance();
             builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().SingleInstance();
 
-            builder.RegisterType<Context>().As<DbContext>().SingleInstance();
-
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).SingleInstance();
-
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
-
             builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
             builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().SingleInstance();
 
             builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().SingleInstance();
+
+            builder.Register((c, p) => Fluently.Configure()
+                .Database
+                (
+                    PostgreSQLConfiguration.Standard
+                    .ConnectionString(ConfigurationManager.ConnectionStrings["InfotecsMagazine"]?.ConnectionString)
+                )
+                .Mappings(m =>
+                {
+                    m.FluentMappings.AddFromAssemblyOf<ArticleMap>();
+                    m.FluentMappings.AddFromAssemblyOf<UserMap>();
+                    m.FluentMappings.AddFromAssemblyOf<CommentMap>();
+                })
+                .BuildSessionFactory()).As<ISessionFactory>().SingleInstance();
 
             builder.Register((c, p) => new LoggerConfiguration()
                 .MinimumLevel.Verbose()

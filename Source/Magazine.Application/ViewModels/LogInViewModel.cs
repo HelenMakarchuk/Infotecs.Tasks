@@ -1,6 +1,6 @@
 ﻿using Magazine.Application.Contracts.Service;
 using Magazine.Domain.Contracts.ViewModel;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
+using NHibernate;
 using Serilog;
 
 namespace Magazine.Application.ViewModels
@@ -11,14 +11,14 @@ namespace Magazine.Application.ViewModels
     public class LogInViewModel : ILogInViewModel
     {
         IAuthenticationService _authenticationService;
-        IUnitOfWork _unitOfWork;
+        ISessionFactory _sessionFactory;
         ILogger _logger;
 
-        public LogInViewModel(IUnitOfWork unitOfWork,
+        public LogInViewModel(ISessionFactory sessionFactory,
                               IAuthenticationService authenticationService,
                               ILogger logger)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
             _authenticationService = authenticationService;
             _logger = logger;
         }

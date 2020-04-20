@@ -9,7 +9,7 @@ namespace Magazine.Domain.Contracts.ViewModel
     /// </summary>
     public interface IArticleListViewModel : INotifyPropertyChanged
     {
-        List<Article> Articles { get; set; }
+        IList<Article> Articles { get; set; }
         Article SelectedArticle { get; set; }
 
         void LoadData();

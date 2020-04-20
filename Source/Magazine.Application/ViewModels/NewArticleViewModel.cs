@@ -2,8 +2,8 @@
 using Magazine.Application.Contracts.ViewModel;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Microsoft.Win32;
+using NHibernate;
 using Serilog;
 using System;
 using System.ComponentModel;
@@ -15,17 +15,17 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class NewArticleViewModel : INewArticleViewModel, INotifyPropertyChanged
     {
-        IUnitOfWork _unitOfWork;
+        ISessionFactory _sessionFactory;
         IArticleValidateProvider _validateProvider;
         IAuthenticationService _authenticationService;
         ILogger _logger;
 
-        public NewArticleViewModel(IUnitOfWork unitOfWork,
+        public NewArticleViewModel(ISessionFactory sessionFactory,
                                    IArticleValidateProvider validateProvider,
                                    ILogger logger,
                                    IAuthenticationService authenticationService)
         {
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
             _validateProvider = validateProvider;
             _authenticationService = authenticationService;
             _logger = logger;
@@ -60,8 +60,12 @@ namespace Magazine.Application.ViewModels
             var article = new Article(Title, Body, _authenticationService.User.Id, Teaser);
             _validateProvider.Validate(article);
 
-            _unitOfWork.ArticleRepository.Add(article);
-            _unitOfWork.Commit();
+            using (var session = _sessionFactory.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                session.Save(article);
+                transaction.Commit();
+            }
 
             _logger.Debug("Article \"{Title}\" created.", article.Title);
         }
