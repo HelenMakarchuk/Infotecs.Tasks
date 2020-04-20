@@ -21,27 +21,27 @@ namespace Magazine.Domain.Entities
         /// <summary>
         /// Уникальный идентификатор.
         /// </summary>
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         /// <summary>
         /// Заголовок.
         /// </summary>
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
         /// <summary>
         /// Картинка-тизер.
         /// </summary>
-        public byte[] Teaser { get; set; }
+        public virtual byte[] Teaser { get; set; }
 
         /// <summary>
         /// Контент статьи.
         /// </summary>
-        public string Body { get; set; }
+        public virtual string Body { get; set; }
 
         /// <summary>
         /// Идентификатор автора статьи.
         /// </summary>
-        public int UserId { get; set; }
+        public virtual int UserId { get; set; }
 
         /// <summary>
         /// Автор статьи.

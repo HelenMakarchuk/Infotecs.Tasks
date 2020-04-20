@@ -11,22 +11,22 @@ namespace Magazine.Domain.Entities
         /// <summary>
         /// Уникальный идентификатор.
         /// </summary>
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         /// <summary>
         /// Логин.
         /// </summary>
-        public string Login { get; set; }
+        public virtual string Login { get; set; }
 
         /// <summary>
         /// Пароль.
         /// </summary>
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
 
         /// <summary>
         /// Соль, которая применяется при создании хеша пароля.
         /// </summary>
-        public string Salt { get; set; }
+        public virtual string Salt { get; set; }
 
         /// <summary>
         /// Список статей, автором которых является текущий пользователь.

@@ -10,22 +10,22 @@ namespace Magazine.Domain.Entities
         /// <summary>
         /// Уникальный идентификатор.
         /// </summary>
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         /// <summary>
         /// Текст комментария.
         /// </summary>
-        public string Body { get; set; }
+        public virtual string Body { get; set; }
 
         /// <summary>
         /// Идентификатор статьи, к которой принадлежит комментарий.
         /// </summary>
-        public int ArticleId { get; set; }
+        public virtual int ArticleId { get; set; }
 
         /// <summary>
         /// Идентификатор автора комментария.
         /// </summary>
-        public int UserId { get; set; }
+        public virtual int UserId { get; set; }
 
         /// <summary>
         /// Статья, к которой принадлежит комментарий.
