@@ -1,6 +1,5 @@
-﻿using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Application.Contracts.Page;
 using Magazine.Application.Contracts.ViewModel;
-using Serilog;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,21 +9,15 @@ namespace Magazine.Application.Pages
     /// <summary>
     /// Страница создания новой статьи.
     /// </summary>
-    public partial class NewArticlePage : Page
+    public partial class NewArticlePage : Page, IPage
     {
         INewArticleViewModel _viewModel;
-        IAuthenticationService _authenticationService;
-        ILogger _logger;
 
-        public NewArticlePage(INewArticleViewModel viewModel,
-                              IAuthenticationService authenticationService,
-                              ILogger logger)
+        public NewArticlePage(INewArticleViewModel viewModel)
         {
             InitializeComponent();
 
             _viewModel = viewModel;
-            _authenticationService = authenticationService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -37,12 +30,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
-            if (!_authenticationService.IsLoggedIn)
-            {
-                OnClosed.Invoke(sender, e);
-                return;
-            }
-
+            SetData();
             DataContext = _viewModel;
         }
 
@@ -59,7 +47,17 @@ namespace Magazine.Application.Pages
         /// </summary>
         void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.Save(Title.Text, Body.Text, _authenticationService.User.Id);
+            try
+            {
+                _viewModel.CreateArticle();
+            }
+            catch (ArgumentException ex)
+            {
+                ShowMessage(ex.Message);
+                return;
+            }
+
+            HideMessage();
 
             OnClosed.Invoke(sender, e);
         }
@@ -69,13 +67,21 @@ namespace Magazine.Application.Pages
         /// </summary>
         void ChooseTeaserButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Next release feature !");
+            try
+            {
+                _viewModel.SetTeaser();
+            }
+            catch (ArgumentNullException ex)
+            {
+                ShowMessage(ex.Message);
+                return;
+            }
         }
 
         /// <summary>
         /// Отображение сообщения пользователю.
         /// </summary>
-        void ShowMessage(string text)
+        public void ShowMessage(string text)
         {
             MessageBlock.Text = text;
             MessageBlock.Height = Double.NaN;
@@ -86,12 +92,20 @@ namespace Magazine.Application.Pages
         /// <summary>
         /// Скрытие сообщения.
         /// </summary>
-        void HideMessage()
+        public void HideMessage()
         {
             MessageBlock.Text = "";
             MessageBlock.Height = 0;
             MessageBlockBorder.Visibility = Visibility.Hidden;
             MessageBlockBorder.Margin = new Thickness(0);
+        }
+
+        public void SetData()
+        {
+            _viewModel.Title = String.Empty;
+            _viewModel.Teaser = null;
+            _viewModel.Body = String.Empty;
+            HideMessage();
         }
     }
 }

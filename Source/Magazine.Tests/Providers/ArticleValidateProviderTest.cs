@@ -1,8 +1,5 @@
 ﻿using Autofac;
-using Core.DI;
 using Magazine.Domain.Contracts.Provider;
-using Magazine.Tests.DI;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text;
 using Xunit;
@@ -12,14 +9,28 @@ namespace Infotecs.Magazine.Tests.Providers
     /// <summary>
     /// Тест валидатора сущности "Статья" <see cref="ArticleValidateProvider"/>.
     /// </summary>
-    public class ArticleValidateProviderTest
+    public class ArticleValidateProviderTest : IClassFixture<TestFixture>, IDisposable
     {
-        IContainer _container;
+        TestFixture _testFixture;
+        ILifetimeScope _containerScope;
+        IArticleValidateProvider _articleValidateProvider;
 
-        public ArticleValidateProviderTest()
+        /// <summary>
+        /// Выполнение перед каждым тестом.
+        /// </summary>
+        public ArticleValidateProviderTest(TestFixture testFixture)
         {
-            _container = AutofacConfig.Configure(new TestModule());
-            _container.Resolve<DbContext>(new NamedParameter("DbName", Guid.NewGuid().ToString()));
+            _testFixture = testFixture;
+            _containerScope = _testFixture.Container.BeginLifetimeScope();
+            _articleValidateProvider = _testFixture.Container.Resolve<IArticleValidateProvider>();
+        }
+
+        /// <summary>
+        /// Выполнение после каждого теста.
+        /// </summary>
+        public void Dispose()
+        {
+            _containerScope.Dispose();
         }
 
         /// <summary>
@@ -32,11 +43,8 @@ namespace Infotecs.Magazine.Tests.Providers
         [InlineData("")]
         public void ValidateBody_LengthLessThan2000_ThrowsArgumentException(string body)
         {
-            // Arrange
-            var articleValidateProvider = _container.Resolve<IArticleValidateProvider>();
-
             // Assert
-            var exception = Assert.Throws<ArgumentException>(() => articleValidateProvider.ValidateBody(body));
+            var exception = Assert.Throws<ArgumentException>(() => _articleValidateProvider.ValidateBody(body));
             Assert.Equal(exception.Message, "Body must be at least 2000 characters");
         }
 
@@ -48,11 +56,10 @@ namespace Infotecs.Magazine.Tests.Providers
         public void ValidateBody_LengthMoreThan60000_ThrowsArgumentException()
         {
             // Arrange
-            var articleValidateProvider = _container.Resolve<IArticleValidateProvider>();
             string body = new StringBuilder().Append('a', 60001).ToString();
 
             // Assert
-            var exception = Assert.Throws<ArgumentException>(() => articleValidateProvider.ValidateBody(body));
+            var exception = Assert.Throws<ArgumentException>(() => _articleValidateProvider.ValidateBody(body));
             Assert.Equal(exception.Message, "Body maximum length exceeded");
         }
 
@@ -66,11 +73,8 @@ namespace Infotecs.Magazine.Tests.Providers
         [InlineData("       ")]
         public void ValidateTitle_EmptyOrWhiteSpace_ThrowsArgumentException(string title)
         {
-            // Arrange
-            var articleValidateProvider = _container.Resolve<IArticleValidateProvider>();
-
             // Assert
-            var exception = Assert.Throws<ArgumentException>(() => articleValidateProvider.ValidateTitle(title));
+            var exception = Assert.Throws<ArgumentException>(() => _articleValidateProvider.ValidateTitle(title));
             Assert.Equal(exception.Message, "Title is missing");
         }
 
@@ -82,11 +86,10 @@ namespace Infotecs.Magazine.Tests.Providers
         public void ValidateTitle_LengthMoreThan80_ThrowsArgumentException()
         {
             // Arrange
-            var articleValidateProvider = _container.Resolve<IArticleValidateProvider>();
             string title = new StringBuilder().Append('a', 81).ToString();
 
             // Assert
-            var exception = Assert.Throws<ArgumentException>(() => articleValidateProvider.ValidateTitle(title));
+            var exception = Assert.Throws<ArgumentException>(() => _articleValidateProvider.ValidateTitle(title));
             Assert.Equal(exception.Message, "Title maximum length exceeded");
         }
     }

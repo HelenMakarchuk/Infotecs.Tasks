@@ -2,6 +2,7 @@
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Serilog;
+using System.ComponentModel;
 
 namespace Magazine.Application.ViewModels
 {
@@ -23,6 +24,8 @@ namespace Magazine.Application.ViewModels
             _logger = logger;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Регистрация нового пользователя приложения.
         /// </summary>
@@ -31,7 +34,11 @@ namespace Magazine.Application.ViewModels
         /// <returns>Возвращается True если регистрация выполнена, иначе False.</returns>
         public bool TrySignUp(string login, string password)
         {
-            return _authenticationService.TrySignUp(login, password);
+            var signUpAttemptResult = _authenticationService.TrySignUp(login, password);
+
+            _logger.Debug("Sign up attempt result: {Result}.", signUpAttemptResult);
+
+            return signUpAttemptResult;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Magazine.Application.Contracts.Provider;
-using Serilog;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
@@ -12,13 +11,6 @@ namespace Magazine.Application.Providers
     /// </summary>
     public class HashProvider : IHashProvider
     {
-        ILogger _logger;
-
-        public HashProvider(ILogger logger)
-        {
-            _logger = logger;
-        }
-
         /// <summary>
         /// Генерация соли.
         /// </summary>

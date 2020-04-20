@@ -5,6 +5,11 @@
     /// </summary>
     public interface INewArticleViewModel
     {
-        void Save(string title, string body, int userId, byte[] teaser = null);
+        public string Title { get; set; }
+        public byte[] Teaser { get; set; }
+        public string Body { get; set; }
+
+        void CreateArticle();
+        void SetTeaser();
     }
 }

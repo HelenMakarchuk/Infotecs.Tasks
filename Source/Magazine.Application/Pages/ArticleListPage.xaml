@@ -72,6 +72,7 @@
                 </ComboBox>
 
                 <Button Name="EditArticleTitleButton" Click="EditArticleTitleButton_Click" Grid.Column="1" Grid.Row="1" Style="{StaticResource EditButtonStyle}" />
+                <Button Name="EditArticleTeaserButton" Click="EditArticleTeaserButton_Click" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditButtonStyle}" />
                 <Button Name="EditArticleBodyButton" Click="EditArticleBodyButton_Click" Grid.Column="1" Grid.Row="3" Style="{StaticResource EditButtonStyle}" />
             </Grid>
         </Grid>

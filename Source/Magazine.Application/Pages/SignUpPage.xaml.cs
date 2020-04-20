@@ -1,5 +1,5 @@
-﻿using Magazine.Domain.Contracts.ViewModel;
-using Serilog;
+﻿using Infotecs.Magazine.Application.Contracts.Page;
+using Magazine.Domain.Contracts.ViewModel;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,18 +9,15 @@ namespace Magazine.Application.Pages
     /// <summary>
     /// Страница создания нового пользователя приложения.
     /// </summary>
-    public partial class SignUpPage : Page
+    public partial class SignUpPage : Page, IPage
     {
         ISignUpViewModel _viewModel;
-        ILogger _logger;
 
-        public SignUpPage(ISignUpViewModel viewModel,
-                          ILogger logger)
+        public SignUpPage(ISignUpViewModel viewModel)
         {
             InitializeComponent();
 
             _viewModel = viewModel;
-            _logger = logger;
         }
 
         /// <summary>
@@ -38,7 +35,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
-            ClearData();
+            SetData();
             DataContext = _viewModel;
         }
 
@@ -64,20 +61,8 @@ namespace Magazine.Application.Pages
             OnLogIn.Invoke(sender, e);
         }
 
-        /// <summary>
-        /// Очистка данных страницы.
-        /// </summary>
-        void ClearData()
-        {
-            Login.Text = "";
-            Password.Password = "";
-            HideMessage();
-        }
 
-        /// <summary>
-        /// Отображение сообщения пользователю.
-        /// </summary>
-        void ShowMessage(string text)
+        public void ShowMessage(string text)
         {
             MessageBlock.Text = text;
             MessageBlock.Height = Double.NaN;
@@ -85,15 +70,20 @@ namespace Magazine.Application.Pages
             MessageBlockBorder.Margin = new Thickness(0, 20, 0, 5);
         }
 
-        /// <summary>
-        /// Скрытие сообщения.
-        /// </summary>
-        void HideMessage()
+
+        public void HideMessage()
         {
             MessageBlock.Text = "";
             MessageBlock.Height = 0;
             MessageBlockBorder.Visibility = Visibility.Hidden;
             MessageBlockBorder.Margin = new Thickness(0);
+        }
+
+        public void SetData()
+        {
+            Login.Text = String.Empty;
+            Password.Password = String.Empty;
+            HideMessage();
         }
     }
 }

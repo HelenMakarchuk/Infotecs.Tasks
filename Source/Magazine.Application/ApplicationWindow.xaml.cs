@@ -1,6 +1,7 @@
 ﻿using Magazine.Application.Contracts.Service;
 using Magazine.Application.Pages;
 using Serilog;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -34,13 +35,20 @@ namespace Magazine.Application
             _authenticationService = authenticationService;
             _logger = logger;
 
-            _logInPage.OnSignUp += (sender, e) => CurrentPage.NavigationService.Navigate(_signUpPage);
-            _logInPage.OnLoggedIn += (sender, e) => CurrentPage.NavigationService.Navigate(_articleListPage);
-            _signUpPage.OnSignedUp += (sender, e) => CurrentPage.NavigationService.Navigate(_articleListPage);
-            _signUpPage.OnLogIn += (sender, e) => CurrentPage.NavigationService.Navigate(_logInPage);
-            _articleListPage.OnAddArticle += (sender, e) => CurrentPage.NavigationService.Navigate(_newArticlePage);
-            _articleListPage.OnLoggedOut += (sender, e) => CurrentPage.NavigationService.Navigate(_logInPage);
-            _newArticlePage.OnClosed += (sender, e) => CurrentPage.NavigationService.Navigate(_articleListPage);
+            _logInPage.OnSignUp += (sender, e) => SetPage(_signUpPage);
+            _logInPage.OnLoggedIn += (sender, e) => SetPageIfLoggedIn(_articleListPage);
+            _signUpPage.OnSignedUp += (sender, e) => SetPageIfLoggedIn(_articleListPage);
+            _signUpPage.OnLogIn += (sender, e) => SetPage(_logInPage);
+            _articleListPage.OnAddArticle += (sender, e) => SetPageIfLoggedIn(_newArticlePage);
+            _articleListPage.OnLogOut += (sender, e) => { _authenticationService.LogOut(); SetPage(_logInPage); };
+            _newArticlePage.OnClosed += (sender, e) => SetPageIfLoggedIn(_articleListPage);
+
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(GlobalErrorHandler);
+        }
+
+        void GlobalErrorHandler(object sender, UnhandledExceptionEventArgs args)
+        {
+            _logger.Error("{@Exception}", (Exception)args.ExceptionObject);
         }
 
         /// <summary>
@@ -50,7 +58,18 @@ namespace Magazine.Application
         {
             var startPage = _authenticationService.IsLoggedIn ? (Page)_articleListPage : _logInPage;
 
-            CurrentPage.NavigationService.Navigate(startPage);
+            SetPage(startPage);
+        }
+
+        void SetPage(Page page)
+        {
+            CurrentPage.NavigationService.Navigate(page);
+        }
+
+        void SetPageIfLoggedIn(Page page)
+        {
+            if (_authenticationService.IsLoggedIn)
+                SetPage(page);
         }
     }
 }

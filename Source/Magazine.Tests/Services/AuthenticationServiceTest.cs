@@ -1,8 +1,6 @@
 ﻿using Autofac;
-using Core.DI;
+using Infotecs.Magazine.Tests;
 using Magazine.Application.Contracts.Service;
-using Magazine.Tests.DI;
-using Microsoft.EntityFrameworkCore;
 using System;
 using Xunit;
 
@@ -11,14 +9,28 @@ namespace Magazine.Tests.Services
     /// <summary>
     /// Тест сервиса аутентификации <see cref="AuthenticationService"/>.
     /// </summary>
-    public class AuthenticationServiceTest
+    public class AuthenticationServiceTest : IClassFixture<TestFixture>, IDisposable
     {
-        IContainer _container;
+        TestFixture _testFixture;
+        ILifetimeScope _containerScope;
+        IAuthenticationService _authenticationService;
 
-        public AuthenticationServiceTest()
+        /// <summary>
+        /// Выполнение перед каждым тестом.
+        /// </summary>
+        public AuthenticationServiceTest(TestFixture testFixture)
         {
-            _container = AutofacConfig.Configure(new TestModule());
-            _container.Resolve<DbContext>(new NamedParameter("DbName", Guid.NewGuid().ToString()));
+            _testFixture = testFixture;
+            _containerScope = _testFixture.Container.BeginLifetimeScope();
+            _authenticationService = _containerScope.Resolve<IAuthenticationService>();
+        }
+
+        /// <summary>
+        /// Выполнение после каждого теста.
+        /// </summary>
+        public void Dispose()
+        {
+            _containerScope.Dispose();
         }
 
         /// <summary>
@@ -31,11 +43,10 @@ namespace Magazine.Tests.Services
         public void TrySignUp_LoginExists_ReturnFalse(string login)
         {
             // Arrange
-            var authenticationService = _container.Resolve<IAuthenticationService>();
-            var firstSignUp = authenticationService.TrySignUp(login, "SomePassword");
+            var firstSignUp = _authenticationService.TrySignUp(login, "SomePassword");
 
             // Act
-            var secondSignUp = authenticationService.TrySignUp(login, "AnotherPassword");
+            var secondSignUp = _authenticationService.TrySignUp(login, "AnotherPassword");
 
             // Assert
             Assert.True(firstSignUp);
@@ -55,11 +66,10 @@ namespace Magazine.Tests.Services
         public void TryLogIn_LoginDoesntMatch_ReturnFalse(string signUpLogin, string logInLogin)
         {
             // Arrange
-            var authenticationService = _container.Resolve<IAuthenticationService>();
-            var signUpResult = authenticationService.TrySignUp(signUpLogin, "password");
+            var signUpResult = _authenticationService.TrySignUp(signUpLogin, "password");
 
             // Act
-            var logInResult = authenticationService.TryLogIn(logInLogin, "password");
+            var logInResult = _authenticationService.TryLogIn(logInLogin, "password");
 
             // Assert
             Assert.True(signUpResult);
@@ -79,11 +89,10 @@ namespace Magazine.Tests.Services
         public void TryLogIn_PasswordDoesntMatch_ReturnFalse(string signUpPassword, string logInPassword)
         {
             // Arrange
-            var authenticationService = _container.Resolve<IAuthenticationService>();
-            var signUpResult = authenticationService.TrySignUp("login", signUpPassword);
+            var signUpResult = _authenticationService.TrySignUp("login", signUpPassword);
 
             // Act
-            var logInResult = authenticationService.TryLogIn("login", logInPassword);
+            var logInResult = _authenticationService.TryLogIn("login", logInPassword);
 
             // Assert
             Assert.True(signUpResult);
@@ -101,11 +110,10 @@ namespace Magazine.Tests.Services
         public void TryLogIn_CorrectLoginAndPassword_ReturnTrue(string login, string password)
         {
             // Arrange
-            var authenticationService = _container.Resolve<IAuthenticationService>();
-            var signUpResult = authenticationService.TrySignUp(login, password);
+            var signUpResult = _authenticationService.TrySignUp(login, password);
 
             // Act
-            var logInResult = authenticationService.TryLogIn(login, password);
+            var logInResult = _authenticationService.TryLogIn(login, password);
 
             // Assert
             Assert.True(signUpResult);

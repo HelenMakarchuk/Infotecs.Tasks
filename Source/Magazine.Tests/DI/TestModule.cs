@@ -27,33 +27,33 @@ namespace Magazine.Tests.DI
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ApplicationWindow>().As<ApplicationWindow>().SingleInstance();
+            builder.RegisterType<ApplicationWindow>().As<ApplicationWindow>().InstancePerLifetimeScope();
 
-            builder.RegisterType<LogInPage>().As<LogInPage>().SingleInstance();
-            builder.RegisterType<SignUpPage>().As<SignUpPage>().SingleInstance();
-            builder.RegisterType<NewArticlePage>().As<NewArticlePage>().SingleInstance();
-            builder.RegisterType<ArticleListPage>().As<ArticleListPage>().SingleInstance();
+            builder.RegisterType<LogInPage>().As<LogInPage>().InstancePerLifetimeScope();
+            builder.RegisterType<SignUpPage>().As<SignUpPage>().InstancePerLifetimeScope();
+            builder.RegisterType<NewArticlePage>().As<NewArticlePage>().InstancePerLifetimeScope();
+            builder.RegisterType<ArticleListPage>().As<ArticleListPage>().InstancePerLifetimeScope();
 
-            builder.RegisterType<LogInViewModel>().As<ILogInViewModel>().SingleInstance();
-            builder.RegisterType<SignUpViewModel>().As<ISignUpViewModel>().SingleInstance();
-            builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().SingleInstance();
-            builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().SingleInstance();
+            builder.RegisterType<LogInViewModel>().As<ILogInViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<SignUpViewModel>().As<ISignUpViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().InstancePerLifetimeScope();
 
-            builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>().UseInMemoryDatabase(p.Named<string>("DbName")).Options)).As<DbContext>().SingleInstance();
+            builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>().UseInMemoryDatabase("TestContext").Options)).As<DbContext>().InstancePerLifetimeScope();
 
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).SingleInstance();
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
-            builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
-            builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().SingleInstance();
+            builder.RegisterType<HashProvider>().As<IHashProvider>().InstancePerLifetimeScope();
+            builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().InstancePerLifetimeScope();
 
-            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().SingleInstance();
+            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
 
             builder.Register((c, p) => new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Hour)
-                .CreateLogger()).As<ILogger>().SingleInstance();
+                .WriteTo.File("Logs/.log", rollingInterval: RollingInterval.Day)
+                .CreateLogger()).As<ILogger>().InstancePerLifetimeScope();
         }
     }
 }

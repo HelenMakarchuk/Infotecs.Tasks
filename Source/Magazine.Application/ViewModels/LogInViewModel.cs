@@ -31,7 +31,11 @@ namespace Magazine.Application.ViewModels
         /// <returns>Возвращается True если аутентификация выполнена, иначе False.</returns>
         public bool TryLogIn(string login, string password)
         {
-            return _authenticationService.TryLogIn(login, password);
+            var loginAttemptResult = _authenticationService.TryLogIn(login, password);
+
+            _logger.Debug("Log in attempt result: {Result}.", loginAttemptResult);
+
+            return loginAttemptResult;
         }
     }
 }

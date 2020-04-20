@@ -1,7 +1,9 @@
-﻿using Magazine.Domain.Contracts.ViewModel;
+﻿using Magazine.Domain.Contracts.Provider;
+using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,15 @@ namespace Magazine.Application.ViewModels
     public class ArticleListViewModel : IArticleListViewModel
     {
         IUnitOfWork _unitOfWork;
+        IArticleValidateProvider _validateProvider;
         ILogger _logger;
 
         public ArticleListViewModel(IUnitOfWork unitOfWork,
+                                    IArticleValidateProvider validateProvider,
                                     ILogger logger)
         {
             _unitOfWork = unitOfWork;
+            _validateProvider = validateProvider;
             _logger = logger;
         }
 
@@ -57,7 +62,7 @@ namespace Magazine.Application.ViewModels
             _unitOfWork.ArticleRepository.Remove(SelectedArticle.Id);
             _unitOfWork.Commit();
 
-            _logger.Debug($"Article \"{SelectedArticle.Title.Substring(0, Math.Min(SelectedArticle.Title.Length, 10))}\" deleted");
+            _logger.Debug("Article \"{Title}\" deleted.", SelectedArticle.Title);
 
             SelectedArticle = null;
             LoadData();
@@ -68,12 +73,37 @@ namespace Magazine.Application.ViewModels
         /// </summary>
         public void UpdateArticle()
         {
+            _validateProvider.Validate(SelectedArticle);
+
             _unitOfWork.ArticleRepository.Update(SelectedArticle);
             _unitOfWork.Commit();
 
-            _logger.Debug($"Article \"{SelectedArticle.Title.Substring(0, Math.Min(SelectedArticle.Title.Length, 10))}\" updated");
+            _logger.Debug("Article \"{Title}\" updated.", SelectedArticle.Title);
 
             LoadData();
+        }
+
+        public void SetTeaser()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                if (String.IsNullOrEmpty(openFileDialog.FileName))
+                    throw new ArgumentNullException("Empty file.");
+
+                using (var stream = openFileDialog.OpenFile())
+                {
+                    var array = new byte[stream.Length];
+                    int read = 0;
+
+                    while (read != array.Length)
+                        read += stream.Read(array, read, array.Length - read);
+
+                    SelectedArticle.Teaser = array;
+                }
+            }
         }
     }
 }

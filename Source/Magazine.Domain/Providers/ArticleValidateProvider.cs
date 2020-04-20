@@ -1,5 +1,5 @@
 ﻿using Magazine.Domain.Contracts.Provider;
-using Serilog;
+using Magazine.Domain.Entities;
 using System;
 
 namespace Magazine.Domain.Providers
@@ -9,11 +9,14 @@ namespace Magazine.Domain.Providers
     /// </summary>
     public class ArticleValidateProvider : IArticleValidateProvider
     {
-        ILogger _logger;
-
-        public ArticleValidateProvider(ILogger logger)
+        /// <summary>
+        /// Валидация статьи.
+        /// </summary>
+        /// <param name="article">Экземпляр статьи.</param>
+        public void Validate(Article article)
         {
-            _logger = logger;
+            ValidateTitle(article.Title);
+            ValidateBody(article.Body);
         }
 
         /// <summary>

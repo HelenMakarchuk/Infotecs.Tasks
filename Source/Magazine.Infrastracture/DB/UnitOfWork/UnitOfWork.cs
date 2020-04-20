@@ -43,6 +43,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
 
             if (disposing)
             {
+                _context?.Database?.EnsureDeleted();
                 _context?.Dispose();
             }
 

@@ -51,7 +51,7 @@ namespace Magazine.Application.DI
 
             builder.Register((c, p) => new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Hour)
+                .WriteTo.File("Logs/.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger()).As<ILogger>().SingleInstance();
         }
     }

@@ -75,12 +75,12 @@ namespace Magazine.Application.Services
 
             if (StringComparer.Ordinal.Compare(currentHash, user.Password) != 0)
             {
-                _logger.Warning($"Login attempt of user {login}");
+                _logger.Warning("Login attempt of {Login}.", login);
                 return false;
             }
 
             User = user;
-            _logger.Information($"New login of user {User.Login}");
+            _logger.Information("New login of {Login}.", User.Login);
             return true;
         }
 
@@ -89,7 +89,7 @@ namespace Magazine.Application.Services
         /// </summary>
         public void LogOut()
         {
-            _logger.Information($"Logout of user {User.Login}");
+            _logger.Information("Logout of {Login}.", User.Login);
             User = null;
         }
     }

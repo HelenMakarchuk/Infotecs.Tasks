@@ -1,4 +1,5 @@
-﻿using Magazine.Domain.Contracts.ViewModel;
+﻿using Infotecs.Magazine.Application.Contracts.Page;
+using Magazine.Domain.Contracts.ViewModel;
 using Serilog;
 using System;
 using System.Windows;
@@ -9,7 +10,7 @@ namespace Magazine.Application.Pages
     /// <summary>
     /// Страница входа в приложение.
     /// </summary>
-    public partial class LogInPage : Page
+    public partial class LogInPage : Page, IPage
     {
         ILogInViewModel _viewModel;
         ILogger _logger;
@@ -38,7 +39,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
-            ClearData();
+            SetData();
             DataContext = _viewModel;
         }
 
@@ -65,19 +66,9 @@ namespace Magazine.Application.Pages
         }
 
         /// <summary>
-        /// Очистка данных страницы.
-        /// </summary>
-        void ClearData()
-        {
-            Login.Text = "";
-            Password.Password = "";
-            HideMessage();
-        }
-
-        /// <summary>
         /// Отображение сообщения пользователю.
         /// </summary>
-        void ShowMessage(string text)
+        public void ShowMessage(string text)
         {
             MessageBlock.Text = text;
             MessageBlock.Height = Double.NaN;
@@ -88,12 +79,19 @@ namespace Magazine.Application.Pages
         /// <summary>
         /// Скрытие сообщения.
         /// </summary>
-        void HideMessage()
+        public void HideMessage()
         {
             MessageBlock.Text = "";
             MessageBlock.Height = 0;
             MessageBlockBorder.Visibility = Visibility.Hidden;
             MessageBlockBorder.Margin = new Thickness(0);
+        }
+
+        public void SetData()
+        {
+            Login.Text = String.Empty;
+            Password.Password = String.Empty;
+            HideMessage();
         }
     }
 }

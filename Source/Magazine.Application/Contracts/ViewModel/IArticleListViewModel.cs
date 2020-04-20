@@ -11,9 +11,11 @@ namespace Magazine.Domain.Contracts.ViewModel
     {
         List<Article> Articles { get; set; }
         Article SelectedArticle { get; set; }
+
         void LoadData();
         void LoadArticle(int id);
         void DeleteSelectedArticle();
         void UpdateArticle();
+        void SetTeaser();
     }
 }
