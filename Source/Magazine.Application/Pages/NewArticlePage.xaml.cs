@@ -1,4 +1,5 @@
 ﻿using Infotecs.Magazine.Application.Contracts.Page;
+using Infotecs.Magazine.Infrastracture.Endpoints;
 using Magazine.Application.Contracts.ViewModel;
 using System;
 using System.Windows;
@@ -12,18 +13,33 @@ namespace Magazine.Application.Pages
     public partial class NewArticlePage : Page, IPage
     {
         INewArticleViewModel _viewModel;
+        RabbitMQEndpoint _endpoint;
 
-        public NewArticlePage(INewArticleViewModel viewModel)
+        public NewArticlePage(RabbitMQEndpoint endpoint,
+                              INewArticleViewModel viewModel)
         {
             InitializeComponent();
 
+            _endpoint = endpoint;
             _viewModel = viewModel;
+
+            _endpoint.Received += (model, e) => OnArticleCreated(model, e);
         }
 
         /// <summary>
         /// Событие закрытия страницы.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> OnClosed;
+        public event EventHandler<RoutedEventArgs> Closed;
+
+        /// <summary>
+        /// Событие создания статьи.
+        /// </summary>
+        public event EventHandler<RabbitMQEventArgs> ArticleCreated;
+
+        void OnArticleCreated(object sender, RabbitMQEventArgs e)
+        {
+            ArticleCreated.Invoke(sender, e);
+        }
 
         /// <summary>
         /// Обработчик события загрузки страницы.
@@ -39,7 +55,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            OnClosed.Invoke(sender, e);
+            Closed.Invoke(sender, e);
         }
 
         /// <summary>
@@ -59,7 +75,7 @@ namespace Magazine.Application.Pages
 
             HideMessage();
 
-            OnClosed.Invoke(sender, e);
+            Closed.Invoke(sender, e);
         }
 
         /// <summary>

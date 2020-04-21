@@ -10,6 +10,7 @@ namespace Magazine.Infrastracture.Contracts.UnitOfWork
     {
         IRepository<User> UserRepository { get; }
         IRepository<Article> ArticleRepository { get; }
+        public IRepository<Comment> CommentRepository { get; }
         void Commit();
     }
 }

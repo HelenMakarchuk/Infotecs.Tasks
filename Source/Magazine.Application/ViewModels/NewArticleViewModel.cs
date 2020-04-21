@@ -1,9 +1,10 @@
-﻿using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.ComponentModel;
@@ -15,17 +16,17 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class NewArticleViewModel : INewArticleViewModel, INotifyPropertyChanged
     {
-        IUnitOfWork _unitOfWork;
+        RabbitMQEndpoint _endpoint;
         IArticleValidateProvider _validateProvider;
         IAuthenticationService _authenticationService;
         ILogger _logger;
 
-        public NewArticleViewModel(IUnitOfWork unitOfWork,
+        public NewArticleViewModel(RabbitMQEndpoint endpoint,
                                    IArticleValidateProvider validateProvider,
                                    ILogger logger,
                                    IAuthenticationService authenticationService)
         {
-            _unitOfWork = unitOfWork;
+            _endpoint = endpoint;
             _validateProvider = validateProvider;
             _authenticationService = authenticationService;
             _logger = logger;
@@ -60,10 +61,7 @@ namespace Magazine.Application.ViewModels
             var article = new Article(Title, Body, _authenticationService.User.Id, Teaser);
             _validateProvider.Validate(article);
 
-            _unitOfWork.ArticleRepository.Add(article);
-            _unitOfWork.Commit();
-
-            _logger.Debug("Article \"{Title}\" created.", article.Title);
+            _endpoint.Send(JsonConvert.SerializeObject(article));
         }
 
         public void SetTeaser()

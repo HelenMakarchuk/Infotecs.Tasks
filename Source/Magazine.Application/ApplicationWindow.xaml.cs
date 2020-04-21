@@ -1,9 +1,12 @@
-﻿using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+using Magazine.Application.Contracts.Service;
 using Magazine.Application.Pages;
 using Serilog;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Magazine.Application
 {
@@ -12,6 +15,7 @@ namespace Magazine.Application
     /// </summary>
     public partial class ApplicationWindow : Window
     {
+        RabbitMQEndpoint _endpoint;
         LogInPage _logInPage;
         SignUpPage _signUpPage;
         NewArticlePage _newArticlePage;
@@ -19,7 +23,8 @@ namespace Magazine.Application
         IAuthenticationService _authenticationService;
         ILogger _logger;
 
-        public ApplicationWindow(LogInPage logInPage,
+        public ApplicationWindow(RabbitMQEndpoint endpoint,
+                                 LogInPage logInPage,
                                  SignUpPage signUpPage,
                                  NewArticlePage newArticlePage,
                                  ArticleListPage articleListPage,
@@ -28,6 +33,8 @@ namespace Magazine.Application
         {
             InitializeComponent();
 
+            _endpoint = endpoint;
+
             _logInPage = logInPage;
             _signUpPage = signUpPage;
             _newArticlePage = newArticlePage;
@@ -35,16 +42,23 @@ namespace Magazine.Application
             _authenticationService = authenticationService;
             _logger = logger;
 
-            _logInPage.OnSignUp += (sender, e) => SetPage(_signUpPage);
-            _logInPage.OnLoggedIn += (sender, e) => SetPageIfLoggedIn(_articleListPage);
-            _signUpPage.OnSignedUp += (sender, e) => SetPageIfLoggedIn(_articleListPage);
-            _signUpPage.OnLogIn += (sender, e) => SetPage(_logInPage);
-            _articleListPage.OnAddArticle += (sender, e) => SetPageIfLoggedIn(_newArticlePage);
-            _articleListPage.OnLogOut += (sender, e) => { _authenticationService.LogOut(); SetPage(_logInPage); };
-            _newArticlePage.OnClosed += (sender, e) => SetPageIfLoggedIn(_articleListPage);
+            _logInPage.SigningUp += (sender, e) => SetPage(_signUpPage);
+            _logInPage.LoggingIn += (sender, e) => SetPageIfLoggedIn(_articleListPage);
+            _signUpPage.SignedUp += (sender, e) => SetPageIfLoggedIn(_articleListPage);
+            _signUpPage.LoggingIn += (sender, e) => SetPage(_logInPage);
+            _articleListPage.AddingArticle += (sender, e) => SetPageIfLoggedIn(_newArticlePage);
+            _articleListPage.LoggedOut += (sender, e) => { _authenticationService.LogOut(); SetPage(_logInPage); };
+            _newArticlePage.Closed += (sender, e) => SetPageIfLoggedIn(_articleListPage);
 
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(GlobalErrorHandler);
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) => GlobalErrorHandler(sender, e);
+            CurrentPage.NavigationService.Navigating += (sender, e) => OnNavigating(sender, e);
+            this.Closing += ApplicationWindow_Closing;
         }
+
+        /// <summary>
+        /// TODO: Dispose Container
+        /// </summary>
+        private void ApplicationWindow_Closing(object sender, CancelEventArgs e) { }
 
         void GlobalErrorHandler(object sender, UnhandledExceptionEventArgs args)
         {
@@ -52,20 +66,38 @@ namespace Magazine.Application
         }
 
         /// <summary>
+        /// Обработчик события навигации на следующую страницу.
+        /// </summary>
+        void OnNavigating(object sender, NavigatingCancelEventArgs e)
+        {
+            e.Cancel = !(_authenticationService.IsLoggedIn || e.Content == _logInPage || e.Content == _signUpPage);
+        }
+
+        /// <summary>
         /// Обработчик события загрузки окна.
         /// </summary>
         void OnLoad(object sender, RoutedEventArgs e)
         {
-            var startPage = _authenticationService.IsLoggedIn ? (Page)_articleListPage : _logInPage;
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
+            var startPage = _authenticationService.IsLoggedIn ? (Page)_articleListPage : _logInPage;
             SetPage(startPage);
         }
 
+        /// <summary>
+        /// Назначение страницы.
+        /// </summary>
+        /// <param name="page">Следующая страница.</param>
         void SetPage(Page page)
         {
             CurrentPage.NavigationService.Navigate(page);
         }
 
+        /// <summary>
+        /// Назначение страницы с проверкой на аутентификацию.
+        /// </summary>
+        /// <param name="page"></param>
         void SetPageIfLoggedIn(Page page)
         {
             if (_authenticationService.IsLoggedIn)

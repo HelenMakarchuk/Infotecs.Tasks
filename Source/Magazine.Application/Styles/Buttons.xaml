@@ -3,7 +3,8 @@
                     xmlns:local="clr-namespace:Magazine.Application">
 
     <Style x:Key="BaseButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="#B2DFFC" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Background" Value="#8ec2e8" />
         <Setter Property="Foreground" Value="#FFFFFF" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="5" />
@@ -42,7 +43,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                    <Border Name="border" BorderThickness="0" Background="{TemplateBinding Background}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>

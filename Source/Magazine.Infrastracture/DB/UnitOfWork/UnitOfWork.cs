@@ -12,15 +12,17 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         DbContext _context;
-        bool disposed = false;
+        bool _disposed;
 
         public UnitOfWork(DbContext context,
                           IRepository<User> userRepository,
-                          IRepository<Article> articleRepository)
+                          IRepository<Article> articleRepository,
+                          IRepository<Comment> commentRepository)
         {
             _context = context;
             UserRepository = userRepository;
             ArticleRepository = articleRepository;
+            CommentRepository = commentRepository;
         }
 
         ~UnitOfWork()
@@ -30,6 +32,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
 
         public IRepository<User> UserRepository { get; }
         public IRepository<Article> ArticleRepository { get; }
+        public IRepository<Comment> CommentRepository { get; }
 
         public void Commit()
         {
@@ -38,7 +41,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
 
         public virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (_disposed)
                 return;
 
             if (disposing)
@@ -47,7 +50,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
                 _context?.Dispose();
             }
 
-            disposed = true;
+            _disposed = true;
         }
 
         public void Dispose()
