@@ -23,12 +23,12 @@ namespace Magazine.Application.Pages
         /// <summary>
         /// Событие завершения регистрации нового пользователя приложения.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> OnSignedUp;
+        public event EventHandler<RoutedEventArgs> SignedUp;
 
         /// <summary>
         /// Событие перехода на страницу аутентификации пользователя приложения.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> OnLogIn;
+        public event EventHandler<RoutedEventArgs> LoggingIn;
 
         /// <summary>
         /// Обработчик события загрузки страницы.
@@ -50,7 +50,7 @@ namespace Magazine.Application.Pages
                 return;
             }
 
-            OnSignedUp.Invoke(sender, e);
+            SignedUp.Invoke(sender, e);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void LogInButton_Click(object sender, RoutedEventArgs e)
         {
-            OnLogIn.Invoke(sender, e);
+            LoggingIn.Invoke(sender, e);
         }
 
 

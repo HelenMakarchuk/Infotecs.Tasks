@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Endpoints;
 using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
@@ -16,6 +18,7 @@ using Magazine.Infrastracture.DB.Repositories;
 using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Configuration;
 
 namespace Magazine.Application.DI
 {
@@ -38,7 +41,11 @@ namespace Magazine.Application.DI
             builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().SingleInstance();
             builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().SingleInstance();
 
-            builder.RegisterType<Context>().As<DbContext>().SingleInstance();
+            builder.RegisterType<ApiEndpoint>().As<RabbitMQEndpoint>().SingleInstance();
+
+            builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>()
+             .UseNpgsql(ConfigurationManager.ConnectionStrings["InfotecsMagazine"]?.ConnectionString).Options))
+             .As<DbContext>().InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).SingleInstance();
 

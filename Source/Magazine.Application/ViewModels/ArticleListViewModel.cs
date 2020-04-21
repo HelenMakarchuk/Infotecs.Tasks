@@ -1,4 +1,5 @@
-﻿using Magazine.Domain.Contracts.Provider;
+﻿using Magazine.Application.Contracts.Service;
+using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
@@ -18,14 +19,17 @@ namespace Magazine.Application.ViewModels
     public class ArticleListViewModel : IArticleListViewModel
     {
         IUnitOfWork _unitOfWork;
+        IAuthenticationService _authenticationService;
         IArticleValidateProvider _validateProvider;
         ILogger _logger;
 
         public ArticleListViewModel(IUnitOfWork unitOfWork,
+                                    IAuthenticationService authenticationService,
                                     IArticleValidateProvider validateProvider,
                                     ILogger logger)
         {
             _unitOfWork = unitOfWork;
+            _authenticationService = authenticationService;
             _validateProvider = validateProvider;
             _logger = logger;
         }
@@ -42,7 +46,7 @@ namespace Magazine.Application.ViewModels
         {
             var previousArticle = SelectedArticle;
             Articles = _unitOfWork.ArticleRepository.Select(a => new Article() { Id = a.Id, Title = a.Title }).ToList();
-            SelectedArticle = previousArticle ?? Articles.FirstOrDefault();
+            SelectedArticle = previousArticle ?? _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.User).FirstOrDefault();
         }
 
         /// <summary>
@@ -104,6 +108,13 @@ namespace Magazine.Application.ViewModels
                     SelectedArticle.Teaser = array;
                 }
             }
+        }
+
+        public void CreateComment(string text)
+        {
+            var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = text, UserId = _authenticationService.User.Id };
+            _unitOfWork.CommentRepository.Add(comment);
+            _unitOfWork.Commit();
         }
     }
 }
