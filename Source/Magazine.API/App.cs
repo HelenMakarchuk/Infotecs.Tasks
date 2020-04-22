@@ -1,4 +1,4 @@
-﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+﻿using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Newtonsoft.Json;

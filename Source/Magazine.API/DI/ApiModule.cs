@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Infotecs.Magazine.Infrastracture.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
 using Magazine.API.Endpoints;
 using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
@@ -38,7 +38,7 @@ namespace Magazine.API.DI
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
 
-            builder.RegisterType<WpfEndpoint>().As<RabbitMQEndpoint>().SingleInstance();
+            builder.RegisterType<ServerRabbitMQEndpoint>().As<RabbitMQEndpoint>().SingleInstance();
 
             builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
             builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().SingleInstance();

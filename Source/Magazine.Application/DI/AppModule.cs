@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Infotecs.Magazine.Application.Endpoints;
-using Infotecs.Magazine.Infrastracture.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
 using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
@@ -41,7 +41,7 @@ namespace Magazine.Application.DI
             builder.RegisterType<NewArticleViewModel>().As<INewArticleViewModel>().SingleInstance();
             builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().SingleInstance();
 
-            builder.RegisterType<ApiEndpoint>().As<RabbitMQEndpoint>().SingleInstance();
+            builder.RegisterType<ClientRabbitMQEndpoint>().As<RabbitMQEndpoint>().SingleInstance();
 
             builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>()
              .UseNpgsql(ConfigurationManager.ConnectionStrings["InfotecsMagazine"]?.ConnectionString).Options))
