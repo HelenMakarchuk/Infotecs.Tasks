@@ -4,6 +4,7 @@ using Magazine.Domain.Entities;
 using NHibernate;
 using Serilog;
 using System;
+using System.Linq;
 
 namespace Magazine.Application.Services
 {
@@ -28,7 +29,7 @@ namespace Magazine.Application.Services
         /// <summary>
         /// Текущий пользователь приложения.
         /// </summary>
-        public User User { get; private set; }
+        public Account User { get; private set; }
 
         /// <summary>
         /// Признак того, что текущий пользователь прошел аутентификацию.
@@ -46,10 +47,10 @@ namespace Magazine.Application.Services
             using (var session = _sessionFactory.OpenSession())
             using (var transaction = session.BeginTransaction())
             {
-                if (session.QueryOver<User>().Where(u => u.Login == login).SingleOrDefault() != null)
+                if (session.Query<Account>().SingleOrDefault(u => u.Login == login) != null)
                     return false;
 
-                var user = new User();
+                var user = new Account();
                 user.Login = login;
                 user.Salt = _hashProvider.GetSalt();
                 user.Password = _hashProvider.GetHash(password, user.Salt);
@@ -71,7 +72,7 @@ namespace Magazine.Application.Services
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                var user = session.QueryOver<User>().Where(u => u.Login == login).SingleOrDefault();
+                var user = session.Query<Account>().SingleOrDefault(u => u.Login == login);
 
                 if (user == null)
                     return false;

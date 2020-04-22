@@ -6,7 +6,7 @@ namespace Magazine.Domain.Entities
     /// <summary>
     /// Модель БД сущности "Пользователь".
     /// </summary>
-    public class User : IEntity
+    public class Account : IEntity
     {
         /// <summary>
         /// Уникальный идентификатор.

@@ -16,10 +16,10 @@ namespace Magazine.Infrastracture.DB.EntityConfigurations
 
             Map(e => e.Body, "body").CustomSqlType("VARCHAR(6000)").Length(6000).Not.Nullable().Check("LENGTH(TRIM(body)) > 0");
             Map(e => e.ArticleId, "articleid").CustomSqlType("INT").Not.Nullable();
-            Map(e => e.UserId, "userid").CustomSqlType("INT").Not.Nullable();
+            Map(e => e.AccountId, "accountid").CustomSqlType("INT").Not.Nullable();
 
             HasOne(e => e.Article).ForeignKey("fk_comment_articleid_article_id").Cascade.None();
-            HasOne(e => e.User).ForeignKey("fk_comment_userid_user_id").Cascade.None();
+            HasOne(e => e.Account).ForeignKey("fk_comment_accountid_account_id").Cascade.None();
         }
     }
 }

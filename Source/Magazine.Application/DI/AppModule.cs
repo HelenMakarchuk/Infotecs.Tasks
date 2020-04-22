@@ -51,7 +51,7 @@ namespace Magazine.Application.DI
                 .Mappings(m =>
                 {
                     m.FluentMappings.AddFromAssemblyOf<ArticleMap>();
-                    m.FluentMappings.AddFromAssemblyOf<UserMap>();
+                    m.FluentMappings.AddFromAssemblyOf<AccountMap>();
                     m.FluentMappings.AddFromAssemblyOf<CommentMap>();
                 })
                 .BuildSessionFactory()).As<ISessionFactory>().SingleInstance();

@@ -15,7 +15,7 @@ namespace Magazine.Domain.Entities
             Title = title;
             Body = body;
             Teaser = teaser;
-            UserId = userId;
+            AccountId = userId;
         }
 
         /// <summary>
@@ -41,12 +41,12 @@ namespace Magazine.Domain.Entities
         /// <summary>
         /// Идентификатор автора статьи.
         /// </summary>
-        public virtual int UserId { get; set; }
+        public virtual int AccountId { get; set; }
 
         /// <summary>
         /// Автор статьи.
         /// </summary>
-        public virtual User User { get; set; }
+        public virtual Account Account { get; set; }
 
         /// <summary>
         /// Список комментариев к статье.

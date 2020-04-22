@@ -1,6 +1,7 @@
 ﻿using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using NHibernate;
 using Serilog;
@@ -42,7 +43,7 @@ namespace Magazine.Application.ViewModels
             using (var session = _sessionFactory.OpenSession())
             {
                 var previousArticle = SelectedArticle;
-                Articles = session.QueryOver<Article>().Select(a => new Article() { Id = a.Id, Title = a.Title }).List();
+                Articles = session.Query<Article>().Select(a => new Article() { Id = a.Id, Title = a.Title }).ToList();
                 SelectedArticle = previousArticle ?? Articles.FirstOrDefault();
             }
         }
@@ -55,7 +56,7 @@ namespace Magazine.Application.ViewModels
         {
             using (var session = _sessionFactory.OpenSession())
             {
-                SelectedArticle = session.QueryOver<Article>().Where(a => a.Id == id).Fetch(SelectMode.Fetch, a => a.Comments).Fetch(SelectMode.Fetch, c => c.User).SingleOrDefault();
+                SelectedArticle = session.Query<Article>().Include(a => a.Comments).ThenInclude(c => c.Account).SingleOrDefault(a => a.Id == id);
             }
         }
 
