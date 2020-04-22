@@ -1,9 +1,11 @@
-﻿using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Entities;
 using Microsoft.Win32;
 using NHibernate;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.ComponentModel;
@@ -15,20 +17,35 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class NewArticleViewModel : INewArticleViewModel, INotifyPropertyChanged
     {
+        RabbitMQEndpoint _endpoint;
         ISessionFactory _sessionFactory;
         IArticleValidateProvider _validateProvider;
         IAuthenticationService _authenticationService;
         ILogger _logger;
 
         public NewArticleViewModel(ISessionFactory sessionFactory,
+                                   RabbitMQEndpoint endpoint,
                                    IArticleValidateProvider validateProvider,
                                    ILogger logger,
                                    IAuthenticationService authenticationService)
         {
             _sessionFactory = sessionFactory;
+            _endpoint = endpoint;
             _validateProvider = validateProvider;
             _authenticationService = authenticationService;
             _logger = logger;
+
+            _endpoint.Received += OnArticleCreated;
+        }
+
+        /// <summary>
+        /// Событие создания статьи.
+        /// </summary>
+        public event EventHandler<RabbitMQEventArgs> ArticleCreated;
+
+        void OnArticleCreated(object sender, RabbitMQEventArgs e)
+        {
+            ArticleCreated?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -60,14 +77,7 @@ namespace Magazine.Application.ViewModels
             var article = new Article(Title, Body, _authenticationService.User.Id, Teaser);
             _validateProvider.Validate(article);
 
-            using (var session = _sessionFactory.OpenSession())
-            using (var transaction = session.BeginTransaction())
-            {
-                session.Save(article);
-                transaction.Commit();
-            }
-
-            _logger.Debug("Article \"{Title}\" created.", article.Title);
+            _endpoint.Send(JsonConvert.SerializeObject(article));
         }
 
         public void SetTeaser()

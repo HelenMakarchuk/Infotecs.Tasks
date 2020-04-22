@@ -4,26 +4,27 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Magazine.Application"
-      mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="900"
+      mc:Ignorable="d"
       Title="ArticleListPage"
       Loaded="OnLoad">
 
     <Border Background="#FAFAFA" BorderBrush="LightGray" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MaxWidth="200" />
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" Background="#FFFFFF" BorderBrush="LightGray" BorderThickness="0, 0, 1, 0" Margin="0" Padding="0">
-                <ListBox SelectionChanged="ArticleListBox_SelectionChanged" Name="ArticleListBox" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}" BorderThickness="0" Margin="0" Padding="0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Margin="0" Padding="0" FontSize="14" Text="{Binding Title}" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" MaxWidth="200">
+                    <ListBox SelectionChanged="ArticleListBox_SelectionChanged" Name="ArticleListBox" ItemsSource="{Binding Articles}" SelectedItem="{Binding SelectedArticle}" BorderThickness="0" Margin="0" Padding="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="0" Padding="0" FontSize="14" Text="{Binding Title}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
             </Border>
 
             <Grid Grid.Column="1">
@@ -32,32 +33,51 @@
                     <ColumnDefinition Width="24"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.4*" />
-                    <RowDefinition Height="1.5*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="5*" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBox Name="TitleTextBox" Style="{StaticResource ReadOnlyTextBoxStyle}" Margin="5, 5, 5, 20" Grid.Column="0" Grid.Row="1" Text="{Binding SelectedArticle.Title}" />
-                <Image Name="TeaserImage" Grid.Column="0" Grid.Row="2" Source="{Binding SelectedArticle.Teaser}" />
-                <TextBox Name="BodyTextBox" Style="{StaticResource ReadOnlyTextBoxStyle}" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Margin="5, 20, 5, 20" Grid.Column="0" Grid.Row="3" Text="{Binding SelectedArticle.Body}" />
+                <TextBox Name="TitleTextBox" Style="{StaticResource ReadOnlyTextBoxStyle}" VerticalAlignment="Center" Margin="5, 10" Grid.Column="0" Grid.Row="1" Text="{Binding SelectedArticle.Title}" />
+                <Image Name="TeaserImage" Grid.Column="0" Grid.Row="2" Source="{Binding SelectedArticle.Teaser}" MaxHeight="100" />
+                <TextBox Name="BodyTextBox" Style="{StaticResource ReadOnlyTextBoxStyle}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" MaxHeight="300" Margin="5, 20, 5, 20" Grid.Column="0" Grid.Row="3" Text="{Binding SelectedArticle.Body}" />
 
                 <Border Name="MessageBlockBorder" Visibility="Hidden" Margin="0" BorderThickness="0" Padding="0" Grid.Column="0" Grid.Row="4">
                     <TextBlock Height="0" Name="MessageBlock" Foreground="#f44336" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
 
-                <ListBox Grid.Column="0" Grid.Row="5" ItemsSource="{Binding SelectedArticle.Comments}" BorderThickness="0" Margin="0" Padding="0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Margin="0" Padding="0" FontSize="10" Text="{Binding User.Login}" />
-                                <TextBlock Margin="0" Padding="0" FontSize="10" Text="{Binding Body}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <Grid Grid.Column="0" Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Name="CancelNewCommentButton" Click="CancelNewCommentButton_Click" Grid.Column="1" Visibility="Hidden" HorizontalAlignment="Right" Style="{StaticResource LogInButtonStyle}">Cancel</Button>
+                    <Button Name="AddCommentButton" Click="AddCommentButton_Click" Grid.Column="2" HorizontalAlignment="Right" Style="{StaticResource LogInButtonStyle}">Add comment</Button>
+                </Grid>
+
+                <TextBox Name="NewCommentText" Grid.Column="0" Grid.Row="6" Visibility="Hidden" Margin="0" Padding="0" FontSize="10" />
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="200" Grid.Column="0" Grid.Row="7">
+                    <ListBox Name="CommentsListBox" ItemsSource="{Binding SelectedArticle.Comments}" BorderThickness="0" Margin="0" Padding="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#5d92b6" BorderThickness="1" CornerRadius="4">
+                                    <StackPanel>
+                                        <TextBlock Margin="0" Padding="4, 4, 4, 2" FontSize="10" Text="{Binding User.Login}" Background="#8ec2e8" Foreground="#FFFFFF" FontWeight="SemiBold" />
+                                        <TextBlock Margin="0" Padding="4, 2, 4, 4" FontSize="10" Text="{Binding Body}" Foreground="Black" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
 
                 <ComboBox Background="Blue" BorderThickness="0" Margin="0" Padding="0" Grid.Column="1" Grid.Row="0">
                     <ComboBoxItem BorderThickness="0" Margin="0" Padding="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
@@ -71,9 +91,9 @@
                     </ComboBoxItem>
                 </ComboBox>
 
-                <Button Name="EditArticleTitleButton" Click="EditArticleTitleButton_Click" Grid.Column="1" Grid.Row="1" Style="{StaticResource EditButtonStyle}" />
-                <Button Name="EditArticleTeaserButton" Click="EditArticleTeaserButton_Click" Grid.Column="1" Grid.Row="2" Style="{StaticResource EditButtonStyle}" />
-                <Button Name="EditArticleBodyButton" Click="EditArticleBodyButton_Click" Grid.Column="1" Grid.Row="3" Style="{StaticResource EditButtonStyle}" />
+                <Button Name="EditArticleTitleButton" Click="EditArticleTitleButton_Click" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Style="{StaticResource EditButtonStyle}" />
+                <Button Name="EditArticleTeaserButton" Click="EditArticleTeaserButton_Click" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Style="{StaticResource EditButtonStyle}" />
+                <Button Name="EditArticleBodyButton" Click="EditArticleBodyButton_Click" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Style="{StaticResource EditButtonStyle}" />
             </Grid>
         </Grid>
     </Border>

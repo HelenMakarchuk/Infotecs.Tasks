@@ -1,4 +1,7 @@
-﻿using Magazine.Domain.Contracts.Provider;
+﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+using Magazine.Application.Contracts.Service;
+using Magazine.Application.Contracts.ViewModel;
+using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +22,26 @@ namespace Magazine.Application.ViewModels
     {
         ISessionFactory _sessionFactory;
         IArticleValidateProvider _validateProvider;
+        INewArticleViewModel _newArticleViewModel;
         ILogger _logger;
 
         public ArticleListViewModel(ISessionFactory sessionFactory,
+                                    IAuthenticationService authenticationService,
                                     IArticleValidateProvider validateProvider,
+                                    INewArticleViewModel newArticleViewModel,
                                     ILogger logger)
         {
             _sessionFactory = sessionFactory;
             _validateProvider = validateProvider;
             _logger = logger;
+            _newArticleViewModel = newArticleViewModel;
+
+            _newArticleViewModel.ArticleCreated += OnArticleCreated;
+        }
+
+        void OnArticleCreated(object sender, RabbitMQEventArgs e)
+        {
+            LoadData();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -118,6 +132,13 @@ namespace Magazine.Application.ViewModels
                     SelectedArticle.Teaser = array;
                 }
             }
+        }
+
+        public void CreateComment(string text)
+        {
+            var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = text, AccountId = _authenticationService.User.Id };
+            _unitOfWork.CommentRepository.Add(comment);
+            _unitOfWork.Commit();
         }
     }
 }

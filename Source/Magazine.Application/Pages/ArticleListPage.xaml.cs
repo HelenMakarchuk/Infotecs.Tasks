@@ -25,12 +25,12 @@ namespace Magazine.Application.Pages
         /// <summary>
         /// Событие создания новой статьи.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> OnAddArticle;
+        public event EventHandler<RoutedEventArgs> AddingArticle;
 
         /// <summary>
         /// Событие выхода текущего пользователя из приложения и перехода на страницу аутентификации.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> OnLogOut;
+        public event EventHandler<RoutedEventArgs> LoggedOut;
 
         /// <summary>
         /// Обработчик события загрузки страницы.
@@ -46,7 +46,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void AddArticleButton_Click(object sender, RoutedEventArgs e)
         {
-            OnAddArticle.Invoke(sender, e);
+            AddingArticle.Invoke(sender, e);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            OnLogOut.Invoke(sender, e);
+            LoggedOut.Invoke(sender, e);
         }
 
         /// <summary>
@@ -172,6 +172,31 @@ namespace Magazine.Application.Pages
         {
             _viewModel.LoadData();
             HideMessage();
+        }
+
+        private void AddCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NewCommentText.Visibility == Visibility.Visible)
+            {
+                _viewModel.CreateComment(NewCommentText.Text);
+                CancelNewCommentButton.Visibility = Visibility.Hidden;
+                NewCommentText.Visibility = Visibility.Hidden;
+                NewCommentText.Margin = new Thickness(0);
+                CommentsListBox.Items.Refresh();
+            }
+            else
+            {
+                CancelNewCommentButton.Visibility = Visibility.Visible;
+                NewCommentText.Visibility = Visibility.Visible;
+                NewCommentText.Margin = new Thickness(0, 15, 0, 15);
+            }
+        }
+
+        private void CancelNewCommentButton_Click(object sender, RoutedEventArgs e)
+        {
+            CancelNewCommentButton.Visibility = Visibility.Hidden;
+            NewCommentText.Visibility = Visibility.Hidden;
+            NewCommentText.Margin = new Thickness(0);
         }
     }
 }

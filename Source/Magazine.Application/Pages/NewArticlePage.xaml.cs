@@ -23,7 +23,7 @@ namespace Magazine.Application.Pages
         /// <summary>
         /// Событие закрытия страницы.
         /// </summary>
-        public event EventHandler<RoutedEventArgs> OnClosed;
+        public event EventHandler<RoutedEventArgs> Closed;
 
         /// <summary>
         /// Обработчик события загрузки страницы.
@@ -39,7 +39,7 @@ namespace Magazine.Application.Pages
         /// </summary>
         void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            OnClosed.Invoke(sender, e);
+            Closed.Invoke(sender, e);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Magazine.Application.Pages
 
             HideMessage();
 
-            OnClosed.Invoke(sender, e);
+            Closed.Invoke(sender, e);
         }
 
         /// <summary>

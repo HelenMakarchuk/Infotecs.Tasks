@@ -17,5 +17,6 @@ namespace Magazine.Domain.Contracts.ViewModel
         void DeleteSelectedArticle();
         void UpdateArticle();
         void SetTeaser();
+        void CreateComment(string text);
     }
 }
