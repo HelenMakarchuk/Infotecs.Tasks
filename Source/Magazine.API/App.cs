@@ -1,20 +1,20 @@
 ﻿using Infotecs.Magazine.Infrastracture.Endpoints;
 using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Newtonsoft.Json;
+using NHibernate;
 
 namespace Magazine.API
 {
     public class App
     {
+        ISessionFactory _sessionFactory;
         RabbitMQEndpoint _endpoint;
-        IUnitOfWork _unitOfWork;
 
         public App(RabbitMQEndpoint endpoint,
-                   IUnitOfWork unitOfWork)
+                   ISessionFactory sessionFactory)
         {
             _endpoint = endpoint;
-            _unitOfWork = unitOfWork;
+            _sessionFactory = sessionFactory;
         }
 
         public void Run()
@@ -26,8 +26,12 @@ namespace Magazine.API
         {
             var article = JsonConvert.DeserializeObject<Article>(e.MessageJson);
 
-            _unitOfWork.ArticleRepository.Add(article);
-            _unitOfWork.Commit();
+            using (var session = _sessionFactory.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                session.Save(article);
+                transaction.Commit();
+            }
 
             _endpoint.Send("Article created");
         }

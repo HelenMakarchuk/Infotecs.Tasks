@@ -21,6 +21,7 @@ namespace Magazine.Application.ViewModels
     public class ArticleListViewModel : IArticleListViewModel
     {
         ISessionFactory _sessionFactory;
+        IAuthenticationService _authenticationService;
         IArticleValidateProvider _validateProvider;
         INewArticleViewModel _newArticleViewModel;
         ILogger _logger;
@@ -32,6 +33,7 @@ namespace Magazine.Application.ViewModels
                                     ILogger logger)
         {
             _sessionFactory = sessionFactory;
+            _authenticationService = authenticationService;
             _validateProvider = validateProvider;
             _logger = logger;
             _newArticleViewModel = newArticleViewModel;
@@ -137,8 +139,13 @@ namespace Magazine.Application.ViewModels
         public void CreateComment(string text)
         {
             var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = text, AccountId = _authenticationService.User.Id };
-            _unitOfWork.CommentRepository.Add(comment);
-            _unitOfWork.Commit();
+
+            using (var session = _sessionFactory.OpenSession())
+            using (var transaction = session.BeginTransaction())
+            {
+                session.Save(comment);
+                transaction.Commit();
+            }
         }
     }
 }

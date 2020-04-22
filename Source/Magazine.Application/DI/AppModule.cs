@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using Infotecs.Magazine.Application.Endpoints;
-using Infotecs.Magazine.Infrastracture.Endpoints;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Endpoints;
 using Magazine.Application.Contracts.Provider;
 using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
@@ -40,14 +40,6 @@ namespace Magazine.Application.DI
             builder.RegisterType<ArticleListViewModel>().As<IArticleListViewModel>().SingleInstance();
 
             builder.RegisterType<ApiEndpoint>().As<RabbitMQEndpoint>().SingleInstance();
-
-            builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>()
-             .UseNpgsql(ConfigurationManager.ConnectionStrings["InfotecsMagazine"]?.ConnectionString).Options))
-             .As<DbContext>().InstancePerLifetimeScope();
-
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).SingleInstance();
-
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
 
             builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
             builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().SingleInstance();
