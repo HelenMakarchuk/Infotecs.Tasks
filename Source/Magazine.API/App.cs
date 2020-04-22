@@ -19,7 +19,7 @@ namespace Magazine.API
 
         public void Run()
         {
-            _endpoint.Received += (sender, e) => OnReceived(sender, e);
+            _endpoint.Received += OnReceived;
         }
 
         void OnReceived(object sender, RabbitMQEventArgs e)

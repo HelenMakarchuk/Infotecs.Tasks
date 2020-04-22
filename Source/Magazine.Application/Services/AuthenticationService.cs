@@ -28,7 +28,7 @@ namespace Magazine.Application.Services
         /// <summary>
         /// Текущий пользователь приложения.
         /// </summary>
-        public User User { get; private set; }
+        public Account User { get; private set; }
 
         /// <summary>
         /// Признак того, что текущий пользователь прошел аутентификацию.
@@ -46,7 +46,7 @@ namespace Magazine.Application.Services
             if (_unitOfWork.UserRepository.SingleOrDefault(u => u.Login == login) != null)
                 return false;
 
-            var user = new User();
+            var user = new Account();
             user.Login = login;
             user.Salt = _hashProvider.GetSalt();
             user.Password = _hashProvider.GetHash(password, user.Salt);

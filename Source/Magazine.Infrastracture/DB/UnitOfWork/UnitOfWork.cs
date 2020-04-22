@@ -15,7 +15,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
         bool _disposed;
 
         public UnitOfWork(DbContext context,
-                          IRepository<User> userRepository,
+                          IRepository<Account> userRepository,
                           IRepository<Article> articleRepository,
                           IRepository<Comment> commentRepository)
         {
@@ -30,7 +30,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
             Dispose(false);
         }
 
-        public IRepository<User> UserRepository { get; }
+        public IRepository<Account> UserRepository { get; }
         public IRepository<Article> ArticleRepository { get; }
         public IRepository<Comment> CommentRepository { get; }
 

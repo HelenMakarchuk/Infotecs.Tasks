@@ -8,20 +8,11 @@ namespace Infotecs.Magazine.Application.Endpoints
 {
     public class ApiEndpoint : RabbitMQEndpoint
     {
-        const string QueueName = "ApiQueue";
-
         public ApiEndpoint() : base()
         {
-            _channel.ExchangeDeclare(exchange: ExchangeName, type: ExchangeType);
-
-            _channel.QueueDeclare(queue: QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            _channel.QueueBind(queue: QueueName, exchange: ExchangeName, routingKey: RoutingKeys.Article.ToString());
-
-            _consumer = new EventingBasicConsumer(_channel);
-
             _consumer.Received += (model, e) => OnReceived(model, e);
 
-            _channel.BasicConsume(queue: QueueName, autoAck: true, consumer: _consumer);
+            _channel.BasicConsume(QueueName.Article + RoutingKeyName.WPF, autoAck: true, consumer: _consumer);
         }
 
         ~ApiEndpoint()
@@ -38,7 +29,7 @@ namespace Infotecs.Magazine.Application.Endpoints
 
         public override void Send(string message)
         {
-            _channel.BasicPublish(exchange: ExchangeName, routingKey: RoutingKeys.Article.ToString(), basicProperties: null, body: Encoding.UTF8.GetBytes(message));
+            _channel.BasicPublish(ExchangeName, routingKey: RoutingKeyName.API, basicProperties: null, body: Encoding.UTF8.GetBytes(message));
         }
     }
 }

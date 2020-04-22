@@ -25,7 +25,7 @@ namespace Magazine.Domain.Entities
         /// <summary>
         /// Идентификатор автора комментария.
         /// </summary>
-        public int UserId { get; set; }
+        public int AccountId { get; set; }
 
         /// <summary>
         /// Статья, к которой принадлежит комментарий.
@@ -35,6 +35,6 @@ namespace Magazine.Domain.Entities
         /// <summary>
         /// Автор комментария.
         /// </summary>
-        public virtual User User { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

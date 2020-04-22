@@ -8,20 +8,11 @@ namespace Magazine.API.Endpoints
 {
     public class WpfEndpoint : RabbitMQEndpoint
     {
-        const string QueueName = "WpfQueue";
-
         public WpfEndpoint() : base()
         {
-            _channel.ExchangeDeclare(exchange: ExchangeName, type: ExchangeType);
-
-            _channel.QueueDeclare(queue: QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            _channel.QueueBind(queue: QueueName, exchange: ExchangeName, routingKey: RoutingKeys.Article.ToString());
-
-            _consumer = new EventingBasicConsumer(_channel);
-
             _consumer.Received += (model, e) => OnReceived(model, e);
 
-            _channel.BasicConsume(queue: QueueName, autoAck: true, consumer: _consumer);
+            _channel.BasicConsume(QueueName.Article + RoutingKeyName.API, autoAck: true, consumer: _consumer);
         }
 
         ~WpfEndpoint()
@@ -38,7 +29,7 @@ namespace Magazine.API.Endpoints
 
         public override void Send(string message)
         {
-            _channel.BasicPublish(exchange: ExchangeName, routingKey: RoutingKeys.Article.ToString(), basicProperties: null, body: Encoding.UTF8.GetBytes(message));
+            _channel.BasicPublish(ExchangeName, routingKey: RoutingKeyName.WPF, basicProperties: null, Encoding.UTF8.GetBytes(message));
         }
     }
 }

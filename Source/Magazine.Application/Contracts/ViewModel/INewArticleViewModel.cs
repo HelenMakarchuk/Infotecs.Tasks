@@ -1,4 +1,7 @@
-﻿namespace Magazine.Application.Contracts.ViewModel
+﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+using System;
+
+namespace Magazine.Application.Contracts.ViewModel
 {
     /// <summary>
     /// Интерфейс класса бизнес-логики <see cref="NewArticleViewModel"/> для страницы создания новой статьи <see cref="NewArticlePage"/>.
@@ -8,6 +11,8 @@
         public string Title { get; set; }
         public byte[] Teaser { get; set; }
         public string Body { get; set; }
+
+        event EventHandler<RabbitMQEventArgs> ArticleCreated;
 
         void CreateArticle();
         void SetTeaser();

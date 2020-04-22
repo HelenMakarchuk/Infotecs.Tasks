@@ -1,4 +1,6 @@
-﻿using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+using Magazine.Application.Contracts.Service;
+using Magazine.Application.Contracts.ViewModel;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
@@ -21,17 +23,28 @@ namespace Magazine.Application.ViewModels
         IUnitOfWork _unitOfWork;
         IAuthenticationService _authenticationService;
         IArticleValidateProvider _validateProvider;
+        INewArticleViewModel _newArticleViewModel;
         ILogger _logger;
+
 
         public ArticleListViewModel(IUnitOfWork unitOfWork,
                                     IAuthenticationService authenticationService,
                                     IArticleValidateProvider validateProvider,
+                                    INewArticleViewModel newArticleViewModel,
                                     ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _authenticationService = authenticationService;
             _validateProvider = validateProvider;
             _logger = logger;
+            _newArticleViewModel = newArticleViewModel;
+
+            _newArticleViewModel.ArticleCreated += OnArticleCreated;
+        }
+
+        void OnArticleCreated(object sender, RabbitMQEventArgs e)
+        {
+            LoadData();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -46,7 +59,7 @@ namespace Magazine.Application.ViewModels
         {
             var previousArticle = SelectedArticle;
             Articles = _unitOfWork.ArticleRepository.Select(a => new Article() { Id = a.Id, Title = a.Title }).ToList();
-            SelectedArticle = previousArticle ?? _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.User).FirstOrDefault();
+            SelectedArticle = previousArticle ?? _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.Account).FirstOrDefault();
         }
 
         /// <summary>
@@ -55,7 +68,7 @@ namespace Magazine.Application.ViewModels
         /// <param name="id"></param>
         public void LoadArticle(int id)
         {
-            SelectedArticle = _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.User).SingleOrDefault(a => a.Id == id);
+            SelectedArticle = _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.Account).SingleOrDefault(a => a.Id == id);
         }
 
         /// <summary>
@@ -112,7 +125,7 @@ namespace Magazine.Application.ViewModels
 
         public void CreateComment(string text)
         {
-            var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = text, UserId = _authenticationService.User.Id };
+            var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = text, AccountId = _authenticationService.User.Id };
             _unitOfWork.CommentRepository.Add(comment);
             _unitOfWork.Commit();
         }

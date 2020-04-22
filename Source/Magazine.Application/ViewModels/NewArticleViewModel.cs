@@ -30,6 +30,18 @@ namespace Magazine.Application.ViewModels
             _validateProvider = validateProvider;
             _authenticationService = authenticationService;
             _logger = logger;
+
+            _endpoint.Received += OnArticleCreated;
+        }
+
+        /// <summary>
+        /// Событие создания статьи.
+        /// </summary>
+        public event EventHandler<RabbitMQEventArgs> ArticleCreated;
+
+        void OnArticleCreated(object sender, RabbitMQEventArgs e)
+        {
+            ArticleCreated?.Invoke(sender, e);
         }
 
         /// <summary>

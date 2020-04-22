@@ -4,11 +4,15 @@ using System;
 
 namespace Infotecs.Magazine.Infrastracture.Endpoints
 {
-    public enum RoutingKeys
+    public static class QueueName
     {
-        Article,
-        User,
-        Comment
+        public const string Article = "Article";
+    }
+
+    public static class RoutingKeyName
+    {
+        public const string WPF = "WPF";
+        public const string API = "API";
     }
 
     /// <summary>
@@ -17,7 +21,6 @@ namespace Infotecs.Magazine.Infrastracture.Endpoints
     public abstract class RabbitMQEndpoint : IDisposable
     {
         protected const string ExchangeName = "MagazineExchange";
-        protected const string ExchangeType = "direct";
 
         bool _disposed;
 
@@ -58,6 +61,16 @@ namespace Infotecs.Magazine.Infrastracture.Endpoints
 
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
+
+            _channel.ExchangeDeclare(ExchangeName, type: ExchangeType.Direct);
+
+            _channel.QueueDeclare(QueueName.Article + RoutingKeyName.WPF, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            _channel.QueueBind(QueueName.Article + RoutingKeyName.WPF, ExchangeName, routingKey: RoutingKeyName.WPF);
+
+            _channel.QueueDeclare(QueueName.Article + RoutingKeyName.API, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            _channel.QueueBind(QueueName.Article + RoutingKeyName.API, ExchangeName, routingKey: RoutingKeyName.API);
+
+            _consumer = new EventingBasicConsumer(_channel);
         }
 
         ~RabbitMQEndpoint()

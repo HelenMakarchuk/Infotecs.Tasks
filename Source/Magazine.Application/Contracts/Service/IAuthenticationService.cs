@@ -7,7 +7,7 @@ namespace Magazine.Application.Contracts.Service
     /// </summary>
     public interface IAuthenticationService
     {
-        public User User { get; }
+        public Account User { get; }
         bool IsLoggedIn { get; }
         bool TrySignUp(string username, string password);
         bool TryLogIn(string login, string password);

@@ -50,8 +50,8 @@ namespace Magazine.Application
             _articleListPage.LoggedOut += (sender, e) => { _authenticationService.LogOut(); SetPage(_logInPage); };
             _newArticlePage.Closed += (sender, e) => SetPageIfLoggedIn(_articleListPage);
 
-            AppDomain.CurrentDomain.UnhandledException += (sender, e) => GlobalErrorHandler(sender, e);
-            CurrentPage.NavigationService.Navigating += (sender, e) => OnNavigating(sender, e);
+            AppDomain.CurrentDomain.UnhandledException += GlobalErrorHandler;
+            CurrentPage.NavigationService.Navigating += OnNavigating;
             this.Closing += ApplicationWindow_Closing;
         }
 

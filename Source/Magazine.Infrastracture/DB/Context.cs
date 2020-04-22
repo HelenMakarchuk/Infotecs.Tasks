@@ -16,13 +16,13 @@ namespace Magazine.Infrastracture.DB
         }
 
         public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Account> Users { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ArticleConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new AccountConfiguration());
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
         }
     }
