@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Core.DI;
-using Infotecs.Magazine.Infrastracture.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
 using Magazine.Application.DI;
 using System.Windows;
 

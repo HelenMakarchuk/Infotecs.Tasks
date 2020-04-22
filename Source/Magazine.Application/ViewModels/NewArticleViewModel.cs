@@ -1,4 +1,4 @@
-﻿using Infotecs.Magazine.Infrastracture.Endpoints;
+﻿using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
 using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
 using Magazine.Domain.Contracts.Provider;
