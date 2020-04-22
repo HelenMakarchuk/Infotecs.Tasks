@@ -4,15 +4,10 @@ using System;
 
 namespace Infotecs.Magazine.Infrastracture.Endpoints
 {
-    public static class QueueName
+    public static class ExchangeName
     {
-        public const string Article = "Article";
-    }
-
-    public static class RoutingKeyName
-    {
-        public const string WPF = "WPF";
-        public const string API = "API";
+        public const string WPF = "WpfExchange";
+        public const string API = "ApiExchange";
     }
 
     /// <summary>
@@ -20,8 +15,6 @@ namespace Infotecs.Magazine.Infrastracture.Endpoints
     /// </summary>
     public abstract class RabbitMQEndpoint : IDisposable
     {
-        protected const string ExchangeName = "MagazineExchange";
-
         bool _disposed;
 
         /// <summary>
@@ -62,13 +55,15 @@ namespace Infotecs.Magazine.Infrastracture.Endpoints
             _connection = _factory.CreateConnection();
             _channel = _connection.CreateModel();
 
-            _channel.ExchangeDeclare(ExchangeName, type: ExchangeType.Direct);
+            //_channel.ExchangeDelete(ExchangeName.API);
 
-            _channel.QueueDeclare(QueueName.Article + RoutingKeyName.WPF, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            _channel.QueueBind(QueueName.Article + RoutingKeyName.WPF, ExchangeName, routingKey: RoutingKeyName.WPF);
+            _channel.ExchangeDeclare(ExchangeName.API, type: ExchangeType.Fanout);
+            _channel.QueueDeclare(ExchangeName.API, false, false, false, null);
+            _channel.QueueBind(ExchangeName.API, ExchangeName.API, "");
 
-            _channel.QueueDeclare(QueueName.Article + RoutingKeyName.API, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            _channel.QueueBind(QueueName.Article + RoutingKeyName.API, ExchangeName, routingKey: RoutingKeyName.API);
+            _channel.ExchangeDeclare(ExchangeName.WPF, type: ExchangeType.Fanout);
+            _channel.QueueDeclare(ExchangeName.WPF, false, false, false, null);
+            _channel.QueueBind(ExchangeName.WPF, ExchangeName.WPF, "");
 
             _consumer = new EventingBasicConsumer(_channel);
         }

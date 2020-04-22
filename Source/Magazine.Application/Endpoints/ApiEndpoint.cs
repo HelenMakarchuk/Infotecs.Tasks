@@ -12,7 +12,7 @@ namespace Infotecs.Magazine.Application.Endpoints
         {
             _consumer.Received += (model, e) => OnReceived(model, e);
 
-            _channel.BasicConsume(QueueName.Article + RoutingKeyName.WPF, autoAck: true, consumer: _consumer);
+            _channel.BasicConsume(ExchangeName.API, true, _consumer);
         }
 
         ~ApiEndpoint()
@@ -29,7 +29,7 @@ namespace Infotecs.Magazine.Application.Endpoints
 
         public override void Send(string message)
         {
-            _channel.BasicPublish(ExchangeName, routingKey: RoutingKeyName.API, basicProperties: null, body: Encoding.UTF8.GetBytes(message));
+            _channel.BasicPublish(ExchangeName.WPF, "", null, Encoding.UTF8.GetBytes(message));
         }
     }
 }

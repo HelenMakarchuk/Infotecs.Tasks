@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>Infotecs.Magazine.API</AssemblyName>
+    <RootNamespace>Infotecs.Magazine.API</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Out\Debug\Magazine.API</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\Out\Release\Magazine.API</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
