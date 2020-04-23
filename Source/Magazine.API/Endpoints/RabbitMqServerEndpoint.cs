@@ -70,6 +70,10 @@ namespace Magazine.API.Endpoints
                     switch (clientMessage.Method)
                     {
                         case Methods.Get:
+                            result = _articleService.Get();
+                            break;
+                        case Methods.GetById:
+                            result = _articleService.GetById(JsonConvert.DeserializeObject<int>(clientMessage.ValueJson));
                             break;
                         case Methods.Create:
                             result = _articleService.Create(JsonConvert.DeserializeObject<Article>(clientMessage.ValueJson));

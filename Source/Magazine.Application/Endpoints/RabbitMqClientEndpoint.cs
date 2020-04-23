@@ -42,6 +42,16 @@ namespace Infotecs.Magazine.Application.Endpoints
         }
 
         /// <summary>
+        /// Событие получения списка статей.
+        /// </summary>
+        public event EventHandler<RabbitMqServerMessage> ArticleGotten;
+
+        /// <summary>
+        /// Событие получения статьи по идентификатору.
+        /// </summary>
+        public event EventHandler<RabbitMqServerMessage> ArticleGottenById;
+
+        /// <summary>
         /// Событие создания статьи.
         /// </summary>
         public event EventHandler<RabbitMqServerMessage> ArticleCreated;
@@ -82,18 +92,16 @@ namespace Infotecs.Magazine.Application.Endpoints
             var messageJson = Encoding.UTF8.GetString(e.Body.ToArray());
             var serverMessage = JsonConvert.DeserializeObject<RabbitMqServerMessage>(messageJson);
 
-            if (serverMessage.Status == Statuses.Error)
-            {
-                _logger.Warning("Server returned an error: {@Exception}", JsonConvert.DeserializeObject<Exception>(serverMessage.ResultJson));
-                return;
-            }
-
             switch (serverMessage.Service)
             {
                 case Services.Article:
                     switch (serverMessage.Method)
                     {
                         case Methods.Get:
+                            ArticleGotten?.Invoke(sender, serverMessage);
+                            break;
+                        case Methods.GetById:
+                            ArticleGottenById?.Invoke(sender, serverMessage);
                             break;
                         case Methods.Create:
                             ArticleCreated?.Invoke(sender, serverMessage);
@@ -109,14 +117,8 @@ namespace Infotecs.Magazine.Application.Endpoints
                 case Services.Comment:
                     switch (serverMessage.Method)
                     {
-                        case Methods.Get:
-                            break;
                         case Methods.Create:
                             CommentCreated?.Invoke(sender, serverMessage);
-                            break;
-                        case Methods.Update:
-                            break;
-                        case Methods.Delete:
                             break;
                     }
                     break;
@@ -128,10 +130,6 @@ namespace Infotecs.Magazine.Application.Endpoints
                             break;
                         case Methods.Create:
                             AccountCreated?.Invoke(sender, serverMessage);
-                            break;
-                        case Methods.Update:
-                            break;
-                        case Methods.Delete:
                             break;
                     }
                     break;

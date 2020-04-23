@@ -56,14 +56,13 @@ namespace Magazine.Application.Pages
         /// </summary>
         void OnAccountGotten(object sender, RabbitMqServerMessage e)
         {
-            var account = JsonConvert.DeserializeObject<Account>(e.ResultJson);
-
             if (e.Status == Statuses.Error)
             {
                 ShowMessage("Incorrect login or password");
                 return;
             }
 
+            var account = JsonConvert.DeserializeObject<Account>(e.ResultJson);
             _applicationViewModel.LogIn(account);
         }
 
@@ -88,10 +87,13 @@ namespace Magazine.Application.Pages
         /// </summary>
         public void ShowMessage(string text)
         {
-            MessageBlock.Text = text;
-            MessageBlock.Height = Double.NaN;
-            MessageBlockBorder.Visibility = Visibility.Visible;
-            MessageBlockBorder.Margin = new Thickness(0, 20, 0, 5);
+            Dispatcher.Invoke(() =>
+            {
+                MessageBlock.Text = text;
+                MessageBlock.Height = Double.NaN;
+                MessageBlockBorder.Visibility = Visibility.Visible;
+                MessageBlockBorder.Margin = new Thickness(0, 20, 0, 5);
+            });
         }
 
         /// <summary>

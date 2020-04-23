@@ -81,7 +81,15 @@ namespace Magazine.Application.Pages
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    _viewModel.DeleteSelectedArticle();
+                    try
+                    {
+                        _viewModel.DeleteSelectedArticle();
+                        HideMessage();
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        ShowMessage(ex.Message);
+                    }
                     break;
                 case MessageBoxResult.No:
                     break;

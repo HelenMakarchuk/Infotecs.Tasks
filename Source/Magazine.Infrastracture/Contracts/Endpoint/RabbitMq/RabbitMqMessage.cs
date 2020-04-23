@@ -16,7 +16,7 @@
     {
         public RabbitMqClientMessage() { }
 
-        public RabbitMqClientMessage(Methods method, Services entity, string valueJson)
+        public RabbitMqClientMessage(Methods method, Services entity, string valueJson = null)
         {
             Method = method;
             Service = entity;
@@ -37,6 +37,7 @@
     public enum Methods
     {
         Get,
+        GetById,
         Create,
         Update,
         Delete

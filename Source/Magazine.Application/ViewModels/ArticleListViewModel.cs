@@ -4,15 +4,12 @@ using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace Magazine.Application.ViewModels
 {
@@ -23,22 +20,21 @@ namespace Magazine.Application.ViewModels
     {
         RabbitMqClientEndpoint _endpoint;
         IApplicationViewModel _applicationViewModel;
-        IUnitOfWork _unitOfWork;
         IArticleValidateProvider _validateProvider;
         ILogger _logger;
 
         public ArticleListViewModel(RabbitMqClientEndpoint endpoint,
                                     IApplicationViewModel applicationViewModel,
-                                    IUnitOfWork unitOfWork,
                                     IArticleValidateProvider validateProvider,
                                     ILogger logger)
         {
             _endpoint = endpoint;
-            _unitOfWork = unitOfWork;
             _applicationViewModel = applicationViewModel;
             _validateProvider = validateProvider;
             _logger = logger;
 
+            _endpoint.ArticleGotten += OnArticleGotten;
+            _endpoint.ArticleGottenById += OnArticleGottenById;
             _endpoint.ArticleCreated += OnArticleCreated;
             _endpoint.ArticleUpdated += OnArticleUpdated;
             _endpoint.ArticleDeleted += OnArticleDeleted;
@@ -87,13 +83,28 @@ namespace Magazine.Application.ViewModels
         }
 
         /// <summary>
+        /// Обработчик события получения списка статей.
+        /// </summary>
+        private void OnArticleGotten(object sender, RabbitMqServerMessage e)
+        {
+            Articles = JsonConvert.DeserializeObject<List<Article>>(e.ResultJson);
+        }
+
+        /// <summary>
+        /// Обработчик события получения статьи по идентификатору.
+        /// </summary>
+        private void OnArticleGottenById(object sender, RabbitMqServerMessage e)
+        {
+            SelectedArticle = JsonConvert.DeserializeObject<Article>(e.ResultJson);
+        }
+
+        /// <summary>
         /// Загрузка данных для страницы отображения статей <see cref="ArticleListPage"/>
         /// </summary>
         public void LoadData()
         {
-            var previousArticle = SelectedArticle;
-            Articles = _unitOfWork.ArticleRepository.Select(a => new Article() { Id = a.Id, Title = a.Title }).ToList();
-            SelectedArticle = previousArticle ?? _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.Account).FirstOrDefault();
+            var clientMessage = new RabbitMqClientMessage(Methods.Get, Services.Article);
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
 
         /// <summary>
@@ -102,7 +113,8 @@ namespace Magazine.Application.ViewModels
         /// <param name="id"></param>
         public void LoadArticle(int id)
         {
-            SelectedArticle = _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.Account).SingleOrDefault(a => a.Id == id);
+            var clientMessage = new RabbitMqClientMessage(Methods.GetById, Services.Article, JsonConvert.SerializeObject(id));
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
 
         /// <summary>
@@ -110,6 +122,9 @@ namespace Magazine.Application.ViewModels
         /// </summary>
         public void DeleteSelectedArticle()
         {
+            if (SelectedArticle == null)
+                throw new ArgumentException("No article selected.");
+
             var clientMessage = new RabbitMqClientMessage(Methods.Delete, Services.Article, JsonConvert.SerializeObject(SelectedArticle.Id));
             _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }

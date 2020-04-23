@@ -87,7 +87,7 @@ namespace Magazine.Application
         void SetPage(Page page)
         {
             // Выполнение основным потоком приложения.
-            CurrentPage.Dispatcher.Invoke(() => CurrentPage.NavigationService.Navigate(page));
+            Dispatcher.Invoke(() => CurrentPage.NavigationService.Navigate(page));
         }
 
         /// <summary>

@@ -44,13 +44,13 @@ namespace Magazine.Application.Pages
         /// </summary>
         void OnAccountCreated(object sender, RabbitMqServerMessage e)
         {
-            var account = JsonConvert.DeserializeObject<Account>(e.ResultJson);
-
             if (e.Status == Statuses.Error)
             {
                 ShowMessage("User with the same login exists");
                 return;
             }
+
+            var account = JsonConvert.DeserializeObject<Account>(e.ResultJson);
 
             SignedUp();
         }
@@ -82,10 +82,13 @@ namespace Magazine.Application.Pages
 
         public void ShowMessage(string text)
         {
-            MessageBlock.Text = text;
-            MessageBlock.Height = Double.NaN;
-            MessageBlockBorder.Visibility = Visibility.Visible;
-            MessageBlockBorder.Margin = new Thickness(0, 20, 0, 5);
+            Dispatcher.Invoke(() =>
+            {
+                MessageBlock.Text = text;
+                MessageBlock.Height = Double.NaN;
+                MessageBlockBorder.Visibility = Visibility.Visible;
+                MessageBlockBorder.Margin = new Thickness(0, 20, 0, 5);
+            });
         }
 
         public void HideMessage()
