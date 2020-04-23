@@ -4,6 +4,7 @@ using Magazine.Domain.Entities;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Serilog;
 using System.Text;
 
 namespace Magazine.API.Endpoints
@@ -18,15 +19,18 @@ namespace Magazine.API.Endpoints
         ArticleService _articleService;
         CommentService _commentService;
         AccountService _accountService;
+        ILogger _logger;
         string _queueName;
 
         public RabbitMqServerEndpoint(ArticleService articleService,
                                       CommentService commentService,
-                                      AccountService accountService) : base()
+                                      AccountService accountService,
+                                      ILogger logger) : base()
         {
             _articleService = articleService;
             _commentService = commentService;
             _accountService = accountService;
+            _logger = logger;
 
             // Генерация уникального имени очереди для текущей сессии cервера.
             _queueName = QueueNamePrefix + _channel.QueueDeclare();
