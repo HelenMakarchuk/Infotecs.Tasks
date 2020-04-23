@@ -1,12 +1,8 @@
 ﻿using Autofac;
-using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
+using Infotecs.Magazine.API.Services;
 using Magazine.API.Endpoints;
 using Magazine.Application.Contracts.Provider;
-using Magazine.Application.Contracts.Service;
 using Magazine.Application.Providers;
-using Magazine.Application.Services;
-using Magazine.Domain.Contracts.Provider;
-using Magazine.Domain.Providers;
 using Magazine.Infrastracture.Contracts.Repository;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Magazine.Infrastracture.DB;
@@ -32,18 +28,17 @@ namespace Magazine.API.DI
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<App>().As<App>().SingleInstance();
-
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).SingleInstance();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
 
-            builder.RegisterType<ServerRabbitMQEndpoint>().As<RabbitMQEndpoint>().SingleInstance();
+            builder.RegisterType<RabbitMqServerEndpoint>().As<RabbitMqServerEndpoint>().SingleInstance();
 
             builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
-            builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().SingleInstance();
 
-            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().SingleInstance();
+            builder.RegisterType<ArticleService>().As<ArticleService>().SingleInstance();
+            builder.RegisterType<CommentService>().As<CommentService>().SingleInstance();
+            builder.RegisterType<AccountService>().As<AccountService>().SingleInstance();
 
             builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>()
                 .UseNpgsql(_configuration.GetConnectionString("InfotecsMagazine")).Options))

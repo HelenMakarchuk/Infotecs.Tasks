@@ -1,5 +1,6 @@
-﻿using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
-using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Application.Contracts.ViewModel;
+using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
 using Magazine.Application.Contracts.ViewModel;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Entities;
@@ -16,32 +17,20 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class NewArticleViewModel : INewArticleViewModel, INotifyPropertyChanged
     {
-        RabbitMQEndpoint _endpoint;
+        RabbitMqClientEndpoint _endpoint;
         IArticleValidateProvider _validateProvider;
-        IAuthenticationService _authenticationService;
+        IApplicationViewModel _applicationViewModel;
         ILogger _logger;
 
-        public NewArticleViewModel(RabbitMQEndpoint endpoint,
+        public NewArticleViewModel(RabbitMqClientEndpoint endpoint,
                                    IArticleValidateProvider validateProvider,
-                                   ILogger logger,
-                                   IAuthenticationService authenticationService)
+                                   IApplicationViewModel applicationViewModel,
+                                   ILogger logger)
         {
             _endpoint = endpoint;
             _validateProvider = validateProvider;
-            _authenticationService = authenticationService;
+            _applicationViewModel = applicationViewModel;
             _logger = logger;
-
-            _endpoint.Received += OnArticleCreated;
-        }
-
-        /// <summary>
-        /// Событие создания статьи.
-        /// </summary>
-        public event EventHandler<RabbitMQEventArgs> ArticleCreated;
-
-        void OnArticleCreated(object sender, RabbitMQEventArgs e)
-        {
-            ArticleCreated?.Invoke(sender, e);
         }
 
         /// <summary>
@@ -70,10 +59,11 @@ namespace Magazine.Application.ViewModels
         /// <param name="teaser">Картинка-тизер.</param>
         public void CreateArticle()
         {
-            var article = new Article(Title, Body, _authenticationService.User.Id, Teaser);
+            var article = new Article(Title, Body, _applicationViewModel.CurrentAccount.Id, Teaser);
             _validateProvider.Validate(article);
 
-            _endpoint.Send(JsonConvert.SerializeObject(article));
+            var clientMessage = new RabbitMqClientMessage(Methods.Create, Services.Article, JsonConvert.SerializeObject(article));
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
 
         public void SetTeaser()

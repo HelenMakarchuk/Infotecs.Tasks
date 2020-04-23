@@ -1,5 +1,10 @@
 ﻿using Infotecs.Magazine.Application.Contracts.Page;
+using Infotecs.Magazine.Application.Contracts.ViewModel;
+using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
 using Magazine.Domain.Contracts.ViewModel;
+using Magazine.Domain.Entities;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Windows;
@@ -13,26 +18,29 @@ namespace Magazine.Application.Pages
     public partial class LogInPage : Page, IPage
     {
         ILogInViewModel _viewModel;
+        RabbitMqClientEndpoint _endpoint;
+        IApplicationViewModel _applicationViewModel;
         ILogger _logger;
 
         public LogInPage(ILogInViewModel viewModel,
+                         RabbitMqClientEndpoint endpoint,
+                         IApplicationViewModel applicationViewModel,
                          ILogger logger)
         {
             InitializeComponent();
 
             _viewModel = viewModel;
+            _endpoint = endpoint;
+            _applicationViewModel = applicationViewModel;
             _logger = logger;
+
+            _endpoint.AccountGotten += OnAccountGotten;
         }
 
         /// <summary>
         /// Событие перехода на страницу регистрации нового пользователя.
         /// </summary>
         public event EventHandler<RoutedEventArgs> SigningUp;
-
-        /// <summary>
-        /// Событие завершения аутентификации пользователя.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> LoggingIn;
 
         /// <summary>
         /// Обработчик события загрузки страницы.
@@ -44,17 +52,27 @@ namespace Magazine.Application.Pages
         }
 
         /// <summary>
-        /// Обработчик события начала выполнения аутентификации пользователя.
+        /// Обработчик события получения данных аккаунта.
         /// </summary>
-        void LogInButton_Click(object sender, RoutedEventArgs e)
+        void OnAccountGotten(object sender, RabbitMqServerMessage e)
         {
-            if (!_viewModel.TryLogIn(Login.Text, Password.Password))
+            var account = JsonConvert.DeserializeObject<Account>(e.ResultJson);
+
+            if (e.Status == Statuses.Error)
             {
                 ShowMessage("Incorrect login or password");
                 return;
             }
 
-            LoggingIn.Invoke(sender, e);
+            _applicationViewModel.LogIn(account);
+        }
+
+        /// <summary>
+        /// Обработчик события начала выполнения аутентификации пользователя.
+        /// </summary>
+        void LogInButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.LogIn(Login.Text, Password.Password);
         }
 
         /// <summary>

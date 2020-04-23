@@ -1,6 +1,8 @@
-﻿using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
 using Magazine.Domain.Contracts.ViewModel;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
+using Magazine.Domain.Entities;
+using Newtonsoft.Json;
 using Serilog;
 using System.ComponentModel;
 
@@ -11,16 +13,13 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class SignUpViewModel : ISignUpViewModel
     {
-        IUnitOfWork _unitOfWork;
-        IAuthenticationService _authenticationService;
+        RabbitMqClientEndpoint _endpoint;
         ILogger _logger;
 
-        public SignUpViewModel(IAuthenticationService authenticationService,
-                               IUnitOfWork unitOfWork,
+        public SignUpViewModel(RabbitMqClientEndpoint endpoint,
                                ILogger logger)
         {
-            _authenticationService = authenticationService;
-            _unitOfWork = unitOfWork;
+            _endpoint = endpoint;
             _logger = logger;
         }
 
@@ -32,13 +31,16 @@ namespace Magazine.Application.ViewModels
         /// <param name="login">Логин.</param>
         /// <param name="password">Пароль.</param>
         /// <returns>Возвращается True если регистрация выполнена, иначе False.</returns>
-        public bool TrySignUp(string login, string password)
+        public void SignUp(string login, string password)
         {
-            var signUpAttemptResult = _authenticationService.TrySignUp(login, password);
+            var account = new Account()
+            {
+                Login = login,
+                Password = password
+            };
 
-            _logger.Debug("Sign up attempt result: {Result}.", signUpAttemptResult);
-
-            return signUpAttemptResult;
+            var clientMessage = new RabbitMqClientMessage(Methods.Create, Services.Account, JsonConvert.SerializeObject(account));
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
     }
 }

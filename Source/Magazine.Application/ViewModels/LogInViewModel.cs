@@ -1,7 +1,10 @@
-﻿using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
 using Magazine.Domain.Contracts.ViewModel;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
+using Magazine.Domain.Entities;
+using Newtonsoft.Json;
 using Serilog;
+using System;
 
 namespace Magazine.Application.ViewModels
 {
@@ -10,18 +13,17 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class LogInViewModel : ILogInViewModel
     {
-        IAuthenticationService _authenticationService;
-        IUnitOfWork _unitOfWork;
+        RabbitMqClientEndpoint _endpoint;
         ILogger _logger;
 
-        public LogInViewModel(IUnitOfWork unitOfWork,
-                              IAuthenticationService authenticationService,
-                              ILogger logger)
+        public LogInViewModel(RabbitMqClientEndpoint endpoint,
+                               ILogger logger)
         {
-            _unitOfWork = unitOfWork;
-            _authenticationService = authenticationService;
+            _endpoint = endpoint;
             _logger = logger;
         }
+
+        public event Action LoggedIn;
 
         /// <summary>
         /// Аутентификация пользователя.
@@ -29,13 +31,16 @@ namespace Magazine.Application.ViewModels
         /// <param name="login">Логин пользователя.</param>
         /// <param name="password">Пароль пользователя.</param>
         /// <returns>Возвращается True если аутентификация выполнена, иначе False.</returns>
-        public bool TryLogIn(string login, string password)
+        public void LogIn(string login, string password)
         {
-            var loginAttemptResult = _authenticationService.TryLogIn(login, password);
+            var account = new Account()
+            {
+                Login = login,
+                Password = password
+            };
 
-            _logger.Debug("Log in attempt result: {Result}.", loginAttemptResult);
-
-            return loginAttemptResult;
+            var clientMessage = new RabbitMqClientMessage(Methods.Get, Services.Account, JsonConvert.SerializeObject(account));
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
     }
 }

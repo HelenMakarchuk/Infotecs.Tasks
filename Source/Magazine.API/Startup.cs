@@ -1,6 +1,7 @@
 using Autofac;
 using Core.DI;
 using Magazine.API.DI;
+using Magazine.API.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,8 +18,7 @@ namespace Magazine.API
             Configuration = configuration;
             _container = AutofacConfig.Configure(new ApiModule(configuration));
 
-            var app = _container.Resolve<App>();
-            app.Run();
+            _container.Resolve<RabbitMqServerEndpoint>();
         }
 
         public IConfiguration Configuration { get; }

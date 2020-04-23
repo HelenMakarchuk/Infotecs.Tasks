@@ -1,31 +1,12 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Text;
 
-namespace Infotecs.Magazine.Infrastracture.Contracts.Endpoint
+namespace Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq
 {
-    /// <summary>
-    /// Список константных имен для Exchange брокера сообщений.
-    /// </summary>
-    public static class ExchangeName
-    {
-        public const string Client = "ClientExchange";
-        public const string Server = "ServerExchange";
-    }
-
-    /// <summary>
-    /// Класс аргументов события добавления сообщения в очередь.
-    /// </summary>
-    public class RabbitMQEventArgs
-    {
-        public string MessageJson { get; set; }
-    }
-
     /// <summary>
     /// Класс брокера сообщений RabbitMQ.
     /// </summary>
-    public abstract class RabbitMQEndpoint
+    public abstract class RabbitMqEndpoint
     {
         protected bool _disposed;
 
@@ -39,7 +20,7 @@ namespace Infotecs.Magazine.Infrastracture.Contracts.Endpoint
         /// </summary>
         protected IModel _channel;
 
-        public RabbitMQEndpoint()
+        public RabbitMqEndpoint()
         {
             // Создание фабрики подключений к очереди сообщений.
             var factory = new ConnectionFactory()
@@ -66,17 +47,9 @@ namespace Infotecs.Magazine.Infrastracture.Contracts.Endpoint
         }
 
         /// <summary>
-        /// Событие добавления сообщения в очередь.
-        /// </summary>
-        public event EventHandler<RabbitMQEventArgs> Received;
-
-        /// <summary>
         /// Обработчик события добавления сообщения в очередь.
         /// </summary>
-        protected virtual void OnReceived(object sender, BasicDeliverEventArgs e)
-        {
-            Received.Invoke(sender, new RabbitMQEventArgs() { MessageJson = Encoding.UTF8.GetString(e.Body.ToArray()) });
-        }
+        protected abstract void OnReceived(object sender, BasicDeliverEventArgs e);
 
         /// <summary>
         /// Добавление сообщения в очередь сообщений. 

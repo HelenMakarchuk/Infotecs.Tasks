@@ -1,6 +1,10 @@
 ﻿using Infotecs.Magazine.Application.Contracts.Page;
+using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
+using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,12 +18,20 @@ namespace Magazine.Application.Pages
     public partial class ArticleListPage : Page, IPage
     {
         IArticleListViewModel _viewModel;
+        RabbitMqClientEndpoint _endpoint;
+        ILogger _logger;
 
-        public ArticleListPage(IArticleListViewModel viewModel)
+        public ArticleListPage(IArticleListViewModel viewModel,
+                               RabbitMqClientEndpoint endpoint,
+                               ILogger logger)
         {
             InitializeComponent();
 
             _viewModel = viewModel;
+            _endpoint = endpoint;
+            _logger = logger;
+
+            _endpoint.CommentCreated += OnCommentCreated;
         }
 
         /// <summary>
@@ -31,6 +43,16 @@ namespace Magazine.Application.Pages
         /// Событие выхода текущего пользователя из приложения и перехода на страницу аутентификации.
         /// </summary>
         public event EventHandler<RoutedEventArgs> LoggedOut;
+
+        /// <summary>
+        /// Обработчик события создания комментария.
+        /// </summary>
+        private void OnCommentCreated(object sender, RabbitMqServerMessage e)
+        {
+            var comment = JsonConvert.DeserializeObject<Comment>(e.ResultJson);
+            _logger.Debug("Comment created. {@Comment}", comment);
+            CommentsListBox.Items.Refresh();
+        }
 
         /// <summary>
         /// Обработчик события загрузки страницы.
@@ -182,7 +204,6 @@ namespace Magazine.Application.Pages
                 CancelNewCommentButton.Visibility = Visibility.Hidden;
                 NewCommentText.Visibility = Visibility.Hidden;
                 NewCommentText.Margin = new Thickness(0);
-                CommentsListBox.Items.Refresh();
             }
             else
             {

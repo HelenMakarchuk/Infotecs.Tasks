@@ -5,6 +5,6 @@
     /// </summary>
     public interface ISignUpViewModel
     {
-        bool TrySignUp(string login, string password);
+        void SignUp(string login, string password);
     }
 }

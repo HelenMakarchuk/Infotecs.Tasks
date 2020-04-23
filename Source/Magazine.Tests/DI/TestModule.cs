@@ -1,11 +1,9 @@
 ﻿using Autofac;
 using Magazine.Application;
 using Magazine.Application.Contracts.Provider;
-using Magazine.Application.Contracts.Service;
 using Magazine.Application.Contracts.ViewModel;
 using Magazine.Application.Pages;
 using Magazine.Application.Providers;
-using Magazine.Application.Services;
 using Magazine.Application.ViewModels;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
@@ -47,8 +45,6 @@ namespace Magazine.Tests.DI
 
             builder.RegisterType<HashProvider>().As<IHashProvider>().InstancePerLifetimeScope();
             builder.RegisterType<ArticleValidateProvider>().As<IArticleValidateProvider>().InstancePerLifetimeScope();
-
-            builder.RegisterType<AuthenticationService>().As<IAuthenticationService>().InstancePerLifetimeScope();
 
             builder.Register((c, p) => new LoggerConfiguration()
                 .MinimumLevel.Verbose()

@@ -1,12 +1,13 @@
-﻿using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
-using Magazine.Application.Contracts.Service;
-using Magazine.Application.Contracts.ViewModel;
+﻿using Infotecs.Magazine.Application.Contracts.ViewModel;
+using Infotecs.Magazine.Application.Endpoints;
+using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
 using Magazine.Domain.Contracts.Provider;
 using Magazine.Domain.Contracts.ViewModel;
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -20,37 +21,70 @@ namespace Magazine.Application.ViewModels
     /// </summary>
     public class ArticleListViewModel : IArticleListViewModel
     {
+        RabbitMqClientEndpoint _endpoint;
+        IApplicationViewModel _applicationViewModel;
         IUnitOfWork _unitOfWork;
-        IAuthenticationService _authenticationService;
         IArticleValidateProvider _validateProvider;
-        INewArticleViewModel _newArticleViewModel;
         ILogger _logger;
 
-
-        public ArticleListViewModel(IUnitOfWork unitOfWork,
-                                    IAuthenticationService authenticationService,
+        public ArticleListViewModel(RabbitMqClientEndpoint endpoint,
+                                    IApplicationViewModel applicationViewModel,
+                                    IUnitOfWork unitOfWork,
                                     IArticleValidateProvider validateProvider,
-                                    INewArticleViewModel newArticleViewModel,
                                     ILogger logger)
         {
+            _endpoint = endpoint;
             _unitOfWork = unitOfWork;
-            _authenticationService = authenticationService;
+            _applicationViewModel = applicationViewModel;
             _validateProvider = validateProvider;
             _logger = logger;
-            _newArticleViewModel = newArticleViewModel;
 
-            _newArticleViewModel.ArticleCreated += OnArticleCreated;
-        }
-
-        void OnArticleCreated(object sender, RabbitMQEventArgs e)
-        {
-            LoadData();
+            _endpoint.ArticleCreated += OnArticleCreated;
+            _endpoint.ArticleUpdated += OnArticleUpdated;
+            _endpoint.ArticleDeleted += OnArticleDeleted;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Список статей.
+        /// </summary>
         public List<Article> Articles { get; set; }
+
+        /// <summary>
+        /// Текущая статья.
+        /// </summary>
         public Article SelectedArticle { get; set; }
+
+        /// <summary>
+        /// Обработчик события создания статьи.
+        /// </summary>
+        private void OnArticleCreated(object sender, RabbitMqServerMessage e)
+        {
+            var article = JsonConvert.DeserializeObject<Article>(e.ResultJson);
+            _logger.Debug("Article created. {@Article}", article);
+            LoadData();
+        }
+
+        /// <summary>
+        /// Обработчик события обновления статьи.
+        /// </summary>
+        private void OnArticleUpdated(object sender, RabbitMqServerMessage e)
+        {
+            var article = JsonConvert.DeserializeObject<Article>(e.ResultJson);
+            _logger.Debug("Article updated. {@Article}", article);
+            LoadData();
+        }
+
+        /// <summary>
+        /// Обработчик события удаления статьи.
+        /// </summary>
+        private void OnArticleDeleted(object sender, RabbitMqServerMessage e)
+        {
+            var article = JsonConvert.DeserializeObject<Article>(e.ResultJson);
+            _logger.Debug("Article updated. {@Article}", article);
+            LoadData();
+        }
 
         /// <summary>
         /// Загрузка данных для страницы отображения статей <see cref="ArticleListPage"/>
@@ -76,13 +110,8 @@ namespace Magazine.Application.ViewModels
         /// </summary>
         public void DeleteSelectedArticle()
         {
-            _unitOfWork.ArticleRepository.Remove(SelectedArticle.Id);
-            _unitOfWork.Commit();
-
-            _logger.Debug("Article \"{Title}\" deleted.", SelectedArticle.Title);
-
-            SelectedArticle = null;
-            LoadData();
+            var clientMessage = new RabbitMqClientMessage(Methods.Delete, Services.Article, JsonConvert.SerializeObject(SelectedArticle.Id));
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
 
         /// <summary>
@@ -92,12 +121,8 @@ namespace Magazine.Application.ViewModels
         {
             _validateProvider.Validate(SelectedArticle);
 
-            _unitOfWork.ArticleRepository.Update(SelectedArticle);
-            _unitOfWork.Commit();
-
-            _logger.Debug("Article \"{Title}\" updated.", SelectedArticle.Title);
-
-            LoadData();
+            var clientMessage = new RabbitMqClientMessage(Methods.Update, Services.Article, JsonConvert.SerializeObject(SelectedArticle));
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
 
         public void SetTeaser()
@@ -125,9 +150,9 @@ namespace Magazine.Application.ViewModels
 
         public void CreateComment(string text)
         {
-            var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = text, AccountId = _authenticationService.User.Id };
-            _unitOfWork.CommentRepository.Add(comment);
-            _unitOfWork.Commit();
+            var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = text, AccountId = _applicationViewModel.CurrentAccount.Id };
+            var clientMessage = new RabbitMqClientMessage(Methods.Create, Services.Comment, JsonConvert.SerializeObject(comment));
+            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Magazine.Infrastracture.Contracts.UnitOfWork
     /// </summary>
     public interface IUnitOfWork
     {
-        IRepository<Account> UserRepository { get; }
+        IRepository<Account> AccountRepository { get; }
         IRepository<Article> ArticleRepository { get; }
         public IRepository<Comment> CommentRepository { get; }
         void Commit();

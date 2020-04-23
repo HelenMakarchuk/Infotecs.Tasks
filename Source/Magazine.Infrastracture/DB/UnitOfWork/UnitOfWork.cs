@@ -20,7 +20,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
                           IRepository<Comment> commentRepository)
         {
             _context = context;
-            UserRepository = userRepository;
+            AccountRepository = userRepository;
             ArticleRepository = articleRepository;
             CommentRepository = commentRepository;
         }
@@ -30,7 +30,7 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
             Dispose(false);
         }
 
-        public IRepository<Account> UserRepository { get; }
+        public IRepository<Account> AccountRepository { get; }
         public IRepository<Article> ArticleRepository { get; }
         public IRepository<Comment> CommentRepository { get; }
 

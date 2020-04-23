@@ -1,10 +1,14 @@
-﻿namespace Magazine.Domain.Contracts.ViewModel
+﻿using System;
+
+namespace Magazine.Domain.Contracts.ViewModel
 {
     /// <summary>
     /// Интерфейс класса бизнес-логики <see cref="LogInViewModel"/> для страницы входа в приложение <see cref="LogInPage"/>.
     /// </summary>
     public interface ILogInViewModel
     {
-        bool TryLogIn(string login, string password);
+        event Action LoggedIn;
+
+        void LogIn(string login, string password);
     }
 }

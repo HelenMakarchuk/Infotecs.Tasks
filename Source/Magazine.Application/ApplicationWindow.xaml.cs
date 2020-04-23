@@ -1,5 +1,5 @@
-﻿using Infotecs.Magazine.Infrastracture.Contracts.Endpoint;
-using Magazine.Application.Contracts.Service;
+﻿using Infotecs.Magazine.Application.Contracts.ViewModel;
+using Infotecs.Magazine.Application.Endpoints;
 using Magazine.Application.Pages;
 using Serilog;
 using System;
@@ -15,39 +15,38 @@ namespace Magazine.Application
     /// </summary>
     public partial class ApplicationWindow : Window
     {
-        RabbitMQEndpoint _endpoint;
+        IApplicationViewModel _viewModel;
+        RabbitMqClientEndpoint _endpoint;
         LogInPage _logInPage;
         SignUpPage _signUpPage;
         NewArticlePage _newArticlePage;
         ArticleListPage _articleListPage;
-        IAuthenticationService _authenticationService;
         ILogger _logger;
 
-        public ApplicationWindow(RabbitMQEndpoint endpoint,
+        public ApplicationWindow(RabbitMqClientEndpoint endpoint,
+                                 IApplicationViewModel viewModel,
                                  LogInPage logInPage,
                                  SignUpPage signUpPage,
                                  NewArticlePage newArticlePage,
                                  ArticleListPage articleListPage,
-                                 IAuthenticationService authenticationService,
                                  ILogger logger)
         {
             InitializeComponent();
 
+            _viewModel = viewModel;
             _endpoint = endpoint;
-
             _logInPage = logInPage;
             _signUpPage = signUpPage;
             _newArticlePage = newArticlePage;
             _articleListPage = articleListPage;
-            _authenticationService = authenticationService;
             _logger = logger;
 
             _logInPage.SigningUp += (sender, e) => SetPage(_signUpPage);
-            _logInPage.LoggingIn += (sender, e) => SetPageIfLoggedIn(_articleListPage);
-            _signUpPage.SignedUp += (sender, e) => SetPageIfLoggedIn(_articleListPage);
+            _viewModel.LoggedIn += () => SetPageIfLoggedIn(_articleListPage);
+            _signUpPage.SignedUp += () => SetPage(_logInPage);
             _signUpPage.LoggingIn += (sender, e) => SetPage(_logInPage);
             _articleListPage.AddingArticle += (sender, e) => SetPageIfLoggedIn(_newArticlePage);
-            _articleListPage.LoggedOut += (sender, e) => { _authenticationService.LogOut(); SetPage(_logInPage); };
+            _articleListPage.LoggedOut += (sender, e) => { _viewModel.LogOut(); SetPage(_logInPage); };
             _newArticlePage.Closed += (sender, e) => SetPageIfLoggedIn(_articleListPage);
 
             AppDomain.CurrentDomain.UnhandledException += GlobalErrorHandler;
@@ -70,7 +69,7 @@ namespace Magazine.Application
         /// </summary>
         void OnNavigating(object sender, NavigatingCancelEventArgs e)
         {
-            e.Cancel = !(_authenticationService.IsLoggedIn || e.Content == _logInPage || e.Content == _signUpPage);
+            e.Cancel = !(_viewModel.IsLoggedIn || e.Content == _logInPage || e.Content == _signUpPage);
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace Magazine.Application
             this.SizeToContent = SizeToContent.WidthAndHeight;
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            var startPage = _authenticationService.IsLoggedIn ? (Page)_articleListPage : _logInPage;
+            var startPage = _viewModel.IsLoggedIn ? (Page)_articleListPage : _logInPage;
             SetPage(startPage);
         }
 
@@ -100,7 +99,7 @@ namespace Magazine.Application
         /// <param name="page"></param>
         void SetPageIfLoggedIn(Page page)
         {
-            if (_authenticationService.IsLoggedIn)
+            if (_viewModel.IsLoggedIn)
                 SetPage(page);
         }
     }
