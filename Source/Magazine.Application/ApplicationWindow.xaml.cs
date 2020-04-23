@@ -1,5 +1,4 @@
 ﻿using Infotecs.Magazine.Application.Contracts.ViewModel;
-using Infotecs.Magazine.Application.Endpoints;
 using Magazine.Application.Pages;
 using Serilog;
 using System;
@@ -16,15 +15,13 @@ namespace Magazine.Application
     public partial class ApplicationWindow : Window
     {
         IApplicationViewModel _viewModel;
-        RabbitMqClientEndpoint _endpoint;
         LogInPage _logInPage;
         SignUpPage _signUpPage;
         NewArticlePage _newArticlePage;
         ArticleListPage _articleListPage;
         ILogger _logger;
 
-        public ApplicationWindow(RabbitMqClientEndpoint endpoint,
-                                 IApplicationViewModel viewModel,
+        public ApplicationWindow(IApplicationViewModel viewModel,
                                  LogInPage logInPage,
                                  SignUpPage signUpPage,
                                  NewArticlePage newArticlePage,
@@ -34,7 +31,6 @@ namespace Magazine.Application
             InitializeComponent();
 
             _viewModel = viewModel;
-            _endpoint = endpoint;
             _logInPage = logInPage;
             _signUpPage = signUpPage;
             _newArticlePage = newArticlePage;
@@ -90,7 +86,8 @@ namespace Magazine.Application
         /// <param name="page">Следующая страница.</param>
         void SetPage(Page page)
         {
-            CurrentPage.NavigationService.Navigate(page);
+            // Выполнение основным потоком приложения.
+            CurrentPage.Dispatcher.Invoke(() => CurrentPage.NavigationService.Navigate(page));
         }
 
         /// <summary>
