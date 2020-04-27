@@ -1,5 +1,4 @@
-﻿using Magazine.Domain.Contracts.Provider;
-using Magazine.Domain.Entities;
+﻿using Magazine.Domain.Entities;
 using System;
 
 namespace Magazine.Domain.Providers
@@ -7,7 +6,7 @@ namespace Magazine.Domain.Providers
     /// <summary>
     /// Валидатор сущности "Статья".
     /// </summary>
-    public class ArticleValidateProvider : IArticleValidateProvider
+    public class ArticleValidateProvider
     {
         /// <summary>
         /// Валидация статьи.

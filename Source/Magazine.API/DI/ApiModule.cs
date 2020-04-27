@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Infotecs.Magazine.API.Services;
 using Magazine.API.Endpoints;
-using Magazine.Application.Contracts.Provider;
-using Magazine.Application.Providers;
+using Magazine.Desktop.Contracts.Provider;
+using Magazine.Desktop.Providers;
 using Magazine.Infrastracture.Contracts.Repository;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Magazine.Infrastracture.DB;
