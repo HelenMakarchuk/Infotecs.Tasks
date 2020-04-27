@@ -115,7 +115,7 @@ namespace Infotecs.Magazine.Desktop.ViewModels
         void SetPage(Page page)
         {
             // Выполнение основным потоком приложения.
-            System.Windows.Application.Current.Dispatcher.Invoke(() => CurrentPage = page);
+            Application.Current.Dispatcher.Invoke(() => CurrentPage = page);
         }
 
         void SetData()

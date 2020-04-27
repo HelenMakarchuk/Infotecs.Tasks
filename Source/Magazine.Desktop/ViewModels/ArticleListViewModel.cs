@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Magazine.Desktop.ViewModels
 {
@@ -238,52 +239,42 @@ namespace Magazine.Desktop.ViewModels
 
         void CreateComment()
         {
-            //if (NewCommentText.Visibility == Visibility.Visible)
-            //{
-            //    try
-            //    {
-            //        _viewModel.CreateComment(NewCommentText.Text);
-            //        NotifyUserMessages.Clear();
-            //    }
-            //    catch (ArgumentException ex)
-            //    {
-            //        NotifyUserMessages.Add("ex.Message);
-            //    }
-
-            //    CancelNewCommentButton.Visibility = Visibility.Hidden;
-            //    NewCommentText.Visibility = Visibility.Hidden;
-            //    NewCommentText.Margin = new Thickness(0);
-            //}
-            //else
-            //{
-            //    CancelNewCommentButton.Visibility = Visibility.Visible;
-            //    NewCommentText.Visibility = Visibility.Visible;
-            //    NewCommentText.Margin = new Thickness(0, 15, 0, 15);
-            //}
-
-            var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = "NewCommentText.Text", AccountId = _authenticationProvider.CurrentAccount.Id };
-
-            try
+            if (_page.NewCommentText.Visibility == Visibility.Visible)
             {
-                _commentValidateProvider.Validate(comment);
-                NotifyUserMessages.Clear();
-            }
-            catch (ArgumentException ex)
-            {
-                NotifyUserMessages.Add(ex.Message);
-                return;
-            }
+                var comment = new Comment() { ArticleId = SelectedArticle.Id, Body = _page.NewCommentText.Text, AccountId = _authenticationProvider.CurrentAccount.Id };
 
-            var clientMessage = new RabbitMqClientMessage(Methods.Create, Services.Comment, JsonConvert.SerializeObject(comment));
-            _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
-            _logger.Debug("Create comment request has sent to RabbitMQ endpoint. {@Comment}", comment);
+                try
+                {
+                    _commentValidateProvider.Validate(comment);
+                    NotifyUserMessages.Clear();
+                }
+                catch (ArgumentException ex)
+                {
+                    NotifyUserMessages.Add(ex.Message);
+                    return;
+                }
+
+                var clientMessage = new RabbitMqClientMessage(Methods.Create, Services.Comment, JsonConvert.SerializeObject(comment));
+                _endpoint.Send(JsonConvert.SerializeObject(clientMessage));
+                _logger.Debug("Create comment request has sent to RabbitMQ endpoint. {@Comment}", comment);
+
+                _page.CancelNewCommentButton.Visibility = Visibility.Hidden;
+                _page.NewCommentText.Visibility = Visibility.Hidden;
+                _page.NewCommentText.Margin = new Thickness(0);
+            }
+            else
+            {
+                _page.CancelNewCommentButton.Visibility = Visibility.Visible;
+                _page.NewCommentText.Visibility = Visibility.Visible;
+                _page.NewCommentText.Margin = new Thickness(0, 15, 0, 15);
+            }
         }
 
         void CancelAddingComment()
         {
-            // CancelNewCommentButton.Visibility = Visibility.Hidden;
-            // NewCommentText.Visibility = Visibility.Hidden;
-            // NewCommentText.Margin = new Thickness(0);
+            _page.CancelNewCommentButton.Visibility = Visibility.Hidden;
+            _page.NewCommentText.Visibility = Visibility.Hidden;
+            _page.NewCommentText.Margin = new Thickness(0);
         }
 
         public override void SetData()
@@ -295,13 +286,13 @@ namespace Magazine.Desktop.ViewModels
 
         void EditArticleTitle()
         {
-            //if (TitleTextBox.Style == (Style)this.FindResource("EditTextBoxStyle"))
-            //{
-            UpdateArticle();
-            //}
+            if (_page.TitleTextBox.Style == (Style)_page.FindResource("EditTextBoxStyle"))
+            {
+                UpdateArticle();
+            }
 
-            //TitleTextBox.Style = TitleTextBox.Style == (Style)this.FindResource("EditTextBoxStyle") ? (Style)this.FindResource("ReadOnlyTextBoxStyle") : (Style)this.FindResource("EditTextBoxStyle");
-            //EditArticleTitleButton.Background = EditArticleTitleButton.Background == (ImageBrush)this.FindResource("EditImageBrush") ? (ImageBrush)this.FindResource("SaveImageBrush") : (ImageBrush)this.FindResource("EditImageBrush");
+            _page.TitleTextBox.Style = _page.TitleTextBox.Style == (Style)_page.FindResource("EditTextBoxStyle") ? (Style)_page.FindResource("ReadOnlyTextBoxStyle") : (Style)_page.FindResource("EditTextBoxStyle");
+            _page.EditArticleTitleButton.Background = _page.EditArticleTitleButton.Background == (ImageBrush)_page.FindResource("EditImageBrush") ? (ImageBrush)_page.FindResource("SaveImageBrush") : (ImageBrush)_page.FindResource("EditImageBrush");
         }
 
         void EditArticleTeaser()
@@ -336,13 +327,13 @@ namespace Magazine.Desktop.ViewModels
 
         void EditArticleBody()
         {
-            //if (BodyTextBox.Style == (Style)this.FindResource("EditTextBoxStyle"))
-            //{
-            UpdateArticle();
-            //}
+            if (_page.BodyTextBox.Style == (Style)_page.FindResource("EditTextBoxStyle"))
+            {
+                UpdateArticle();
+            }
 
-            //BodyTextBox.Style = BodyTextBox.Style == (Style)this.FindResource("EditTextBoxStyle") ? (Style)this.FindResource("ReadOnlyTextBoxStyle") : (Style)this.FindResource("EditTextBoxStyle");
-            //EditArticleBodyButton.Background = EditArticleBodyButton.Background == (ImageBrush)this.FindResource("EditImageBrush") ? (ImageBrush)this.FindResource("SaveImageBrush") : (ImageBrush)this.FindResource("EditImageBrush");
+            _page.BodyTextBox.Style = _page.BodyTextBox.Style == (Style)_page.FindResource("EditTextBoxStyle") ? (Style)_page.FindResource("ReadOnlyTextBoxStyle") : (Style)_page.FindResource("EditTextBoxStyle");
+            _page.EditArticleBodyButton.Background = _page.EditArticleBodyButton.Background == (ImageBrush)_page.FindResource("EditImageBrush") ? (ImageBrush)_page.FindResource("SaveImageBrush") : (ImageBrush)_page.FindResource("EditImageBrush");
         }
 
         /// <summary>
