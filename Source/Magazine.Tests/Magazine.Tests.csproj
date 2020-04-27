@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\Magazine.Application\Magazine.Application.csproj" />
+    <ProjectReference Include="..\Magazine.Desktop\Magazine.Desktop.csproj" />
     <ProjectReference Include="..\Magazine.Domain\Magazine.Domain.csproj" />
     <ProjectReference Include="..\Magazine.Infrastracture\Magazine.Infrastracture.csproj" />
   </ItemGroup>

@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--#region ListBox -->
+    <Style x:Key="BaseListBoxStyle" TargetType="ListBox">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="0, 10, 0, 0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <!--#endregion-->
+
+    <!--#region ListBox -->
+    <Style x:Key="NotifyUserListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border 
+                        CornerRadius="2" 
+                        Background="#ffcdd2" 
+                        BorderThickness="1" 
+                        BorderBrush="#cb9ca1" 
+                        Margin="0, 8, 0, 0"
+                        Padding="0">
+                        
+                        <TextBlock 
+                            Text="{Binding}" 
+                            Foreground="#5e0000" 
+                            TextWrapping="Wrap" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0"
+                            Padding="2, 5" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+    
+</ResourceDictionary>

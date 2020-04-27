@@ -1,8 +1,9 @@
 ﻿using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
-using Magazine.Application.Contracts.Provider;
+using Magazine.Desktop.Contracts.Provider;
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 
 namespace Infotecs.Magazine.API.Services
@@ -14,12 +15,15 @@ namespace Infotecs.Magazine.API.Services
     {
         IUnitOfWork _unitOfWork;
         IHashProvider _hashProvider;
+        ILogger _logger;
 
         public AccountService(IUnitOfWork unitOfWork,
-                              IHashProvider hashProvider)
+                              IHashProvider hashProvider,
+                              ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _hashProvider = hashProvider;
+            _logger = logger;
         }
 
         /// <summary>

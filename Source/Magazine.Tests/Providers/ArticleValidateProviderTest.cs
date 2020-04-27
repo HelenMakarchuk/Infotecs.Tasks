@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Magazine.Domain.Contracts.Provider;
+using Magazine.Domain.Providers;
 using System;
 using System.Text;
 using Xunit;
@@ -13,7 +13,7 @@ namespace Infotecs.Magazine.Tests.Providers
     {
         TestFixture _testFixture;
         ILifetimeScope _containerScope;
-        IArticleValidateProvider _articleValidateProvider;
+        ArticleValidateProvider _articleValidateProvider;
 
         /// <summary>
         /// Выполнение перед каждым тестом.
@@ -22,7 +22,7 @@ namespace Infotecs.Magazine.Tests.Providers
         {
             _testFixture = testFixture;
             _containerScope = _testFixture.Container.BeginLifetimeScope();
-            _articleValidateProvider = _testFixture.Container.Resolve<IArticleValidateProvider>();
+            _articleValidateProvider = _testFixture.Container.Resolve<ArticleValidateProvider>();
         }
 
         /// <summary>

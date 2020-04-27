@@ -2,6 +2,7 @@
 using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace Infotecs.Magazine.API.Services
 {
@@ -11,10 +12,13 @@ namespace Infotecs.Magazine.API.Services
     public class CommentService
     {
         IUnitOfWork _unitOfWork;
+        ILogger _logger;
 
-        public CommentService(IUnitOfWork unitOfWork)
+        public CommentService(IUnitOfWork unitOfWork,
+                              ILogger logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         /// <summary>

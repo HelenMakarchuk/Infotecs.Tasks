@@ -3,6 +3,7 @@ using Magazine.Domain.Entities;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Serilog;
 using System.Linq;
 
 namespace Infotecs.Magazine.API.Services
@@ -13,10 +14,13 @@ namespace Infotecs.Magazine.API.Services
     public class ArticleService
     {
         IUnitOfWork _unitOfWork;
+        ILogger _logger;
 
-        public ArticleService(IUnitOfWork unitOfWork)
+        public ArticleService(IUnitOfWork unitOfWork,
+                              ILogger logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         /// <summary>
@@ -52,6 +56,11 @@ namespace Infotecs.Magazine.API.Services
         /// <returns>Возврат статьи.</returns>
         public (Statuses status, string resultJson) Create(Article article)
         {
+            var dbArticle = _unitOfWork.ArticleRepository.SingleOrDefault(a => a.Title == article.Title);
+
+            if (dbArticle != null)
+                return (Statuses.Error, null);
+
             var entry = _unitOfWork.ArticleRepository.Add(article);
             _unitOfWork.Commit();
 
