@@ -27,8 +27,39 @@ export class ArticleDetailComponent implements OnInit {
     );
   }
 
-  gotoArticles(article: Article) {
-    let articleId = article ? article.id : null;
-    this.router.navigate(['/articles', { id: articleId }]);
+  navigateToArticles(article: Article) {
+    this.router.navigate(['/articles', { id: article.id }]);
+  }
+
+  updateArticle(article: Article) {
+    this.service.updateArticle(article)
+      .subscribe(
+        val => {
+          console.log("Value.", val);
+          this.navigateToArticles(article);
+        },
+        response => {
+          console.log("Error.", response);
+        },
+        () => {
+          console.log("Completed.");
+        }
+    );
+  }
+
+  deleteArticle(article: Article) {
+    this.service.deleteArticle(article.id)
+      .subscribe(
+        val => {
+          console.log("Value.", val);
+          this.navigateToArticles(article);
+        },
+        response => {
+          console.log("Error.", response);
+        },
+        () => {
+          console.log("Completed.");
+        }
+    );
   }
 }

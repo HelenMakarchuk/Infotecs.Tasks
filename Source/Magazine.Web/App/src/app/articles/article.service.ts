@@ -13,10 +13,24 @@ export class ArticleService {
   constructor(private http: HttpClient) { }
 
   addArticle(article: Article) {
+    debugger;
+
     return this.http.post<Article>(`${ConfigService.settings.apiUrl}/article`, article)
-      .pipe(
-        catchError(this.handleError)
-      );
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteArticle(id: number) {
+    debugger;
+
+    return this.http.delete<Article>(`${ConfigService.settings.apiUrl}/article/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateArticle(article: Article) {
+    debugger;
+
+    return this.http.put<Article>(`${ConfigService.settings.apiUrl}/article/${article.id}`, article)
+      .pipe(catchError(this.handleError));
   }
 
   getArticle(id: number) {
@@ -34,6 +48,8 @@ export class ArticleService {
   }
 
   handleError(error: HttpErrorResponse) {
+    debugger;
+
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
       // Client-side errors

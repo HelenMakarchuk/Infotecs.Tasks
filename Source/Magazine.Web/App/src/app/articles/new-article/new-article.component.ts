@@ -16,11 +16,27 @@ export class NewArticleComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: ArticleService
+    private articleService: ArticleService
   ) { }
 
-  createArticle(article: Article) {
+  createArticle(title: string): void {
     debugger;
-    this.service.addArticle(article);
+
+    const newArticle: Article = {
+      title: '', body: '', teaser: [], accountId: 1, account: null, comments: [], id: 0
+    };
+
+    this.articleService.addArticle(newArticle)
+      .subscribe(
+        val => {
+          console.log("Value.", val);
+        },
+        response => {
+          console.log("Error.", response);
+        },
+        () => {
+          console.log("Completed.");
+        }
+      );
   }
 }

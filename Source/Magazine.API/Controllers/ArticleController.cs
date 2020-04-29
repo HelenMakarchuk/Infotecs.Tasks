@@ -47,15 +47,28 @@ namespace Magazine.API.Controllers
         [HttpPost]
         public IActionResult Add(Article article)
         {
-            var dbArticle = _unitOfWork.ArticleRepository.SingleOrDefault(a => a.Title == article.Title);
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
-            if (dbArticle != null)
-                return BadRequest();
+            return Ok(article);
 
-            var entry = _unitOfWork.ArticleRepository.Add(article);
+        }
+
+        // PUT: api/article/4
+        [HttpPut("{id}")]
+        public IActionResult Update(Article article)
+        {
+            var entry = _unitOfWork.ArticleRepository.Update(article);
             _unitOfWork.Commit();
 
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            return Ok(entry.Entity);
+        }
+
+        // DELETE: api/article/4
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var entry = _unitOfWork.ArticleRepository.Remove(id);
+            _unitOfWork.Commit();
 
             return Ok(entry.Entity);
         }

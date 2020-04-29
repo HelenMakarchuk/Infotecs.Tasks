@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="App\src\app\accounts\account.ts" />
     <None Remove="App\src\app\articles\article-detail\article-detail.component.ts" />
     <None Remove="App\src\app\articles\article-list\article-list.component.ts" />
     <None Remove="App\src\app\articles\article.service.ts" />
@@ -31,6 +32,7 @@
     <None Remove="App\src\app\articles\articles.module.ts" />
     <None Remove="App\src\app\articles\mock-articles.ts" />
     <None Remove="App\src\app\articles\new-article\new-article.component.ts" />
+    <None Remove="App\src\app\comments\comment.ts" />
     <None Remove="App\src\app\config\config.component.ts" />
     <None Remove="App\src\app\config\config.service.ts" />
     <None Remove="App\src\app\config\config.ts" />
@@ -58,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="App\src\app\accounts\account.ts" />
     <TypeScriptCompile Include="App\src\app\articles\article-detail\article-detail.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -82,6 +85,7 @@
     <TypeScriptCompile Include="App\src\app\articles\new-article\new-article.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\comments\comment.ts" />
     <TypeScriptCompile Include="App\src\app\config\config.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

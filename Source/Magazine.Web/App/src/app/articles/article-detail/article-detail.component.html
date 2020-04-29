@@ -8,6 +8,8 @@
     <input [(ngModel)]="article.title" placeholder="title" />
   </div>
   <p>
-    <button (click)="gotoArticles(article)">Back</button>
+    <button (click)="navigateToArticles(article)">Back</button>
+    <button (click)="updateArticle(article)">Update</button>
+    <button (click)="deleteArticle(article)">Delete</button>
   </p>
 </div>
