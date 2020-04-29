@@ -8,5 +8,5 @@ if (environment.name === 'prod') {
   enableProdMode();
 }
 
-platformBrowserDynamic(providers).bootstrapModule(AppModule)
+platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
