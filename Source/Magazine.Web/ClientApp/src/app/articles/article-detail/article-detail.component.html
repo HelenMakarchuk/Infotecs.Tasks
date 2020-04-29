@@ -1,0 +1,13 @@
+<div *ngIf="article$ | async as article">
+  <h3>"{{ article.title }}"</h3>
+  <div>
+    <label>Id: </label>{{ article.id }}
+  </div>
+  <div>
+    <label>Name: </label>
+    <input [(ngModel)]="article.title" placeholder="title" />
+  </div>
+  <p>
+    <button (click)="gotoArticles(article)">Back</button>
+  </p>
+</div>

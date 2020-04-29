@@ -1,9 +1,5 @@
 ﻿using Autofac;
-using Magazine.Desktop;
-using Magazine.Desktop.Contracts.Provider;
-using Magazine.Desktop.Pages;
-using Magazine.Desktop.Providers;
-using Magazine.Desktop.ViewModels;
+using Infotecs.Magazine.Domain.Providers;
 using Magazine.Domain.Providers;
 using Magazine.Infrastracture.Contracts.Repository;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
@@ -22,25 +18,13 @@ namespace Magazine.Tests.DI
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ApplicationWindow>().As<ApplicationWindow>().InstancePerLifetimeScope();
-
-            builder.RegisterType<LogInPage>().As<LogInPage>().InstancePerLifetimeScope();
-            builder.RegisterType<SignUpPage>().As<SignUpPage>().InstancePerLifetimeScope();
-            builder.RegisterType<NewArticlePage>().As<NewArticlePage>().InstancePerLifetimeScope();
-            builder.RegisterType<ArticleListPage>().As<ArticleListPage>().InstancePerLifetimeScope();
-
-            builder.RegisterType<LogInViewModel>().As<LogInViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<SignUpViewModel>().As<SignUpViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<NewArticleViewModel>().As<NewArticleViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<ArticleListViewModel>().As<ArticleListViewModel>().InstancePerLifetimeScope();
-
             builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>().UseInMemoryDatabase("TestContext").Options)).As<DbContext>().InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
 
-            builder.RegisterType<HashProvider>().As<IHashProvider>().InstancePerLifetimeScope();
+            builder.RegisterType<HashProvider>().As<HashProvider>().InstancePerLifetimeScope();
             builder.RegisterType<ArticleValidateProvider>().As<ArticleValidateProvider>().InstancePerLifetimeScope();
 
             builder.Register((c, p) => new LoggerConfiguration()

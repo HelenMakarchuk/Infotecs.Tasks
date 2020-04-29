@@ -1,27 +1,34 @@
 using Autofac;
-using Core.DI;
 using Magazine.API.DI;
-using Magazine.API.Endpoints;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Magazine.API
 {
     public class Startup
     {
-        IContainer _container;
+        public ILifetimeScope Container { get; private set; }
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            _container = AutofacConfig.Configure(new ApiModule(configuration));
-
-            _container.Resolve<RabbitMqServerEndpoint>();
         }
 
         public IConfiguration Configuration { get; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddOptions();
+            services.AddControllers();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new ApiModule(Configuration));
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -29,6 +36,13 @@ namespace Magazine.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

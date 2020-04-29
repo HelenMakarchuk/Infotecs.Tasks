@@ -1,8 +1,4 @@
 ﻿using Autofac;
-using Infotecs.Magazine.API.Services;
-using Magazine.API.Endpoints;
-using Magazine.Desktop.Contracts.Provider;
-using Magazine.Desktop.Providers;
 using Magazine.Infrastracture.Contracts.Repository;
 using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Magazine.Infrastracture.DB;
@@ -31,14 +27,6 @@ namespace Magazine.API.DI
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).SingleInstance();
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().SingleInstance();
-
-            builder.RegisterType<RabbitMqServerEndpoint>().As<RabbitMqServerEndpoint>().SingleInstance();
-
-            builder.RegisterType<HashProvider>().As<IHashProvider>().SingleInstance();
-
-            builder.RegisterType<ArticleService>().As<ArticleService>().SingleInstance();
-            builder.RegisterType<CommentService>().As<CommentService>().SingleInstance();
-            builder.RegisterType<AccountService>().As<AccountService>().SingleInstance();
 
             builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>()
                 .UseNpgsql(_configuration.GetConnectionString("InfotecsMagazine")).Options))
