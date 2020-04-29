@@ -18,16 +18,24 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="App\**" />
-    <Content Remove="$(SpaRoot)**" />
-    <Content Remove="App\**" />
-    <EmbeddedResource Remove="App\**" />
     <None Remove="$(SpaRoot)**" />
-    <None Remove="App\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="App\src\app\articles\article-detail\article-detail.component.ts" />
+    <None Remove="App\src\app\articles\article-list\article-list.component.ts" />
+    <None Remove="App\src\app\articles\article.service.ts" />
+    <None Remove="App\src\app\articles\article.ts" />
+    <None Remove="App\src\app\articles\articles-routing.module.ts" />
+    <None Remove="App\src\app\articles\articles.module.ts" />
+    <None Remove="App\src\app\articles\mock-articles.ts" />
+    <None Remove="App\src\app\articles\new-article\new-article.component.ts" />
+    <None Remove="App\src\app\config\config.component.ts" />
+    <None Remove="App\src\app\config\config.service.ts" />
+    <None Remove="App\src\app\config\config.ts" />
+    <None Remove="App\src\app\models\IConfig.ts" />
+    <None Remove="App\src\environments\environment.dev.ts" />
     <None Remove="ClientApp\src\app\animations.ts" />
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
     <None Remove="ClientApp\src\app\articles\article-detail\article-detail.component.ts" />
@@ -50,6 +58,45 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="App\src\app\articles\article-detail\article-detail.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\articles\article-list\article-list.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\articles\article.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\articles\article.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\articles\articles-routing.module.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\articles\articles.module.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\articles\mock-articles.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\articles\new-article\new-article.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\config\config.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\config\config.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\config\config.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\app\models\IConfig.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="App\src\environments\environment.dev.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\animations.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\app-routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\articles\article-detail\article-detail.component.ts" />
