@@ -33,7 +33,7 @@ namespace Magazine.Web.DI
 
             builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>()
                     .UseNpgsql(_configuration.GetConnectionString("InfotecsMagazine")).Options))
-                    .As<DbContext>().InstancePerLifetimeScope();
+                    .As<DbContext>().SingleInstance();
 
             builder.Register((c, p) => new LoggerConfiguration()
                 .MinimumLevel.Verbose()

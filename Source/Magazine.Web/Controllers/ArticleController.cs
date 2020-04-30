@@ -2,6 +2,7 @@
 using Magazine.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using System;
 
 namespace Magazine.Web.Controllers
 {
@@ -37,7 +38,18 @@ namespace Magazine.Web.Controllers
         [HttpPost]
         public IActionResult Add(Article article)
         {
-            return Ok(_articleService.Add(article));
+            Article result = null;
+
+            try
+            {
+                result = _articleService.Add(article);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return Ok(result);
         }
 
         // PUT: api/article/4

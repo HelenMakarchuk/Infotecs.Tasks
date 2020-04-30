@@ -10,10 +10,7 @@ namespace Magazine.Infrastracture.DB
     public class Context : DbContext
     {
         public Context(DbContextOptions<Context> options)
-            : base(options)
-        {
-            Database.EnsureCreated();
-        }
+            : base(options) { }
 
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Account> Users { get; set; }

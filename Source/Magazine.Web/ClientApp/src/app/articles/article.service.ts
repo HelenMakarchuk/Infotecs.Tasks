@@ -34,6 +34,8 @@ export class ArticleService {
   }
 
   getArticle(id: number) {
+    debugger;
+
     return this.http.get<ArticleEntity>(`${ConfigService.settings.apiUrl}/article/${id}`)
       .pipe(
         catchError(this.handleError)

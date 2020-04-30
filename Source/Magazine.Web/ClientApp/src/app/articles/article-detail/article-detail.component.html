@@ -1,17 +1,21 @@
-<input type="text"
-       class="form-control"
-       id="title"
-       name="title"
-       [(ngModel)]="article.title"
-       placeholder="title">
+<div>
+  <input id="title"
+         type="text"
+         class="form-control"
+         [(ngModel)]="article.title"
+         [readonly]="isReadonly"
+         placeholder="title">
 
-<input type="text"
-       class="form-control"
-       id="body"
-       name="body"
-       [(ngModel)]="article.body"
-       placeholder="body">
+  <textarea class="form-control"
+            [readonly]="isReadonly"
+            [(ngModel)]="article.body"
+            rows="15">
+            {{ article.body }}
+  </textarea>
 
-<button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
-<button class="btn btn-primary" (click)="updateArticle()">Update</button>
-<button class="btn btn-primary" (click)="deleteArticle()">Delete</button>
+  <div>
+    <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
+    <button class="btn btn-primary" (click)="updateArticle()">{{ updateButtonName }}</button>
+    <button class="btn btn-primary" (click)="deleteArticle()">Delete</button>
+  </div>
+</div>

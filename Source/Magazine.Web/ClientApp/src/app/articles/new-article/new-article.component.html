@@ -1,0 +1,19 @@
+<div>
+  <input type="text"
+         class="form-control"
+         id="title"
+         name="title"
+         [(ngModel)]="article.title"
+         placeholder="title">
+
+  <input type="text"
+         class="form-control"
+         id="body"
+         name="body"
+         [(ngModel)]="article.body"
+         placeholder="body">
+  <div>
+    <button class="btn btn-primary" (click)="navigateToArticles()">Cancel</button>
+    <button class="btn btn-primary" (click)="createArticle()">Save</button>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+input[readonly], textarea[readonly] {
+  border: none;
+  background: transparent;
+}
+
+input, textarea {
+  margin: 4px;
+}
+
+button {
+  margin: 16px;
+}
+
+#title {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 400;
+}

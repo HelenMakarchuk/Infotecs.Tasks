@@ -1,6 +1,5 @@
-import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../article.service';
 import { ArticleEntity } from '../article';
 
@@ -11,17 +10,40 @@ import { ArticleEntity } from '../article';
 })
 export class ArticleDetailComponent implements OnInit {
 
-  article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, accountId: 0, account: null, comments: null };
+  article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, accountId: 0, comments: null };
+  isReadonly = true;
+  updateButtonName: string = 'Edit';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: ArticleService
-  ) { }
+    private service: ArticleService) { }
 
   ngOnInit() {
-    this.article = this.route.paramMap
-      .pipe(switchMap((params: ParamMap) => this.service.getArticle(+params.get('id')))) as unknown as ArticleEntity;
+    debugger;
+    this.route.paramMap.subscribe(params => {
+      debugger;
+
+      this.service.getArticle(+params.get('id'))
+        .subscribe(
+          val => {
+            debugger;
+
+            console.log("Value.", val);
+            this.article = val;
+          },
+          response => {
+            debugger;
+
+            console.log("Error.", response);
+          },
+          () => {
+            debugger;
+
+            console.log("Completed.");
+          }
+        );
+    });
   }
 
   navigateToArticles() {
@@ -29,13 +51,22 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   updateArticle() {
+    this.isReadonly = !this.isReadonly;
+    this.updateButtonName = this.isReadonly === true ? 'Edit' : 'Save';
+
+    if (this.isReadonly === false)
+      return;
+
+    debugger;
     this.service.updateArticle(this.article)
       .subscribe(
         val => {
-          console.log("Value.", val);
-          this.navigateToArticles();
+          debugger;
+          this.article = val;
         },
         response => {
+          debugger;
+
           console.log("Error.", response);
         },
         () => {
@@ -48,10 +79,14 @@ export class ArticleDetailComponent implements OnInit {
     this.service.deleteArticle(this.article.id)
       .subscribe(
         val => {
+          debugger;
+
           console.log("Value.", val);
           this.navigateToArticles();
         },
         response => {
+          debugger;
+
           console.log("Error.", response);
         },
         () => {

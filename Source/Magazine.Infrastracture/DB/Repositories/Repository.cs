@@ -23,6 +23,11 @@ namespace Magazine.Infrastracture.DB.Repositories
             _entities = _context.Set<T>();
         }
 
+        public IQueryable<T> AsNoTracking()
+        {
+            return _entities.AsNoTracking();
+        }
+
         public EntityEntry<T> Add(T entity)
         {
             return _entities.Add(entity);
@@ -51,6 +56,11 @@ namespace Magazine.Infrastracture.DB.Repositories
         public T FirstOrDefault(Expression<Func<T, bool>> predicate)
         {
             return _entities.FirstOrDefault(predicate);
+        }
+
+        public T FirstOrDefault()
+        {
+            return _entities.FirstOrDefault();
         }
 
         public T SingleOrDefault(Expression<Func<T, bool>> predicate)

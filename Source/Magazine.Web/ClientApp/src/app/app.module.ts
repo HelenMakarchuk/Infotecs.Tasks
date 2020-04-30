@@ -7,12 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ArticleDetailComponent } from './articles/article-detail/article-detail.component';
 import { ArticleListComponent } from './articles/article-list/article-list.component';
+import { NewArticleComponent } from './articles/new-article/new-article.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticleDetailComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    NewArticleComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -21,7 +23,8 @@ import { ArticleListComponent } from './articles/article-list/article-list.compo
     RouterModule.forRoot([
       { path: '', component: ArticleListComponent, pathMatch: 'full' },
       { path: 'articles', component: ArticleListComponent },
-      { path: 'article-detail', component: ArticleDetailComponent },
+      { path: 'article/:id', component: ArticleDetailComponent },
+      { path: 'articles/create', component: NewArticleComponent }
     ])
   ],
   providers: [
