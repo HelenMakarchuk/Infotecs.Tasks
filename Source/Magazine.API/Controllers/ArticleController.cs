@@ -1,4 +1,4 @@
-﻿using Infotecs.Magazine.Infrastracture.DB.Services;
+﻿using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Magazine.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -9,10 +9,10 @@ namespace Magazine.API.Controllers
     [ApiController]
     public class ArticleController : ControllerBase
     {
-        ArticleService _articleService;
+        IEntityService<Article> _articleService;
         ILogger _logger;
 
-        public ArticleController(ArticleService articleService,
+        public ArticleController(IEntityService<Article> articleService,
                                  ILogger logger)
         {
             _articleService = articleService;
