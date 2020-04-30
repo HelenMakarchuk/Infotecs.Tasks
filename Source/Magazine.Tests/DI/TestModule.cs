@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using Infotecs.Magazine.Domain.Providers;
 using Magazine.Domain.Providers;
-using Magazine.Infrastracture.Contracts.Repository;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
 using Magazine.Infrastracture.DB;
 using Magazine.Infrastracture.DB.Repositories;
 using Magazine.Infrastracture.DB.UnitOfWork;
@@ -20,9 +18,9 @@ namespace Magazine.Tests.DI
         {
             builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>().UseInMemoryDatabase("TestContext").Options)).As<DbContext>().InstancePerLifetimeScope();
 
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(Repository<>)).InstancePerLifetimeScope();
 
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<UnitOfWork>().As<UnitOfWork>().InstancePerLifetimeScope();
 
             builder.RegisterType<HashProvider>().As<HashProvider>().InstancePerLifetimeScope();
             builder.RegisterType<ArticleValidateProvider>().As<ArticleValidateProvider>().InstancePerLifetimeScope();

@@ -1,3 +1,5 @@
+using Autofac;
+using Magazine.Web.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -9,6 +11,8 @@ namespace Magazine.Web
 {
     public class Startup
     {
+        public ILifetimeScope Container { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -18,12 +22,18 @@ namespace Magazine.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddControllersWithViews();
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new ApiModule(Configuration));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,13 +48,19 @@ namespace Magazine.Web
             }
 
             app.UseStaticFiles();
-
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
 
             app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+            });
 
             app.UseSpa(spa =>
             {
@@ -54,13 +70,6 @@ namespace Magazine.Web
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
-            });
-
-            app.Use(async (ctx, next) =>
-            {
-                ctx.Response.Headers.Add("Content-Security-Policy",
-                    "default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';");
-                await next();
             });
         }
     }

@@ -23,6 +23,17 @@ namespace Magazine.API
         {
             services.AddOptions();
             services.AddControllers();
+
+            services.AddCors(
+                options => options.AddPolicy(
+                    "allowall",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                )
+            );
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -42,6 +53,13 @@ namespace Magazine.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseCors(x =>
+            {
+                x.AllowAnyHeader();
+                x.AllowAnyMethod();
+                x.AllowAnyOrigin();
             });
         }
     }

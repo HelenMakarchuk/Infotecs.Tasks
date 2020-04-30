@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
-namespace Magazine.API.DI
+namespace Magazine.Web.DI
 {
     /// <summary>
     /// Модуль контейнера зависимостей для API приложения.
@@ -40,5 +40,6 @@ namespace Magazine.API.DI
                 .WriteTo.File("Logs/.log", rollingInterval: RollingInterval.Day)
                 .CreateLogger()).As<ILogger>().SingleInstance();
         }
+
     }
 }

@@ -1,9 +1,10 @@
-﻿using Infotecs.Magazine.Infrastracture.Contracts.Endpoint.RabbitMq;
+﻿using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
+using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Serilog;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Infotecs.Magazine.Infrastracture.DB.Services
@@ -11,88 +12,55 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
     /// <summary>
     /// Сервис обработки операций CRUD для сущности "Статья".
     /// </summary>
-    public class ArticleService
+    public class ArticleService : IEntityService<Article>
     {
-        IUnitOfWork _unitOfWork;
+        UnitOfWork _unitOfWork;
         ILogger _logger;
 
-        public ArticleService(IUnitOfWork unitOfWork,
+        public ArticleService(UnitOfWork unitOfWork,
                               ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
-        /// <summary>
-        /// Получение списка статей.
-        /// </summary>
-        /// <returns>Возврат статуса выполнения операции.</returns>
-        /// <returns>Возврат списка статей.</returns>
-        public (Statuses status, string resultJson) Get()
+        public List<Article> Get()
         {
-            var articles = _unitOfWork.ArticleRepository.Select(a => new Article() { Id = a.Id, Title = a.Title }).ToList();
-
-            return (Statuses.Ok, JsonConvert.SerializeObject(articles));
+            return _unitOfWork.ArticleRepository.Select(a => new Article() { Id = a.Id, Title = a.Title }).ToList();
         }
 
-        /// <summary>
-        /// Получение статьи по идентификатору.
-        /// </summary>
-        /// <param name="id">Идентификатор статьи.</param>
-        /// <returns>Возврат статуса выполнения операции.</returns>
-        /// <returns>Возврат статьи.</returns>
-        public (Statuses status, string resultJson) GetById(int id)
+        public Article Get(int id)
         {
-            var article = _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.Account).SingleOrDefault(a => a.Id == id);
-
-            return (Statuses.Ok, JsonConvert.SerializeObject(article, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize }));
+            return _unitOfWork.ArticleRepository.Include(a => a.Comments).ThenInclude(c => c.Account).SingleOrDefault(a => a.Id == id);
         }
 
-        /// <summary>
-        /// Создание статьи.
-        /// </summary>
-        /// <param name="article">Статья.</param>
-        /// <returns>Возврат статуса выполнения операции.</returns>
-        /// <returns>Возврат статьи.</returns>
-        public (Statuses status, string resultJson) Create(Article article)
+        public Article Add(Article article)
         {
             var dbArticle = _unitOfWork.ArticleRepository.SingleOrDefault(a => a.Title == article.Title);
 
             if (dbArticle != null)
-                return (Statuses.Error, null);
+                throw new ArgumentException("This title already exists.");
 
             var entry = _unitOfWork.ArticleRepository.Add(article);
             _unitOfWork.Commit();
 
-            return (Statuses.Ok, JsonConvert.SerializeObject(entry.Entity, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Serialize }));
+            return entry.Entity;
         }
 
-        /// <summary>
-        /// Обновление статьи.
-        /// </summary>
-        /// <param name="article">Статья.</param>
-        /// <returns>Возврат статуса выполнения операции.</returns>
-        /// <returns>Возврат статьи.</returns>
-        public (Statuses status, string resultJson) Update(Article article)
+        public Article Update(Article article)
         {
             var entry = _unitOfWork.ArticleRepository.Update(article);
             _unitOfWork.Commit();
 
-            return (Statuses.Ok, JsonConvert.SerializeObject(entry.Entity));
+            return entry.Entity;
         }
 
-        /// <summary>
-        /// Удаление статьи.
-        /// </summary>
-        /// <param name="id">Идентификатор статьи.</param>
-        /// <returns>Возврат статуса выполнения операции.</returns>
-        /// <returns>Возврат статьи.</returns>
-        public (Statuses status, string resultJson) Delete(int id)
+        public Article Delete(int id)
         {
             var entry = _unitOfWork.ArticleRepository.Remove(id);
             _unitOfWork.Commit();
 
-            return (Statuses.Ok, JsonConvert.SerializeObject(entry.Entity));
+            return entry.Entity;
         }
     }
 }

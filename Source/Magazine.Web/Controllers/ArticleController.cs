@@ -3,7 +3,7 @@ using Magazine.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 
-namespace Magazine.API.Controllers
+namespace Magazine.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,8 +23,6 @@ namespace Magazine.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
             return Ok(_articleService.Get());
         }
 
@@ -32,8 +30,6 @@ namespace Magazine.API.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
             return Ok(_articleService.Get(id));
         }
 

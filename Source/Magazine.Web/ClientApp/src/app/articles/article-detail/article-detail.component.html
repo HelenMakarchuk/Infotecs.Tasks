@@ -1,13 +1,19 @@
-<div *ngIf="article$ | async as article">
-  <h3>"{{ article.title }}"</h3>
-  <div>
-    <label>Id: </label>{{ article.id }}
-  </div>
-  <div>
-    <label>Name: </label>
-    <input [(ngModel)]="article.title" placeholder="title" />
-  </div>
-  <p>
-    <button (click)="gotoArticles(article)">Back</button>
-  </p>
-</div>
+<h1>Counter</h1>
+
+<input type="text"
+       class="form-control"
+       id="title"
+       name="title"
+       [(ngModel)]="article.title"
+       placeholder="title">
+
+<input type="text"
+       class="form-control"
+       id="body"
+       name="body"
+       [(ngModel)]="article.body"
+       placeholder="body">
+
+<button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
+<button class="btn btn-primary" (click)="updateArticle()">Update</button>
+<button class="btn btn-primary" (click)="deleteArticle()">Delete</button>

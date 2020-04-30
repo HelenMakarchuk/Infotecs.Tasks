@@ -1,6 +1,5 @@
 ﻿using Magazine.Domain.Entities;
-using Magazine.Infrastracture.Contracts.Repository;
-using Magazine.Infrastracture.Contracts.UnitOfWork;
+using Magazine.Infrastracture.DB.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -9,15 +8,15 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
     /// <summary>
     /// Класс реализует паттерн UnitOfWork.
     /// </summary>
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IDisposable
     {
         DbContext _context;
         bool _disposed;
 
         public UnitOfWork(DbContext context,
-                          IRepository<Account> userRepository,
-                          IRepository<Article> articleRepository,
-                          IRepository<Comment> commentRepository)
+                          Repository<Account> userRepository,
+                          Repository<Article> articleRepository,
+                          Repository<Comment> commentRepository)
         {
             _context = context;
             AccountRepository = userRepository;
@@ -30,9 +29,9 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
             Dispose(false);
         }
 
-        public IRepository<Account> AccountRepository { get; }
-        public IRepository<Article> ArticleRepository { get; }
-        public IRepository<Comment> CommentRepository { get; }
+        public Repository<Account> AccountRepository { get; }
+        public Repository<Article> ArticleRepository { get; }
+        public Repository<Comment> CommentRepository { get; }
 
         public void Commit()
         {

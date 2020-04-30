@@ -1,5 +1,4 @@
 ﻿using Magazine.Domain.Contracts.Entity;
-using Magazine.Infrastracture.Contracts.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
@@ -13,7 +12,7 @@ namespace Magazine.Infrastracture.DB.Repositories
     /// Обобщенный репозиторий для работы с сущностями БД.
     /// </summary>
     /// <typeparam name="T">Тип сущности БД.</typeparam>
-    public class Repository<T> : IRepository<T> where T : class, IEntity
+    public class Repository<T> where T : class, IEntity
     {
         protected DbContext _context;
         protected DbSet<T> _entities;
