@@ -1,0 +1,10 @@
+<button class="btn btn-primary" (click)="navigateToNewArticle()">Write Article</button>
+
+<ul class="articles">
+  <li *ngFor="let article of articles$ | async"
+      [class.selected]="article.id === selectedId">
+    <a [routerLink]="['/article', article.id]">
+      <span class="badge">{{ article.title }}</span>
+    </a>
+  </li>
+</ul>

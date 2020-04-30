@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ArticleDetailComponent } from './articles/article-detail/article-detail.component';
+import { ArticleListComponent } from './articles/article-list/article-list.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { ArticleDetailComponent } from './articles/article-detail/article-detail
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: ArticleDetailComponent, pathMatch: 'full' },
+      { path: '', component: ArticleListComponent, pathMatch: 'full' },
       { path: 'article-detail', component: ArticleDetailComponent },
     ])
   ],
