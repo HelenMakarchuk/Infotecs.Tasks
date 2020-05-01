@@ -43,24 +43,22 @@ export class ArticleService {
   }
 
   getArticles() {
+    debugger;
+
     return this.http.get<ArticleEntity[]>(`${ConfigService.settings.apiUrl}/article`)
       .pipe(
         catchError(this.handleError)
       );
   }
 
+  // TODO: handle-error.service.ts
   handleError(error: HttpErrorResponse) {
     debugger;
 
-    let errorMessage = 'Unknown error!';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side errors
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side errors
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(errorMessage);
+    console.log(error);
+
+    alert('Error while executing operation');
+
+    return throwError(error);
   }
 }

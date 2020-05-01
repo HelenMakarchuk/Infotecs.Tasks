@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
   providers: [ArticleService],
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
-  styleUrls: ['./article-list.component.css']
+  styleUrls: ['./article-list.component.less']
 })
 export class ArticleListComponent implements OnInit {
   articles$: Observable<ArticleEntity[]>;
@@ -22,10 +22,9 @@ export class ArticleListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    debugger;
-
     this.articles$ = this.route.paramMap.pipe(
       switchMap(params => {
+        debugger;
         this.selectedId = +params.get('id');
         return this.service.getArticles();
       }));
@@ -57,7 +56,12 @@ export class ArticleListComponent implements OnInit {
     //});
   }
 
-  navigateToNewArticle() {
-    this.router.navigate(['/articles/create']);
+  navigateToArticle(isNew = false) {
+    debugger;
+
+    if (isNew === true)
+      this.router.navigate(['/articles/create']);
+    else
+      this.router.navigate(['/article', this.selectedId]);
   }
 }

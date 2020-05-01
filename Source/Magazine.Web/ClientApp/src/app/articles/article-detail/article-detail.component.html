@@ -4,18 +4,20 @@
          class="form-control"
          [(ngModel)]="article.title"
          [readonly]="isReadonly"
-         placeholder="title">
+         placeholder="Enter title">
 
   <textarea class="form-control"
             [readonly]="isReadonly"
             [(ngModel)]="article.body"
+            placeholder="Enter body"
             rows="15">
             {{ article.body }}
   </textarea>
 
   <div>
     <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
-    <button class="btn btn-primary" (click)="updateArticle()">{{ updateButtonName }}</button>
-    <button class="btn btn-primary" (click)="deleteArticle()">Delete</button>
+    <button class="btn btn-primary" (click)="updateArticle()" *ngIf=isReadonly>Edit</button>
+    <button class="btn btn-primary" (click)="updateArticle()" *ngIf=!isReadonly>Save</button>
+    <button class="btn btn-primary" (click)="deleteArticle() *ngIf=isReadonly">Delete</button>
   </div>
 </div>

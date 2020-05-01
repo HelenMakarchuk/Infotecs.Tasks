@@ -7,6 +7,6 @@ export interface ArticleEntity {
   teaser: [];
   body: string;
   accountId: number;
-  //account: AccountEntity;
+  account: AccountEntity;
   comments: CommentEntity[];
 }
