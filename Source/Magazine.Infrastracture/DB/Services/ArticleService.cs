@@ -60,9 +60,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
             var entry = _unitOfWork.ArticleRepository.Add(article);
             _unitOfWork.Commit();
 
-            entry.State = EntityState.Detached;
-
-            return Get(entry.Entity.Id);
+            return entry.Entity;
         }
 
         public Article Update(Article article)
@@ -72,8 +70,6 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
             var entry = _unitOfWork.ArticleRepository.Update(article);
             _unitOfWork.Commit();
 
-            entry.State = EntityState.Detached;
-
             return entry.Entity; //Get(entry.Entity.Id);
         }
 
@@ -81,8 +77,6 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
         {
             var entry = _unitOfWork.ArticleRepository.Remove(id);
             _unitOfWork.Commit();
-
-            entry.State = EntityState.Detached;
 
             return Get(entry.Entity.Id);
         }

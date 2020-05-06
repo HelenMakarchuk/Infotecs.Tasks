@@ -36,6 +36,9 @@ namespace Magazine.Infrastracture.DB.UnitOfWork
         public void Commit()
         {
             _context.SaveChanges();
+
+            foreach (var entry in _context.ChangeTracker.Entries())
+                _context.Entry(entry.Entity).State = EntityState.Detached;
         }
 
         public virtual void Dispose(bool disposing)
