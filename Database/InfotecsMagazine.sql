@@ -36,3 +36,7 @@ CREATE TABLE public.comment
 	accountid INT NOT NULL,
 	CONSTRAINT fk_comment_accountid_account_id FOREIGN KEY (accountid) REFERENCES public.account (id)
 );
+
+insert into account (login, password, salt) values ('admin', '1111111111111111111111111111111111111111111111111111111111111111', '111111111111111111111111');
+
+select * from account;

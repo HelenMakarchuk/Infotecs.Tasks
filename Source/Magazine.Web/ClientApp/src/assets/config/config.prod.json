@@ -1,3 +1,4 @@
 {
-  "apiUrl": "http://localhost:63585/api"
+  "apiUrl": "http://localhost:63585/api",
+  "graphqlUrl": "http://localhost:63585"
 }

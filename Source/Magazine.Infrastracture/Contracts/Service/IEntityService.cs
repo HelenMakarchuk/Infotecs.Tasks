@@ -1,5 +1,5 @@
 ﻿using Magazine.Domain.Contracts.Entity;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Infotecs.Magazine.Infrastracture.Contracts.Service
 {
@@ -9,7 +9,7 @@ namespace Infotecs.Magazine.Infrastracture.Contracts.Service
         /// Получение списка сущностей.
         /// </summary>
         /// <returns>Возврат списка сущностей.</returns>
-        List<TEntity> Get();
+        IQueryable<TEntity> Get();
 
         /// <summary>
         /// Получение сущности по идентификатору.

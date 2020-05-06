@@ -1,5 +1,10 @@
 using Autofac;
+using HotChocolate;
+using HotChocolate.AspNetCore;
+using Infotecs.Magazine.Infrastracture.DB.Services;
 using Magazine.Web.DI;
+using Magazine.Web.GraphQL;
+using Magazine.Web.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -25,10 +30,24 @@ namespace Magazine.Web
             services.AddOptions();
             services.AddControllersWithViews();
 
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddSingleton<ArticleService>();
+            services.AddSingleton<CommentService>();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services
+              .AddDataLoaderRegistry()
+              .AddGraphQL(SchemaBuilder
+                  .New()
+                  .AddQueryType<Query>()
+                  .Create());
+
+            services.AddSignalR();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -38,6 +57,12 @@ namespace Magazine.Web
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app
+                .UseRouting()
+                .UseWebSockets()
+                .UseGraphQL()
+                .UsePlayground();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -70,6 +95,11 @@ namespace Magazine.Web
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<MessageHub>("/message");
             });
         }
     }

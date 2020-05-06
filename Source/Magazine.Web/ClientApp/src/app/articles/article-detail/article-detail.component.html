@@ -11,13 +11,13 @@
             [(ngModel)]="article.body"
             placeholder="Enter body"
             rows="15">
-            {{ article.body }}
   </textarea>
 
   <div>
     <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
-    <button class="btn btn-primary" (click)="updateArticle()" *ngIf=isReadonly>Edit</button>
-    <button class="btn btn-primary" (click)="updateArticle()" *ngIf=!isReadonly>Save</button>
-    <button class="btn btn-primary" (click)="deleteArticle() *ngIf=isReadonly">Delete</button>
+    <button class="btn btn-primary" (click)="createArticle()" *ngIf="article.account === null">Create</button>
+    <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && isReadonly">Edit</button>
+    <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && !isReadonly">Save</button>
+    <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="article.account !== null && isReadonly">Delete</button>
   </div>
 </div>
