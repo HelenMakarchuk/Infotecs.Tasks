@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Infrastracture", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Tests", "Source\Magazine.Tests\Magazine.Tests.csproj", "{DDA349D4-483D-4889-9515-895F54261516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magazine.Web", "Source\Magazine.Web\Magazine.Web.csproj", "{C2385930-3D0C-476A-851E-F206B4B3BB6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Web", "Source\Magazine.Web\Magazine.Web.csproj", "{C2385930-3D0C-476A-851E-F206B4B3BB6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
