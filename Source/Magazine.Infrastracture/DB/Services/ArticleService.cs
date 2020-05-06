@@ -74,7 +74,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
 
             entry.State = EntityState.Detached;
 
-            return Get(entry.Entity.Id);
+            return entry.Entity; //Get(entry.Entity.Id);
         }
 
         public Article Delete(int id)

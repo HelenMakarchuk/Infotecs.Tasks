@@ -41,7 +41,7 @@ export class ArticleService {
     return this.http.get<ArticleEntity>(ConfigService.settings.graphqlUrl,
       {
         params: new HttpParams()
-          .append('query', `{ article(id: ${id}) { id, title, body, teaser, accountId } }`)
+          .append('query', `{ article(id: ${id}) { id, title, body, teaser, accountId, account { id, login, password, salt  } } }`)
       })
       .pipe(catchError(this.handleError))
       .pipe(map(result => this.fetchPipe.transform(result, 'article')));
