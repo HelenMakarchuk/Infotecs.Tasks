@@ -30,26 +30,20 @@ namespace Magazine.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOptions();
-            services.AddControllersWithViews();
+            services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
+                    .UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")).Options));
 
-            //services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
-            services.AddSingleton<ArticleService>();
-
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
-
+            services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
+            services.AddSingleton<UnitOfWork, UnitOfWork>();
             services.AddSingleton<ArticleValidateProvider, ArticleValidateProvider>();
             services.AddSingleton<IEntityService<Article>, ArticleService>();
-            services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
-            services.AddScoped<UnitOfWork, UnitOfWork>();
 
-            services.AddEntityFrameworkNpgsql()
-                .AddDbContext<Context>(options => options.UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")));
+            services.AddOptions();
 
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
             services.AddSignalR();
         }
 
