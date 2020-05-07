@@ -8,7 +8,6 @@ using Magazine.Infrastracture.DB.Repositories;
 using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Serilog;
 
 namespace Magazine.Web.DI
 {
@@ -36,12 +35,6 @@ namespace Magazine.Web.DI
             builder.Register((c, p) => (DbContext)new Context(new DbContextOptionsBuilder<Context>()
                     .UseNpgsql(_configuration.GetConnectionString("InfotecsMagazine")).Options))
                     .As<DbContext>().InstancePerLifetimeScope();
-
-            builder.Register((c, p) => new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .WriteTo.File("Logs/.log", rollingInterval: RollingInterval.Day)
-                .CreateLogger()).As<ILogger>().SingleInstance();
         }
-
     }
 }
