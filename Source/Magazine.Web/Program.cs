@@ -15,8 +15,7 @@ namespace Magazine.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://*:8000/");
+                    webBuilder.UseStartup<Startup>();
                 })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory());
     }

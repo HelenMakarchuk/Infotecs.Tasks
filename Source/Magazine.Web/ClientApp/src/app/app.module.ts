@@ -7,12 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ArticleDetailComponent } from './articles/article-detail/article-detail.component';
 import { ArticleListComponent } from './articles/article-list/article-list.component';
+import { FetchPipe } from './fetch-pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticleDetailComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    FetchPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
