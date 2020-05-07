@@ -37,7 +37,7 @@ namespace Magazine.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://*:8000/"); // container port
+                    .UseUrls("http://*:8000/");
 
                 })
                 .UseSerilog();
