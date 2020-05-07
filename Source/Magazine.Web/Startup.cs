@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Magazine.Web
 {
@@ -62,6 +63,8 @@ namespace Magazine.Web
                 .UseWebSockets()
                 .UseGraphQL()
                 .UsePlayground();
+
+            app.UseSerilogRequestLogging();
 
             if (env.IsDevelopment())
             {

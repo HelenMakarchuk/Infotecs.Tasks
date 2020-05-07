@@ -1,7 +1,6 @@
 ﻿using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Magazine.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using System;
 
 namespace Magazine.Web.Controllers
@@ -11,13 +10,10 @@ namespace Magazine.Web.Controllers
     public class ArticleController : ControllerBase
     {
         IEntityService<Article> _articleService;
-        ILogger _logger;
 
-        public ArticleController(IEntityService<Article> articleService,
-                                 ILogger logger)
+        public ArticleController(IEntityService<Article> articleService)
         {
             _articleService = articleService;
-            _logger = logger;
         }
 
         // GET: api/article

@@ -13,13 +13,10 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
     public class CommentService : IEntityService<Comment>
     {
         UnitOfWork _unitOfWork;
-        ILogger _logger;
 
-        public CommentService(UnitOfWork unitOfWork,
-                              ILogger logger)
+        public CommentService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
         }
 
         public IQueryable<Comment> Get()

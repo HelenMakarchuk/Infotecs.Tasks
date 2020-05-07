@@ -14,6 +14,14 @@
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\Out\Release\Magazine.Web</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\Out\Debug\Magazine.Web</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="10.4.2" />
@@ -21,6 +29,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.3" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
 
