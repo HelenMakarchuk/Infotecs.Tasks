@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Tests", "Source\Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Web", "Source\Magazine.Web\Magazine.Web.csproj", "{C2385930-3D0C-476A-851E-F206B4B3BB6C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3EA5E4D7-7F3D-41D0-B19B-93861A372528}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{3EA5E4D7-7F3D-41D0-B19B-93861A372528}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
 	EndProjectSection
