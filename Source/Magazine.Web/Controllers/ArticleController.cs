@@ -9,7 +9,7 @@ namespace Magazine.Web.Controllers
     [ApiController]
     public class ArticleController : ControllerBase
     {
-        IEntityService<Article> _articleService;
+        readonly IEntityService<Article> _articleService;
 
         public ArticleController(IEntityService<Article> articleService)
         {

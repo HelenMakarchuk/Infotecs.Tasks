@@ -4,7 +4,7 @@ RUN apt-get update -yq \
     && curl -sL https://deb.nodesource.com/setup_10.x | bash \
     && apt-get install nodejs -yq
 WORKDIR /app
-EXPOSE 80
+EXPOSE 8000
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 RUN apt-get update -yq \

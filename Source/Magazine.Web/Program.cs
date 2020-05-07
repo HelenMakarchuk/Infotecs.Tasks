@@ -1,4 +1,3 @@
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -12,12 +11,9 @@ namespace Magazine.Web
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-               .MinimumLevel.Debug()
-               .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-               .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-               .Enrich.FromLogContext()
-               .WriteTo.Console()
-               .CreateLogger();
+                .WriteTo.File("Logs/.log", LogEventLevel.Verbose, rollingInterval: RollingInterval.Day)
+                .WriteTo.Console(LogEventLevel.Information)
+                .CreateLogger();
 
             try
             {
@@ -34,8 +30,6 @@ namespace Magazine.Web
             {
                 Log.CloseAndFlush();
             }
-
-            Console.ReadKey();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -46,7 +40,6 @@ namespace Magazine.Web
                     .UseUrls("http://*:8000/"); // container port
 
                 })
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .UseSerilog();
     }
 }

@@ -3,7 +3,6 @@ using Magazine.Domain.Entities;
 using Magazine.Domain.Providers;
 using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 using System;
 using System.Linq;
 
@@ -14,17 +13,14 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
     /// </summary>
     public class ArticleService : IEntityService<Article>
     {
-        UnitOfWork _unitOfWork;
-        ArticleValidateProvider _articleValidateProvider;
-        ILogger _logger;
+        readonly UnitOfWork _unitOfWork;
+        readonly ArticleValidateProvider _articleValidateProvider;
 
         public ArticleService(UnitOfWork unitOfWork,
-                              ArticleValidateProvider articleValidateProvider,
-                              ILogger logger)
+                              ArticleValidateProvider articleValidateProvider)
         {
             _unitOfWork = unitOfWork;
             _articleValidateProvider = articleValidateProvider;
-            _logger = logger;
         }
 
         public IQueryable<Article> Get()
@@ -70,7 +66,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
             var entry = _unitOfWork.ArticleRepository.Update(article);
             _unitOfWork.Commit();
 
-            return entry.Entity; //Get(entry.Entity.Id);
+            return entry.Entity;
         }
 
         public Article Delete(int id)

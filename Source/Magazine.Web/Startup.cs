@@ -1,13 +1,15 @@
 using Autofac;
-using HotChocolate;
-using HotChocolate.AspNetCore;
+using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Infotecs.Magazine.Infrastracture.DB.Services;
-using Magazine.Web.DI;
-using Magazine.Web.GraphQL;
-using Magazine.Web.Hubs;
+using Magazine.Domain.Entities;
+using Magazine.Domain.Providers;
+using Magazine.Infrastracture.DB;
+using Magazine.Infrastracture.DB.Repositories;
+using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,41 +33,28 @@ namespace Magazine.Web
             services.AddOptions();
             services.AddControllersWithViews();
 
-            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSingleton<ArticleService>();
-            services.AddSingleton<CommentService>();
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services
-              .AddDataLoaderRegistry()
-              .AddGraphQL(SchemaBuilder
-                  .New()
-                  .AddQueryType<Query>()
-                  .Create());
+            services.AddSingleton<ArticleValidateProvider, ArticleValidateProvider>();
+            services.AddSingleton<IEntityService<Article>, ArticleService>();
+            services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
+            services.AddScoped<UnitOfWork, UnitOfWork>();
+
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<Context>(options => options.UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")));
 
             services.AddSignalR();
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterModule(new ApiModule(Configuration));
-        }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app
-                .UseRouting()
-                .UseWebSockets()
-                .UseGraphQL()
-                .UsePlayground();
-
-            app.UseSerilogRequestLogging();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,6 +63,8 @@ namespace Magazine.Web
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.UseSerilogRequestLogging();
 
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -98,11 +89,6 @@ namespace Magazine.Web
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHub<MessageHub>("/message");
             });
         }
     }
