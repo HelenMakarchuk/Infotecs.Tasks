@@ -38,6 +38,8 @@ export class ArticleService {
   }
 
   handleError(error: HttpErrorResponse) {
+    debugger;
+
     console.log(error);
     return throwError(error);
   }
