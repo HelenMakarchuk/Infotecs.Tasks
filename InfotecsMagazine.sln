@@ -15,9 +15,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Tests", "Source\Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Web", "Source\Magazine.Web\Magazine.Web.csproj", "{C2385930-3D0C-476A-851E-F206B4B3BB6C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{3EA5E4D7-7F3D-41D0-B19B-93861A372528}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{B53D014E-22DB-42AC-B213-62C80EA7E0A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magazine.Web", "Magazine.Web", "{E4092AA7-6CFA-4BC3-A465-AD97B37A9831}"
 	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
+		Source\Dockerfile = Source\Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magazine.DB", "Magazine.DB", "{3B980C6E-0AE0-452F-9DD9-9AD7BC202543}"
+	ProjectSection(SolutionItems) = preProject
+		Database\Dockerfile = Database\Dockerfile
 	EndProjectSection
 EndProject
 Global
@@ -55,6 +62,8 @@ Global
 		{5D4B7C25-40B7-4565-A8E6-F19F90E1829A} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{DDA349D4-483D-4889-9515-895F54261516} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{C2385930-3D0C-476A-851E-F206B4B3BB6C} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
+		{E4092AA7-6CFA-4BC3-A465-AD97B37A9831} = {B53D014E-22DB-42AC-B213-62C80EA7E0A9}
+		{3B980C6E-0AE0-452F-9DD9-9AD7BC202543} = {B53D014E-22DB-42AC-B213-62C80EA7E0A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {280D25F1-A7B1-4434-AB65-F7118A1E88F9}
