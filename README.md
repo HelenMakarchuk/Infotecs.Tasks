@@ -4,13 +4,13 @@
 
 #### Технологии
 
-* Dapper
-* WPF
-* PostgreSQL
-* Autofac
-* Serilog
-* xUnit
-* Nelibur.Sword
+- [ ] Dapper
+- [x] WPF
+- [x] PostgreSQL
+- [x] Autofac
+- [x] Serilog
+- [x] xUnit
+- [ ] Nelibur.Sword
 
 #### Интерфейс
 ![](/images/Interface.png)
