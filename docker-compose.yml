@@ -6,9 +6,17 @@ services:
     container_name: magazine-web-container
     build:
       context: ./Source
-      dockerfile: Dockerfile
+      dockerfile: Magazine.Web/Dockerfile
     ports:
         - "63585:8000"
+  magazine.api:
+    image: ${DOCKER_REGISTRY-}magazine-api-image
+    container_name: magazine-api-container
+    build:
+      context: ./Source
+      dockerfile: Magazine.API/Dockerfile
+    ports:
+        - "63588:80"
   magazine.db:
     image: ${DOCKER_REGISTRY-}magazine-db-image
     container_name: magazine-db-container

@@ -35,7 +35,7 @@ Run application using Docker or Docker Compose.
   <summary>Docker Compose</summary>
   <p>
  
-  `docker-compose up`
+  `docker-compose up --force-recreate`
  
   </p>
 </details>
