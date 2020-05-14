@@ -35,7 +35,7 @@ Run application using Docker or Docker Compose.
   <summary>Docker Compose</summary>
   <p>
  
-  `docker-compose up --force-recreate`
- 
+  `docker-compose stop && docker-compose rm -f --all && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans`
+
   </p>
 </details>
