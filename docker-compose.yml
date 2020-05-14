@@ -10,6 +10,8 @@ services:
         build:
             context: ./Source
             dockerfile: Magazine.Web/Dockerfile
+        depends_on:
+            - magazine.api
         ports:
             - 63585:8000
 
@@ -18,11 +20,11 @@ services:
         image: ${DOCKER_REGISTRY-}magazine-api-image
         container_name: magazine-api-container
         restart: always
-        depends_on:
-            - nginx
         build:
             context: ./Source
             dockerfile: Magazine.API/Dockerfile
+        depends_on:
+            - magazine.db
         ports:
             - 63588:5000
 
@@ -36,7 +38,7 @@ services:
             dockerfile: Dockerfile
         ports:
             - 5436:5432
-
+      
     # Reverse Proxy Web Server "Nginx"
     nginx:
         image: ${DOCKER_REGISTRY-}nginx-image
@@ -45,6 +47,9 @@ services:
         build:
             context: ./Nginx
             dockerfile: Dockerfile
+        depends_on:
+            - magazine.api
+            - magazine.web
         ports:
             - 5496:8081    # magazine.api
             - 5498:8080    # magazine.web
