@@ -17,6 +17,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Web", "Source\Maga
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.API", "Source\Magazine.API\Magazine.API.csproj", "{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{176BBA86-8C9A-4EE8-85C0-3DE4797E6325}"
+	ProjectSection(SolutionItems) = preProject
+		Database\Dockerfile = Database\Dockerfile
+		Database\init.sql = Database\init.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nginx", "Nginx", "{7BF80C33-BA1B-412F-AE10-4BE8C8E5DBC6}"
+	ProjectSection(SolutionItems) = preProject
+		Nginx\Dockerfile = Nginx\Dockerfile
+		Nginx\nginx.conf = Nginx\nginx.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker-Compose", "Docker-Compose", "{354F4809-8632-449C-B490-0A52E99D74B0}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{51D7BB28-4D7B-434C-99FD-E042E4D4C48B}"
+	ProjectSection(SolutionItems) = preProject
+		Nginx\content\50x.html = Nginx\content\50x.html
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +79,7 @@ Global
 		{DDA349D4-483D-4889-9515-895F54261516} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{C2385930-3D0C-476A-851E-F206B4B3BB6C} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
+		{51D7BB28-4D7B-434C-99FD-E042E4D4C48B} = {7BF80C33-BA1B-412F-AE10-4BE8C8E5DBC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {280D25F1-A7B1-4434-AB65-F7118A1E88F9}
