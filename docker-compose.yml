@@ -1,41 +1,50 @@
 version: '3.4'
 
 services:
+
+    # Angular Web Application "Infotecs Magazine"
     magazine.web:
         image: ${DOCKER_REGISTRY-}magazine-web-image
         container_name: magazine-web-container
+        restart: always
         build:
             context: ./Source
             dockerfile: Magazine.Web/Dockerfile
         ports:
             - 63585:8000
-        restart: always
+
+    # Web API "Infotecs Magazine API"
     magazine.api:
-        depends_on:
-            - nginx
         image: ${DOCKER_REGISTRY-}magazine-api-image
         container_name: magazine-api-container
+        restart: always
+        depends_on:
+            - nginx
         build:
             context: ./Source
             dockerfile: Magazine.API/Dockerfile
         ports:
             - 63588:5000
-        restart: always
+
+    # PostgreSQL Database "Infotecs Magazine Database"
     magazine.db:
         image: ${DOCKER_REGISTRY-}magazine-db-image
         container_name: magazine-db-container
+        restart: always
         build:
             context: ./Database
             dockerfile: Dockerfile
         ports:
             - 5436:5432
-        restart: always
+
+    # Reverse Proxy Web Server "Nginx"
     nginx:
         image: ${DOCKER_REGISTRY-}nginx-image
         container_name: nginx-container
+        restart: always
         build:
             context: ./Nginx
             dockerfile: Dockerfile
         ports:
-            - 5496:8081
-        restart: always
+            - 5496:8081    # magazine.api
+            - 5498:8080    # magazine.web
