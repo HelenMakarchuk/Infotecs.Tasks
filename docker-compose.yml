@@ -25,3 +25,11 @@ services:
             dockerfile: Dockerfile
         ports:
             - "5436:5432"
+    nginx:
+        image: ${DOCKER_REGISTRY-}nginx-image
+        container_name: nginx-container
+        build:
+            context: ./Nginx
+            dockerfile: Dockerfile
+        ports:
+            - "5496:8084"
