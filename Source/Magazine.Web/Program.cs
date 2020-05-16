@@ -17,13 +17,13 @@ namespace Magazine.Web
 
             try
             {
-                Log.Information("Starting web host");
+                Log.Information("Starting Infotecs Magazine Web Application");
                 CreateHostBuilder(args).Build().Run();
                 return 0;
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Host terminated unexpectedly");
+                Log.Fatal(ex, "Infotecs Magazine Web Application terminated unexpectedly");
                 return 1;
             }
             finally
@@ -37,7 +37,7 @@ namespace Magazine.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://*:8000/");
+                    .UseUrls("http://*:8000");
 
                 })
                 .UseSerilog();

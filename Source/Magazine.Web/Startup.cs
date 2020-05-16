@@ -1,15 +1,7 @@
 using Autofac;
-using Infotecs.Magazine.Infrastracture.Contracts.Service;
-using Infotecs.Magazine.Infrastracture.DB.Services;
-using Magazine.Domain.Entities;
-using Magazine.Domain.Providers;
-using Magazine.Infrastracture.DB;
-using Magazine.Infrastracture.DB.Repositories;
-using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,19 +22,6 @@ namespace Magazine.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
-                    .UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")).Options));
-
-            services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
-            services.AddSingleton<UnitOfWork, UnitOfWork>();
-            services.AddSingleton<ArticleValidateProvider, ArticleValidateProvider>();
-            services.AddSingleton<IEntityService<Article>, ArticleService>();
-
-            services.AddOptions();
-
-            services.AddControllers()
-                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
             services.AddSignalR();
         }
@@ -59,19 +38,9 @@ namespace Magazine.Web
             }
 
             app.UseSerilogRequestLogging();
-
             app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
+            app.UseSpaStaticFiles();
             app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
 
             app.UseSpa(spa =>
             {

@@ -13,7 +13,7 @@ services:
         depends_on:
             - magazine.api
         ports:
-            - 63585:8000
+            - 63585:8000    # http://localhost:63585
 
     # Web API "Infotecs Magazine API"
     magazine.api:
@@ -26,7 +26,7 @@ services:
         depends_on:
             - magazine.db
         ports:
-            - 63588:5000
+            - 63588:5000    # http://localhost:63588
   
     # PostgreSQL Database "Infotecs Magazine Database"
     magazine.db:
