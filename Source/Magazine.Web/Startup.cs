@@ -1,4 +1,4 @@
-using Autofac;
+//using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -11,8 +11,6 @@ namespace Magazine.Web
 {
     public class Startup
     {
-        public ILifetimeScope Container { get; private set; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,20 +21,11 @@ namespace Magazine.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
-            services.AddSignalR();
+            //services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
-
             app.UseSerilogRequestLogging();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

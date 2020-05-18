@@ -13,9 +13,6 @@ RUN apt-get update -yq \
 WORKDIR /src
 COPY ["Magazine.Web/Magazine.Web.csproj", "Magazine.Web/"]
 
-COPY ["Magazine.Domain/Magazine.Domain.csproj", "Magazine.Domain/"]
-COPY ["Core/Core.csproj", "Core/"]
-
 RUN dotnet restore "Magazine.Web/Magazine.Web.csproj"
 COPY . .
 WORKDIR "/src/Magazine.Web"

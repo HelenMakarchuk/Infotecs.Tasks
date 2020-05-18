@@ -20,7 +20,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{176BBA86-8C9A-4EE8-85C0-3DE4797E6325}"
 	ProjectSection(SolutionItems) = preProject
 		Database\Dockerfile = Database\Dockerfile
-		Database\init.sql = Database\init.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nginx", "Nginx", "{7BF80C33-BA1B-412F-AE10-4BE8C8E5DBC6}"
