@@ -13,7 +13,6 @@ RUN apt-get update -yq \
 WORKDIR /src
 COPY ["Magazine.Web/Magazine.Web.csproj", "Magazine.Web/"]
 
-COPY ["Magazine.Infrastracture/Magazine.Infrastracture.csproj", "Magazine.Infrastracture/"]
 COPY ["Magazine.Domain/Magazine.Domain.csproj", "Magazine.Domain/"]
 COPY ["Core/Core.csproj", "Core/"]
 

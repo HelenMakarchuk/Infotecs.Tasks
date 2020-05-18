@@ -33,6 +33,8 @@ namespace Magazine.API
             services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
                      .UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")).Options));
 
+            services.AddCors();
+
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
@@ -44,6 +46,7 @@ namespace Magazine.API
 
             app.UseRouting();
             app.UseAuthorization();
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
