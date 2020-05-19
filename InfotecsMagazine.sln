@@ -15,25 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Tests", "Source\Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.API", "Source\Magazine.API\Magazine.API.csproj", "{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{176BBA86-8C9A-4EE8-85C0-3DE4797E6325}"
-	ProjectSection(SolutionItems) = preProject
-		Database\Dockerfile = Database\Dockerfile
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nginx", "Nginx", "{7BF80C33-BA1B-412F-AE10-4BE8C8E5DBC6}"
-	ProjectSection(SolutionItems) = preProject
-		Nginx\Dockerfile = Nginx\Dockerfile
-		Nginx\nginx.conf = Nginx\nginx.conf
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker-Compose", "Docker-Compose", "{354F4809-8632-449C-B490-0A52E99D74B0}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{51D7BB28-4D7B-434C-99FD-E042E4D4C48B}"
-	ProjectSection(SolutionItems) = preProject
-		Nginx\content\50x.html = Nginx\content\50x.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magazine.Web", "Magazine.Web", "{FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}"
@@ -43,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magazine.Web", "Magazine.We
 		Source\Magazine.Web\angular.json = Source\Magazine.Web\angular.json
 		Source\Magazine.Web\browserslist = Source\Magazine.Web\browserslist
 		Source\Magazine.Web\Dockerfile = Source\Magazine.Web\Dockerfile
+		Source\Magazine.Web\nginx.conf = Source\Magazine.Web\nginx.conf
 		Source\Magazine.Web\package-lock.json = Source\Magazine.Web\package-lock.json
 		Source\Magazine.Web\package.json = Source\Magazine.Web\package.json
 		Source\Magazine.Web\README.md = Source\Magazine.Web\README.md
@@ -176,7 +161,6 @@ Global
 		{5D4B7C25-40B7-4565-A8E6-F19F90E1829A} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{DDA349D4-483D-4889-9515-895F54261516} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
-		{51D7BB28-4D7B-434C-99FD-E042E4D4C48B} = {7BF80C33-BA1B-412F-AE10-4BE8C8E5DBC6}
 		{FE77DDC4-9ABD-408F-8B8A-0CF55C22E835} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{7FACFF21-2719-4FA1-96E6-85F60D70EC22} = {FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}
 		{F26EF410-D52E-4A1D-BD4C-C74E0AB067AA} = {FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}

@@ -8,7 +8,7 @@ services:
         container_name: magazine-web-container
         restart: always
         build:
-            context: ./Source/Magazine.Web/ClientApp
+            context: ./Source/Magazine.Web
             dockerfile: Dockerfile
         depends_on:
             - magazine.api
@@ -23,29 +23,13 @@ services:
             dockerfile: Magazine.API/Dockerfile
         depends_on:
             - magazine.db
-  
+ 
     # PostgreSQL Database "Infotecs Magazine Database"
     magazine.db:
-        image: ${DOCKER_REGISTRY-}magazine-db-image
+        image: postgres
         container_name: magazine-db-container
         restart: always
-        build:
-            context: ./Database
-            dockerfile: Dockerfile
+        environment:
+            - POSTGRES_PASSWORD=1        
         ports:
             - 5436:5432
-
-    # Reverse Proxy Web Server "Nginx"
-    nginx:
-        image: ${DOCKER_REGISTRY-}nginx-image
-        container_name: nginx-container
-        restart: always
-        build:
-            context: ./Nginx
-            dockerfile: Dockerfile
-        depends_on:
-            - magazine.api
-            - magazine.web
-        ports:
-            - 5498:8080    # web    http://localhost:5498
-            - 5690:8094    # web ssl    https://localhost:5690
