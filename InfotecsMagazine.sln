@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Infrastracture", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Tests", "Source\Magazine.Tests\Magazine.Tests.csproj", "{DDA349D4-483D-4889-9515-895F54261516}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Web", "Source\Magazine.Web\Magazine.Web.csproj", "{C2385930-3D0C-476A-851E-F206B4B3BB6C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.API", "Source\Magazine.API\Magazine.API.csproj", "{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{176BBA86-8C9A-4EE8-85C0-3DE4797E6325}"
@@ -36,6 +34,111 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{51D7BB28-4D7B-434C-99FD-E042E4D4C48B}"
 	ProjectSection(SolutionItems) = preProject
 		Nginx\content\50x.html = Nginx\content\50x.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magazine.Web", "Magazine.Web", "{FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\.editorconfig = Source\Magazine.Web\.editorconfig
+		Source\Magazine.Web\.gitignore = Source\Magazine.Web\.gitignore
+		Source\Magazine.Web\angular.json = Source\Magazine.Web\angular.json
+		Source\Magazine.Web\browserslist = Source\Magazine.Web\browserslist
+		Source\Magazine.Web\Dockerfile = Source\Magazine.Web\Dockerfile
+		Source\Magazine.Web\package-lock.json = Source\Magazine.Web\package-lock.json
+		Source\Magazine.Web\package.json = Source\Magazine.Web\package.json
+		Source\Magazine.Web\README.md = Source\Magazine.Web\README.md
+		Source\Magazine.Web\tsconfig.json = Source\Magazine.Web\tsconfig.json
+		Source\Magazine.Web\tslint.json = Source\Magazine.Web\tslint.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wwwroot", "wwwroot", "{7FACFF21-2719-4FA1-96E6-85F60D70EC22}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\wwwroot\favicon.ico = Source\Magazine.Web\wwwroot\favicon.ico
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\index.html = Source\Magazine.Web\src\index.html
+		Source\Magazine.Web\src\karma.conf.js = Source\Magazine.Web\src\karma.conf.js
+		Source\Magazine.Web\src\main.ts = Source\Magazine.Web\src\main.ts
+		Source\Magazine.Web\src\polyfills.ts = Source\Magazine.Web\src\polyfills.ts
+		Source\Magazine.Web\src\styles.less = Source\Magazine.Web\src\styles.less
+		Source\Magazine.Web\src\test.ts = Source\Magazine.Web\src\test.ts
+		Source\Magazine.Web\src\tsconfig.app.json = Source\Magazine.Web\src\tsconfig.app.json
+		Source\Magazine.Web\src\tsconfig.server.json = Source\Magazine.Web\src\tsconfig.server.json
+		Source\Magazine.Web\src\tsconfig.spec.json = Source\Magazine.Web\src\tsconfig.spec.json
+		Source\Magazine.Web\src\tslint.json = Source\Magazine.Web\src\tslint.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "environments", "environments", "{6FEDCF03-AC46-4438-AB60-D819A162C1E2}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\environments\environment.dev.ts = Source\Magazine.Web\src\environments\environment.dev.ts
+		Source\Magazine.Web\src\environments\environment.prod.ts = Source\Magazine.Web\src\environments\environment.prod.ts
+		Source\Magazine.Web\src\environments\environment.ts = Source\Magazine.Web\src\environments\environment.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{EC0713CF-33D9-4538-86D0-DD7FE27ECC8E}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\assets\.gitkeep = Source\Magazine.Web\src\assets\.gitkeep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{2A7E18B0-B9A7-488E-A375-653E9D0C0F2D}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\assets\config\config.dev.json = Source\Magazine.Web\src\assets\config\config.dev.json
+		Source\Magazine.Web\src\assets\config\config.prod.json = Source\Magazine.Web\src\assets\config\config.prod.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{70A106B5-96F6-4ACC-B5FF-A884880925BF}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\app.component.html = Source\Magazine.Web\src\app\app.component.html
+		Source\Magazine.Web\src\app\app.component.ts = Source\Magazine.Web\src\app\app.component.ts
+		Source\Magazine.Web\src\app\app.module.ts = Source\Magazine.Web\src\app\app.module.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "models", "models", "{6BAF4DD2-7E6B-4AEB-BE6B-47433FB9EE93}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\models\IConfig.ts = Source\Magazine.Web\src\app\models\IConfig.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "message", "message", "{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\message\message.service.ts = Source\Magazine.Web\src\app\message\message.service.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{D4B43F79-06AF-43F8-9704-7FAF84F263E9}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\config\config.component.ts = Source\Magazine.Web\src\app\config\config.component.ts
+		Source\Magazine.Web\src\app\config\config.service.ts = Source\Magazine.Web\src\app\config\config.service.ts
+		Source\Magazine.Web\src\app\config\config.ts = Source\Magazine.Web\src\app\config\config.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comments", "comments", "{EF19E704-9415-4826-8158-0447AC351554}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\comments\comment.ts = Source\Magazine.Web\src\app\comments\comment.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "articles", "articles", "{F90E8485-C034-48CB-A45E-AF4252BFCB57}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\articles\article.service.ts = Source\Magazine.Web\src\app\articles\article.service.ts
+		Source\Magazine.Web\src\app\articles\article.ts = Source\Magazine.Web\src\app\articles\article.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "article-list", "article-list", "{53801B82-E8F3-49D2-B165-DE95C1D4687E}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\articles\article-list\article-list.component.html = Source\Magazine.Web\src\app\articles\article-list\article-list.component.html
+		Source\Magazine.Web\src\app\articles\article-list\article-list.component.less = Source\Magazine.Web\src\app\articles\article-list\article-list.component.less
+		Source\Magazine.Web\src\app\articles\article-list\article-list.component.ts = Source\Magazine.Web\src\app\articles\article-list\article-list.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "article-detail", "article-detail", "{F2630993-871A-4487-9995-A2E2F3CF3BC0}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\articles\article-detail\article-detail.component.html = Source\Magazine.Web\src\app\articles\article-detail\article-detail.component.html
+		Source\Magazine.Web\src\app\articles\article-detail\article-detail.component.less = Source\Magazine.Web\src\app\articles\article-detail\article-detail.component.less
+		Source\Magazine.Web\src\app\articles\article-detail\article-detail.component.ts = Source\Magazine.Web\src\app\articles\article-detail\article-detail.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "accounts", "accounts", "{962B85A9-7FD8-4C09-B1E2-193CA98CE26F}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\accounts\account.ts = Source\Magazine.Web\src\app\accounts\account.ts
 	EndProjectSection
 EndProject
 Global
@@ -60,10 +163,6 @@ Global
 		{DDA349D4-483D-4889-9515-895F54261516}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDA349D4-483D-4889-9515-895F54261516}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDA349D4-483D-4889-9515-895F54261516}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2385930-3D0C-476A-851E-F206B4B3BB6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2385930-3D0C-476A-851E-F206B4B3BB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2385930-3D0C-476A-851E-F206B4B3BB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2385930-3D0C-476A-851E-F206B4B3BB6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -76,9 +175,23 @@ Global
 		{082705F0-6EFD-406D-9682-FD497A6FCBBC} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{5D4B7C25-40B7-4565-A8E6-F19F90E1829A} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{DDA349D4-483D-4889-9515-895F54261516} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
-		{C2385930-3D0C-476A-851E-F206B4B3BB6C} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{51D7BB28-4D7B-434C-99FD-E042E4D4C48B} = {7BF80C33-BA1B-412F-AE10-4BE8C8E5DBC6}
+		{FE77DDC4-9ABD-408F-8B8A-0CF55C22E835} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
+		{7FACFF21-2719-4FA1-96E6-85F60D70EC22} = {FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}
+		{F26EF410-D52E-4A1D-BD4C-C74E0AB067AA} = {FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}
+		{6FEDCF03-AC46-4438-AB60-D819A162C1E2} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
+		{EC0713CF-33D9-4538-86D0-DD7FE27ECC8E} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
+		{2A7E18B0-B9A7-488E-A375-653E9D0C0F2D} = {EC0713CF-33D9-4538-86D0-DD7FE27ECC8E}
+		{70A106B5-96F6-4ACC-B5FF-A884880925BF} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
+		{6BAF4DD2-7E6B-4AEB-BE6B-47433FB9EE93} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{D4B43F79-06AF-43F8-9704-7FAF84F263E9} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{EF19E704-9415-4826-8158-0447AC351554} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{F90E8485-C034-48CB-A45E-AF4252BFCB57} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{53801B82-E8F3-49D2-B165-DE95C1D4687E} = {F90E8485-C034-48CB-A45E-AF4252BFCB57}
+		{F2630993-871A-4487-9995-A2E2F3CF3BC0} = {F90E8485-C034-48CB-A45E-AF4252BFCB57}
+		{962B85A9-7FD8-4C09-B1E2-193CA98CE26F} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {280D25F1-A7B1-4434-AB65-F7118A1E88F9}

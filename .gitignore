@@ -339,3 +339,11 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /WebApplication1
+/Source/Magazine.Web/src/app/models/IConfig.js
+/Source/Magazine.Web/src/app/models/IConfig.js.map
+/Source/Magazine.Web/src/app/config/config.js
+/Source/Magazine.Web/src/app/config/config.js.map
+/Source/Magazine.Web/src/app/config/config.component.js
+/Source/Magazine.Web/src/app/config/config.component.js.map
+/Source/Magazine.Web/src/app/articles/article.js
+/Source/Magazine.Web/src/app/articles/article.js.map
