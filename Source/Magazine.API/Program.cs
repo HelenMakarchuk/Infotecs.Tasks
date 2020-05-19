@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -34,12 +35,15 @@ namespace Magazine.API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://*:5000");
+                    var env = hostingContext.HostingEnvironment;
 
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                          .AddEnvironmentVariables();
                 })
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
                 .UseSerilog();
     }
 }

@@ -6,7 +6,7 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 })
 export class MessageService {
   broadcastMessageReceived = new EventEmitter<string>();
-  connectionEstablished = new EventEmitter<Boolean>();
+  connectionEstablished = new EventEmitter<boolean>();
 
   private connectionIsEstablished = false;
   private connection: HubConnection;
@@ -33,6 +33,8 @@ export class MessageService {
     // после того как сообщение обработано на сервере
     this.connection.on('broadcastMessage', message => {
       debugger;
+      console.log("Notify all clients");
+
       // уведомление клиентов
       this.broadcastMessageReceived.emit(message);
     });

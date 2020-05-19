@@ -21,6 +21,9 @@ services:
         image: ${DOCKER_REGISTRY-}magazine-api-image
         container_name: magazine-api-container
         restart: always
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://*:5000
         build:
             context: ./Source
             dockerfile: Magazine.API/Dockerfile
