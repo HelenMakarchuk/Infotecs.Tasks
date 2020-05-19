@@ -347,3 +347,7 @@ healthchecksdb
 /Source/Magazine.Web/src/app/config/config.component.js.map
 /Source/Magazine.Web/src/app/articles/article.js
 /Source/Magazine.Web/src/app/articles/article.js.map
+/Source/Magazine.Web/src/environments/environment.prod.js
+/Source/Magazine.Web/src/environments/environment.prod.js.map
+/Source/Magazine.Web/src/environments/environment.dev.js
+/Source/Magazine.Web/src/environments/environment.dev.js.map
