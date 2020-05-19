@@ -22,7 +22,7 @@ export class ArticleDetailComponent implements OnInit {
 
     this.messageService.broadcastMessageReceived.subscribe(message => {
       debugger;
-      alert("This article was changed by another user. Refresh this article to get last changes.");
+      alert(message);
     });  
   }
 
@@ -84,7 +84,7 @@ export class ArticleDetailComponent implements OnInit {
           debugger;
 
           this.article = result as ArticleEntity;
-          this.messageService.sendMessage("some message");
+          this.messageService.sendMessage("This article was changed by another user. Refresh this article to get last changes.");
         },
         () => alert('Error while updating article')
       );
