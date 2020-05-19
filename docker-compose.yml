@@ -12,6 +12,9 @@ services:
             dockerfile: Dockerfile
         depends_on:
             - magazine.api
+        ports:
+            - 5498:8080    #        http://localhost:5498
+            - 5690:8094    # ssl    https://localhost:5690
 
     # Web API "Infotecs Magazine API"
     magazine.api:
