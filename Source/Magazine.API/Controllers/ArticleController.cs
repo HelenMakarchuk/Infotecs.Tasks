@@ -1,6 +1,7 @@
 ﻿using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Magazine.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System;
 
 namespace Magazine.API.Controllers
@@ -10,58 +11,93 @@ namespace Magazine.API.Controllers
     public class ArticleController : ControllerBase
     {
         readonly IEntityService<Article> _articleService;
+        readonly ILogger _logger;
 
-        public ArticleController(IEntityService<Article> articleService)
+        public ArticleController(IEntityService<Article> articleService,
+                                 ILogger logger)
         {
             _articleService = articleService;
+            _logger = logger.ForContext<ArticleController>();
         }
 
         // GET: api/article
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_articleService.Get());
+            try
+            {
+                _logger.Debug("Start get request");
+                return Ok(_articleService.Get());
+            }
+            finally
+            {
+                _logger.Debug("Complete get request");
+            }
         }
 
         // GET: api/article/4
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_articleService.Get(id));
+            try
+            {
+                _logger.Debug("Start get request for id = {id}", id);
+                return Ok(_articleService.Get(id));
+            }
+            finally
+            {
+                _logger.Debug("Complete get request for id = {id}", id);
+            }
         }
 
         // POST: api/article
         [HttpPost]
         public IActionResult Add(Article article)
         {
-            Article result = null;
-
-            // Add global exception handler for all methods
-
             try
             {
-                result = _articleService.Add(article);
+                _logger.Debug("Start add request for {article}", article);
+                return Ok(_articleService.Add(article));
             }
             catch (ArgumentException ex)
             {
+                _logger.Warning(ex, "Warning while add request for {article}", article);
                 return BadRequest(ex);
             }
-
-            return Ok(result);
+            finally
+            {
+                _logger.Debug("Complete add request for {article}", article);
+            }
         }
 
         // PUT: api/article/4
         [HttpPut("{id}")]
         public IActionResult Update(Article article)
         {
-            return Ok(_articleService.Update(article));
+            try
+            {
+                _logger.Debug("Start update request for {article}", article);
+                return Ok(_articleService.Update(article));
+            }
+            finally
+            {
+                _logger.Debug("Complete update request for {article}", article);
+            }
         }
 
         // DELETE: api/article/4
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            return Ok(_articleService.Delete(id));
+            try
+            {
+                _logger.Debug("Start delete request for id = {id}", id);
+                return Ok(_articleService.Delete(id));
+            }
+            finally
+            {
+                _logger.Debug("Complete delete request for id = {id}", id);
+            }
         }
     }
 }

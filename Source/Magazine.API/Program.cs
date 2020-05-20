@@ -1,5 +1,5 @@
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -11,19 +11,20 @@ namespace Magazine.API
     {
         public static int Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("Logs/.log", LogEventLevel.Verbose, rollingInterval: RollingInterval.Day)
-                .WriteTo.Console(LogEventLevel.Information)
-                .CreateLogger();
-
             try
             {
-                Log.Information("Starting Infotecs Magazine Web API");
-                CreateHostBuilder(args).Build().Run();
+                CreateWebHostBuilder(args).Build().Run();
                 return 0;
             }
             catch (Exception ex)
             {
+                // Конфигурация логирования независимо от основной конфигурации приложения при возникновении исключения при запуске приложения.
+                if (Log.Logger == null || Log.Logger.GetType().Name == "SilentLogger")
+                    Log.Logger = new LoggerConfiguration()
+                                         .MinimumLevel.Verbose()
+                                         .WriteTo.File("Logs/.log", LogEventLevel.Verbose, rollingInterval: RollingInterval.Hour)
+                                         .CreateLogger();
+
                 Log.Fatal(ex, "Infotecs Magazine Web API terminated unexpectedly");
                 return 1;
             }
@@ -33,17 +34,9 @@ namespace Magazine.API
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    var env = hostingContext.HostingEnvironment;
-
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                          .AddEnvironmentVariables();
-                })
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
-                .UseSerilog();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration))
+                .UseStartup<Startup>();
     }
 }
