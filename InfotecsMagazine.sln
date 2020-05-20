@@ -56,20 +56,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F26EF410-D52
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "environments", "environments", "{6FEDCF03-AC46-4438-AB60-D819A162C1E2}"
 	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\environments\environment.dev.ts = Source\Magazine.Web\src\environments\environment.dev.ts
-		Source\Magazine.Web\src\environments\environment.prod.ts = Source\Magazine.Web\src\environments\environment.prod.ts
+		Source\Magazine.Web\src\environments\environment.development.ts = Source\Magazine.Web\src\environments\environment.development.ts
+		Source\Magazine.Web\src\environments\environment.production.ts = Source\Magazine.Web\src\environments\environment.production.ts
 		Source\Magazine.Web\src\environments\environment.ts = Source\Magazine.Web\src\environments\environment.ts
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{EC0713CF-33D9-4538-86D0-DD7FE27ECC8E}"
 	ProjectSection(SolutionItems) = preProject
 		Source\Magazine.Web\src\assets\.gitkeep = Source\Magazine.Web\src\assets\.gitkeep
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{2A7E18B0-B9A7-488E-A375-653E9D0C0F2D}"
-	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\assets\config\config.dev.json = Source\Magazine.Web\src\assets\config\config.dev.json
-		Source\Magazine.Web\src\assets\config\config.prod.json = Source\Magazine.Web\src\assets\config\config.prod.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{70A106B5-96F6-4ACC-B5FF-A884880925BF}"
@@ -79,21 +73,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{70A106B5-96F
 		Source\Magazine.Web\src\app\app.module.ts = Source\Magazine.Web\src\app\app.module.ts
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "models", "models", "{6BAF4DD2-7E6B-4AEB-BE6B-47433FB9EE93}"
-	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\app\models\IConfig.ts = Source\Magazine.Web\src\app\models\IConfig.ts
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "message", "message", "{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}"
 	ProjectSection(SolutionItems) = preProject
 		Source\Magazine.Web\src\app\message\message.service.ts = Source\Magazine.Web\src\app\message\message.service.ts
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{D4B43F79-06AF-43F8-9704-7FAF84F263E9}"
-	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\app\config\config.component.ts = Source\Magazine.Web\src\app\config\config.component.ts
-		Source\Magazine.Web\src\app\config\config.service.ts = Source\Magazine.Web\src\app\config\config.service.ts
-		Source\Magazine.Web\src\app\config\config.ts = Source\Magazine.Web\src\app\config\config.ts
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comments", "comments", "{EF19E704-9415-4826-8158-0447AC351554}"
@@ -166,11 +148,8 @@ Global
 		{F26EF410-D52E-4A1D-BD4C-C74E0AB067AA} = {FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}
 		{6FEDCF03-AC46-4438-AB60-D819A162C1E2} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
 		{EC0713CF-33D9-4538-86D0-DD7FE27ECC8E} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
-		{2A7E18B0-B9A7-488E-A375-653E9D0C0F2D} = {EC0713CF-33D9-4538-86D0-DD7FE27ECC8E}
 		{70A106B5-96F6-4ACC-B5FF-A884880925BF} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
-		{6BAF4DD2-7E6B-4AEB-BE6B-47433FB9EE93} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
 		{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
-		{D4B43F79-06AF-43F8-9704-7FAF84F263E9} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
 		{EF19E704-9415-4826-8158-0447AC351554} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
 		{F90E8485-C034-48CB-A45E-AF4252BFCB57} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
 		{53801B82-E8F3-49D2-B165-DE95C1D4687E} = {F90E8485-C034-48CB-A45E-AF4252BFCB57}
