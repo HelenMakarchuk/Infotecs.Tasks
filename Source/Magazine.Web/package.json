@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production",
-    "build:ssr": "ng run Magazine.Web:server:dev",
+    "build": "ng build",
+    "build:ssr": "ng run Magazine.Web:server:development",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

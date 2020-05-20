@@ -74,6 +74,9 @@
           "configurations": {
             "production": {
               "browserTarget": "Magazine.Web:build:production"
+            },
+            "development": {
+              "browserTarget": "Magazine.Web:build:development"
             }
           }
         },
@@ -119,7 +122,7 @@
             "tsConfig": "src/tsconfig.server.json"
           },
           "configurations": {
-            "dev": {
+            "development": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
