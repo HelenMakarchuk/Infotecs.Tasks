@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleEntity } from '../article';
-import { ArticleService } from '../article.service';
-import { MessageHubService } from '../../services/message-hub.service';
+import { ArticleService } from '../../services/article/article.service';
+import { MessageHubService } from '../../services/message/message-hub.service';
 
 @Component({
   selector: 'app-article-detail',

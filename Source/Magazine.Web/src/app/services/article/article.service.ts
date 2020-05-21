@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { ArticleEntity } from './article';
+import { environment } from '../../../environments/environment';
+import { ArticleEntity } from '../../articles/article';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -38,8 +38,6 @@ export class ArticleService {
   }
 
   handleError(error: HttpErrorResponse) {
-    debugger;
-
     console.log(error);
     return throwError(error);
   }

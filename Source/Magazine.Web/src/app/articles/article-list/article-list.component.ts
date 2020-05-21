@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArticleService } from '../article.service';
+import { ArticleService } from '../../services/article/article.service';
 import { ArticleEntity } from '../article';
 
 @Component({
@@ -21,12 +21,10 @@ export class ArticleListComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(
       params => {
-        debugger;
         this.selectedId = +params.get('id');
         this.service.getArticles()
           .subscribe(
             result => {
-              debugger;
               this.articles = result as ArticleEntity[];
             },
             () => alert('Error while opening article')
@@ -35,8 +33,6 @@ export class ArticleListComponent implements OnInit {
   }
 
   navigateToArticle(article: ArticleEntity = null) {
-    debugger;
-
     if (article !== null) {
       this.router.navigate(['/article', article.id]);
       return;

@@ -74,9 +74,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{70A106B5-96F
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}"
-	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\app\services\message-hub.service.ts = Source\Magazine.Web\src\app\services\message-hub.service.ts
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comments", "comments", "{EF19E704-9415-4826-8158-0447AC351554}"
 	ProjectSection(SolutionItems) = preProject
@@ -85,7 +82,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comments", "comments", "{EF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "articles", "articles", "{F90E8485-C034-48CB-A45E-AF4252BFCB57}"
 	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\app\articles\article.service.ts = Source\Magazine.Web\src\app\articles\article.service.ts
 		Source\Magazine.Web\src\app\articles\article.ts = Source\Magazine.Web\src\app\articles\article.ts
 	EndProjectSection
 EndProject
@@ -106,6 +102,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "accounts", "accounts", "{962B85A9-7FD8-4C09-B1E2-193CA98CE26F}"
 	ProjectSection(SolutionItems) = preProject
 		Source\Magazine.Web\src\app\accounts\account.ts = Source\Magazine.Web\src\app\accounts\account.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "message", "message", "{89137A50-F5A9-4AEB-A070-92E031F579DD}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\services\message\message-hub.service.ts = Source\Magazine.Web\src\app\services\message\message-hub.service.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "article", "article", "{9C20C30E-639B-4DB1-B950-1F33E88F1EA4}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\services\article\article.service.ts = Source\Magazine.Web\src\app\services\article\article.service.ts
 	EndProjectSection
 EndProject
 Global
@@ -155,6 +161,8 @@ Global
 		{53801B82-E8F3-49D2-B165-DE95C1D4687E} = {F90E8485-C034-48CB-A45E-AF4252BFCB57}
 		{F2630993-871A-4487-9995-A2E2F3CF3BC0} = {F90E8485-C034-48CB-A45E-AF4252BFCB57}
 		{962B85A9-7FD8-4C09-B1E2-193CA98CE26F} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{89137A50-F5A9-4AEB-A070-92E031F579DD} = {13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}
+		{9C20C30E-639B-4DB1-B950-1F33E88F1EA4} = {13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {280D25F1-A7B1-4434-AB65-F7118A1E88F9}
