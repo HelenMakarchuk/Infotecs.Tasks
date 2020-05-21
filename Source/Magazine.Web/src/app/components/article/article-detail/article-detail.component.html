@@ -1,19 +1,29 @@
 <div>
-  <input id="title"
-         type="text"
-         class="form-control"
-         [(ngModel)]="article.title"
-         [readonly]="isReadonly"
-         placeholder="Enter title">
+  <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
+    <mat-label *ngIf="!isReadonly">
+      Title
+    </mat-label>
 
-  <textarea class="form-control"
-            [readonly]="isReadonly"
-            [(ngModel)]="article.body"
-            placeholder="Enter body"
-            rows="15">
-  </textarea>
+    <input matInput
+           [(ngModel)]="article.title"
+           [readonly]="isReadonly"
+           placeholder="Ex. ASP.Net Core Web API with Docker Compose, PostgreSQL and EF Core.">
+  </mat-form-field>
 
-  <div>
+  <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
+    <mat-label *ngIf="!isReadonly">
+      Content
+    </mat-label>
+
+    <textarea matInput
+              [readonly]="isReadonly"
+              [(ngModel)]="article.body"
+              placeholder="Ex. In this article .."
+              cdkTextareaAutosize>
+    </textarea>
+  </mat-form-field>
+
+  <div class="menu-panel">
     <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
     <button class="btn btn-primary" (click)="createArticle()" *ngIf="article.account === null">Create</button>
     <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && isReadonly">Edit</button>
