@@ -3,8 +3,8 @@
 #### Технологии
 
 - [x] Angular
-- [ ] WebApi
-- [ ] Less
+- [x] WebApi
+- [x] Less
 - [ ] SignalR
 - [x] Docker
 - [x] Docker Compose
