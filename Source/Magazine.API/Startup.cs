@@ -1,5 +1,6 @@
 using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Infotecs.Magazine.Infrastracture.DB.Services;
+using Magazine.API.Hubs;
 using Magazine.Domain.Entities;
 using Magazine.Domain.Providers;
 using Magazine.Infrastracture.DB;
@@ -51,8 +52,21 @@ namespace Magazine.API
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseAuthentication();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:4200")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials();
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/message");
+            });
         }
     }
 }

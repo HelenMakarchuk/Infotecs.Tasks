@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleEntity } from '../article';
 import { ArticleService } from '../article.service';
-import { MessageService } from '../../message/message.service';
+import { MessageHubService } from '../../services/message-hub.service';
 
 @Component({
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.less']
 })
-export class ArticleDetailComponent implements OnInit {
+export class ArticleDetailComponent implements OnInit, AfterViewInit {
 
   article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0, comments: null };
   isReadonly = false;
@@ -18,25 +18,21 @@ export class ArticleDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private articleService: ArticleService,
-    private messageService: MessageService) {
+    private messageService: MessageHubService) { }
 
-    this.messageService.broadcastMessageReceived.subscribe(message => {
-      debugger;
+  ngAfterViewInit() {
+    this.messageService.message.subscribe(message => {
       alert(message);
-    });  
+    });
   }
 
   ngOnInit() {
-    debugger;
-
     this.route.paramMap.subscribe(
       params => {
-        debugger;
         if (params.get('id') !== null) {
           this.articleService.getArticle(+params.get('id'))
             .subscribe(
               result => {
-                debugger;
                 this.article = result as ArticleEntity;
                 this.isReadonly = true;
               },
@@ -48,22 +44,16 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   navigateToArticles() {
-    debugger;
     this.router.navigate(['/articles', { id: this.article !== null ? this.article.id : null }]);
   }
 
   createArticle() {
-
-    // check body and title
-
-    debugger;
     this.isReadonly = true;
 
     this.articleService.addArticle(this.article)
       .subscribe(
         result => this.article = result as ArticleEntity,
         response => {
-          debugger;
           alert(`Error while creating article. ${response.error.Message}`);
           this.isReadonly = false;
         }
@@ -71,8 +61,6 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   updateArticle() {
-    debugger;
-
     this.isReadonly = !this.isReadonly;
 
     if (this.isReadonly === false)
@@ -81,8 +69,6 @@ export class ArticleDetailComponent implements OnInit {
     this.articleService.updateArticle(this.article)
       .subscribe(
         result => {
-          debugger;
-
           this.article = result as ArticleEntity;
           this.messageService.sendMessage("This article was changed by another user. Refresh this article to get last changes.");
         },
@@ -91,7 +77,6 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   deleteArticle() {
-    debugger;
     this.articleService.deleteArticle(this.article.id)
       .subscribe(
         () => this.navigateToArticles(),

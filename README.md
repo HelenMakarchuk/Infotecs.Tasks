@@ -87,7 +87,7 @@ Run application using Docker or Docker Compose.
   `ng build --configuration=development`
   
   ###### Serve the application at http://localhost:4200. ######
-  `ng serve --configuration=development`
+  `ng serve --configuration=development --open`
 
   </p>
 </details>

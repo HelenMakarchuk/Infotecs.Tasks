@@ -1,54 +1,46 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MessageService {
-  broadcastMessageReceived = new EventEmitter<string>();
-  connectionEstablished = new EventEmitter<boolean>();
-
-  private connectionIsEstablished = false;
+export class MessageHubService {
+  
   private connection: HubConnection;
+  connectionEstablished = new Subject<boolean>();
+  message = new Subject<string>();
 
   constructor() {
     this.createConnection();
-    this.registerOnServerEvents();
     this.startConnection();
+    this.registerOnServerEvents();
   }
 
   sendMessage(message: string) {
-    debugger;
     this.connection.invoke('send', message);
   }
 
   private createConnection() {
     this.connection = new HubConnectionBuilder()
-      .withUrl('/message')
+      .withUrl(`${environment.hubUrl}/message`)
       .build();
   }
 
   private registerOnServerEvents(): void {
-    debugger;
-    // после того как сообщение обработано на сервере
     this.connection.on('broadcastMessage', message => {
-      debugger;
-      console.log("Notify all clients");
-
-      // уведомление клиентов
-      this.broadcastMessageReceived.emit(message);
+      console.log('Received', message);
+      this.message.next(message);
     });
   }
 
   private startConnection(): void {
-    debugger;
-
     this.connection
       .start()
       .then(() => {
-        this.connectionIsEstablished = true;
         console.log('Hub connection started');
-        this.connectionEstablished.emit(true);
+        this.connectionEstablished.next(true);
       })
       .catch(error => {
         console.log(error);
@@ -56,4 +48,11 @@ export class MessageService {
         setTimeout(function () { this.startConnection(); }, 5000);
       });
   }
-}    
+
+  disconnect() {
+    if (this.connection) {
+      this.connection.stop();
+      this.connection = null;
+    }
+  }
+}

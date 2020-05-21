@@ -73,9 +73,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{70A106B5-96F
 		Source\Magazine.Web\src\app\app.module.ts = Source\Magazine.Web\src\app\app.module.ts
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "message", "message", "{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}"
 	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\app\message\message.service.ts = Source\Magazine.Web\src\app\message\message.service.ts
+		Source\Magazine.Web\src\app\message\message-hub.service.ts = Source\Magazine.Web\src\app\message\message-hub.service.ts
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "comments", "comments", "{EF19E704-9415-4826-8158-0447AC351554}"
