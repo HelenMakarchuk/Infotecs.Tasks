@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
 export class MessageHubService {
   
   private connection: HubConnection;
-  connectionEstablished = new Subject<boolean>();
   message = new Subject<string>();
 
   constructor() {
@@ -40,7 +39,6 @@ export class MessageHubService {
       .start()
       .then(() => {
         console.log('Hub connection started');
-        this.connectionEstablished.next(true);
       })
       .catch(error => {
         console.log(error);
