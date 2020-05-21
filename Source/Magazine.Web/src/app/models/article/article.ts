@@ -1,5 +1,5 @@
-import { AccountEntity } from "../accounts/account";
-import { CommentEntity } from "../comments/comment";
+import { AccountEntity } from "../account/account";
+import { CommentEntity } from "../comment/comment";
 
 export interface ArticleEntity {
   id: number;

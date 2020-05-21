@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { ArticleEntity } from '../../articles/article';
+import { ArticleEntity } from '../../models/article/article';
 import { throwError } from 'rxjs';
 
 @Injectable({
