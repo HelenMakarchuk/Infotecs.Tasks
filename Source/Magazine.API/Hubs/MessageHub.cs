@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
-namespace Magazine.API.Hubs
+namespace Infotecs.Magazine.API.Hubs
 {
     public class MessageHub : Hub
     {

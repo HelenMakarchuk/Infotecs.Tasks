@@ -1,4 +1,5 @@
-﻿using Magazine.Domain.Entities;
+using Infotecs.Magazine.Domain.Contracts.Provider;
+using Infotecs.Magazine.Domain.Entities;
 using System;
 using System.Text.RegularExpressions;
 
@@ -7,7 +8,7 @@ namespace Infotecs.Magazine.Domain.Providers
     /// <summary>
     /// Валидатор сущности "Аккаунт".
     /// </summary>
-    public class AccountValidateProvider
+    public class AccountValidateProvider : IValidateProvider<Account>
     {
         /// <summary>
         /// Валидация аккаунта.

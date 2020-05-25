@@ -1,4 +1,5 @@
-﻿using Magazine.Domain.Entities;
+using Infotecs.Magazine.Domain.Contracts.Provider;
+using Infotecs.Magazine.Domain.Entities;
 using System;
 
 namespace Infotecs.Magazine.Domain.Providers
@@ -6,7 +7,7 @@ namespace Infotecs.Magazine.Domain.Providers
     /// <summary>
     /// Валидатор сущности "Комментарий".
     /// </summary>
-    public class CommentValidateProvider
+    public class CommentValidateProvider : IValidateProvider<Comment>
     {
         /// <summary>
         /// Валидация статьи.

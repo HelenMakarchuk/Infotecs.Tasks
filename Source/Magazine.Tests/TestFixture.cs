@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Core.DI;
-using Magazine.Tests.DI;
+using Infotecs.Magazine.Tests.DI;
 using System;
 
 namespace Infotecs.Magazine.Tests

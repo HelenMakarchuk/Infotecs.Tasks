@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Magazine.Domain.Providers;
+using Infotecs.Magazine.Domain.Providers;
 using System;
 using System.Text;
 using Xunit;

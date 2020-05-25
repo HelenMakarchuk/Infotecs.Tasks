@@ -1,7 +1,6 @@
-﻿using Infotecs.Magazine.Infrastracture.Contracts.Service;
-using Magazine.Domain.Entities;
-using Magazine.Domain.Providers;
-using Magazine.Infrastracture.DB.UnitOfWork;
+using Infotecs.Magazine.Domain.Contracts.Provider;
+using Infotecs.Magazine.Domain.Entities;
+using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -14,10 +13,10 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
     public class ArticleService : IEntityService<Article>
     {
         readonly UnitOfWork _unitOfWork;
-        readonly ArticleValidateProvider _articleValidateProvider;
+        readonly IValidateProvider<Article> _articleValidateProvider;
 
         public ArticleService(UnitOfWork unitOfWork,
-                              ArticleValidateProvider articleValidateProvider)
+                              IValidateProvider<Article> articleValidateProvider)
         {
             _unitOfWork = unitOfWork;
             _articleValidateProvider = articleValidateProvider;

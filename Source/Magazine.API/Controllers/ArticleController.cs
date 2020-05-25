@@ -1,10 +1,10 @@
-﻿using Infotecs.Magazine.Infrastracture.Contracts.Service;
-using Magazine.Domain.Entities;
+using Infotecs.Magazine.Domain.Entities;
+using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
 
-namespace Magazine.API.Controllers
+namespace Infotecs.Magazine.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

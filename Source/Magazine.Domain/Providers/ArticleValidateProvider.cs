@@ -1,12 +1,13 @@
-﻿using Magazine.Domain.Entities;
+using Infotecs.Magazine.Domain.Contracts.Provider;
+using Infotecs.Magazine.Domain.Entities;
 using System;
 
-namespace Magazine.Domain.Providers
+namespace Infotecs.Magazine.Domain.Providers
 {
     /// <summary>
     /// Валидатор сущности "Статья".
     /// </summary>
-    public class ArticleValidateProvider
+    public class ArticleValidateProvider : IValidateProvider<Article>
     {
         /// <summary>
         /// Валидация статьи.

@@ -1,6 +1,6 @@
-﻿using Magazine.Domain.Contracts.Entity;
+﻿using Infotecs.Magazine.Domain.Contracts.Entity;
 
-namespace Magazine.Domain.Entities
+namespace Infotecs.Magazine.Domain.Entities
 {
     /// <summary>
     /// Модель БД сущности "Комментарий".

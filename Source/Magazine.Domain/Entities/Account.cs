@@ -1,7 +1,7 @@
-﻿using Magazine.Domain.Contracts.Entity;
+﻿using Infotecs.Magazine.Domain.Contracts.Entity;
 using System.Collections.Generic;
 
-namespace Magazine.Domain.Entities
+namespace Infotecs.Magazine.Domain.Entities
 {
     /// <summary>
     /// Модель БД сущности "Пользователь".

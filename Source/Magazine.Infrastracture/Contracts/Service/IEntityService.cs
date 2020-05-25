@@ -1,4 +1,4 @@
-﻿using Magazine.Domain.Contracts.Entity;
+using Infotecs.Magazine.Domain.Contracts.Entity;
 using System.Linq;
 
 namespace Infotecs.Magazine.Infrastracture.Contracts.Service

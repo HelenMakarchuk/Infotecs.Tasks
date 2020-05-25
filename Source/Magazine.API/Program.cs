@@ -5,7 +5,7 @@ using Serilog;
 using Serilog.Events;
 using System;
 
-namespace Magazine.API
+namespace Infotecs.Magazine.API
 {
     public class Program
     {

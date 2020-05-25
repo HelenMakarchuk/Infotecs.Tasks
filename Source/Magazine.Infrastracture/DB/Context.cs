@@ -1,10 +1,10 @@
-﻿using Magazine.Domain.Entities;
-using Magazine.Infrastracture.DB.EntityConfigurations;
+﻿using Infotecs.Magazine.Domain.Entities;
+using Infotecs.Magazine.Infrastracture.DB.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Magazine.Infrastracture.DB
+namespace Infotecs.Magazine.Infrastracture.DB
 {
     /// <summary>
     /// Контекст основной БД приложения

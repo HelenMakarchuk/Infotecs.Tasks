@@ -1,8 +1,8 @@
-﻿using Magazine.Domain.Entities;
+﻿using Infotecs.Magazine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Magazine.Infrastracture.DB.EntityConfigurations
+namespace Infotecs.Magazine.Infrastracture.DB.EntityConfigurations
 {
     /// <summary>
     /// Конфигурация БД сущности "Статья" <see cref="Article"/>.

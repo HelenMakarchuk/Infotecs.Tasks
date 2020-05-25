@@ -1,13 +1,11 @@
-﻿using Autofac;
+using Autofac;
 using Infotecs.Magazine.Domain.Providers;
-using Magazine.Domain.Providers;
-using Magazine.Infrastracture.DB;
-using Magazine.Infrastracture.DB.Repositories;
-using Magazine.Infrastracture.DB.UnitOfWork;
+using Infotecs.Magazine.Infrastracture.DB;
+using Infotecs.Magazine.Infrastracture.DB.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace Magazine.Tests.DI
+namespace Infotecs.Magazine.Tests.DI
 {
     /// <summary>
     /// Модуль контейнера зависимостей для тестов.

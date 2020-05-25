@@ -1,4 +1,4 @@
-﻿using Magazine.Domain.Contracts.Entity;
+﻿using Infotecs.Magazine.Domain.Contracts.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Magazine.Infrastracture.DB.Repositories
+namespace Infotecs.Magazine.Infrastracture.DB.Repositories
 {
     /// <summary>
     /// Обобщенный репозиторий для работы с сущностями БД.

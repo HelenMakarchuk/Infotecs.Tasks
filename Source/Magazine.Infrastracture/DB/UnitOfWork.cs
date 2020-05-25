@@ -1,9 +1,9 @@
-﻿using Magazine.Domain.Entities;
-using Magazine.Infrastracture.DB.Repositories;
+using Infotecs.Magazine.Domain.Entities;
+using Infotecs.Magazine.Infrastracture.DB.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Magazine.Infrastracture.DB.UnitOfWork
+namespace Infotecs.Magazine.Infrastracture.DB
 {
     /// <summary>
     /// Класс реализует паттерн UnitOfWork.

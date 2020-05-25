@@ -1,11 +1,11 @@
+using Infotecs.Magazine.API.Hubs;
+using Infotecs.Magazine.Domain.Contracts.Provider;
+using Infotecs.Magazine.Domain.Entities;
+using Infotecs.Magazine.Domain.Providers;
 using Infotecs.Magazine.Infrastracture.Contracts.Service;
+using Infotecs.Magazine.Infrastracture.DB;
+using Infotecs.Magazine.Infrastracture.DB.Repositories;
 using Infotecs.Magazine.Infrastracture.DB.Services;
-using Magazine.API.Hubs;
-using Magazine.Domain.Entities;
-using Magazine.Domain.Providers;
-using Magazine.Infrastracture.DB;
-using Magazine.Infrastracture.DB.Repositories;
-using Magazine.Infrastracture.DB.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Magazine.API
+namespace Infotecs.Magazine.API
 {
     public class Startup
     {
@@ -29,7 +29,7 @@ namespace Magazine.API
         {
             services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
             services.AddSingleton<UnitOfWork, UnitOfWork>();
-            services.AddSingleton<ArticleValidateProvider, ArticleValidateProvider>();
+            services.AddSingleton<IValidateProvider<Article>, ArticleValidateProvider>();
             services.AddSingleton<IEntityService<Article>, ArticleService>();
 
             services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
