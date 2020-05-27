@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class MessageHubService {
+export class NotificationHubService {
   
   private connection: HubConnection;
   message = new Subject<string>();
@@ -23,7 +23,7 @@ export class MessageHubService {
 
   private createConnection() {
     this.connection = new HubConnectionBuilder()
-      .withUrl(`${environment.hubUrl}/message`)
+      .withUrl(`${environment.hubUrl}/notification`)
       .build();
   }
 

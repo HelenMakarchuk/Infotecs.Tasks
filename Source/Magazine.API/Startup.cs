@@ -65,7 +65,7 @@ namespace Infotecs.Magazine.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<MessageHub>("/message");
+                endpoints.MapHub<NotificationHub>("/notification");
             });
         }
     }

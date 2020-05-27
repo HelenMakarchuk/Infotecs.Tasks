@@ -1,5 +1,4 @@
-﻿using Infotecs.Magazine.Domain.Contracts.Entity;
-using System.Collections.Generic;
+using Infotecs.Magazine.Domain.Contracts.Entity;
 
 namespace Infotecs.Magazine.Domain.Entities
 {
@@ -42,15 +41,5 @@ namespace Infotecs.Magazine.Domain.Entities
         /// Идентификатор автора статьи.
         /// </summary>
         public int AccountId { get; set; }
-
-        /// <summary>
-        /// Автор статьи.
-        /// </summary>
-        public virtual Account Account { get; set; }
-
-        /// <summary>
-        /// Список комментариев к статье.
-        /// </summary>
-        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

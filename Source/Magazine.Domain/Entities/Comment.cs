@@ -1,4 +1,4 @@
-﻿using Infotecs.Magazine.Domain.Contracts.Entity;
+using Infotecs.Magazine.Domain.Contracts.Entity;
 
 namespace Infotecs.Magazine.Domain.Entities
 {
@@ -26,15 +26,5 @@ namespace Infotecs.Magazine.Domain.Entities
         /// Идентификатор автора комментария.
         /// </summary>
         public int AccountId { get; set; }
-
-        /// <summary>
-        /// Статья, к которой принадлежит комментарий.
-        /// </summary>
-        public virtual Article Article { get; set; }
-
-        /// <summary>
-        /// Автор комментария.
-        /// </summary>
-        public virtual Account Account { get; set; }
     }
 }

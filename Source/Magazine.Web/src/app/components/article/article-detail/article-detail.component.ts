@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleEntity } from '../../../models/article/article';
 import { ArticleService } from '../../../services/article/article.service';
-import { MessageHubService } from '../../../services/message/message-hub.service';
+import { NotificationHubService } from '../../../services/notification/notification-hub.service';
 
 @Component({
   selector: 'app-article-detail',
@@ -18,7 +18,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private articleService: ArticleService,
-    private messageService: MessageHubService) { }
+    private messageService: NotificationHubService) { }
 
   ngAfterViewInit() {
     this.messageService.message.subscribe(message => {
