@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, LogLevel, HubConnectionBuilder } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -12,39 +12,25 @@ export class NotificationHubService {
   message = new Subject<string>();
 
   constructor() {
-    this.createConnection();
-    this.startConnection();
+    this.buildConnection();
     this.registerOnServerEvents();
+    this.connection.start();
   }
 
   sendMessage() {
     this.connection.invoke('NotifyOnUpdate');
   }
 
-  private createConnection() {
+  private buildConnection() {
     this.connection = new HubConnectionBuilder()
       .withUrl(`${environment.hubUrl}/notification`)
+      .configureLogging(LogLevel.Information)
+      .withAutomaticReconnect()
       .build();
   }
 
   private registerOnServerEvents(): void {
-    this.connection.on('NotifyOnUpdate', message => {
-      console.log('Received', message);
-      this.message.next(message);
-    });
-  }
-
-  private startConnection(): void {
-    this.connection
-      .start()
-      .then(() => {
-        console.log('Hub connection started');
-      })
-      .catch(error => {
-        console.log(error);
-        console.log('Error while establishing connection, retrying...');
-        setTimeout(function () { this.startConnection(); }, 5000);
-      });
+    this.connection.on('NotifyOnUpdate', message => this.message.next(message));
   }
 
   disconnect() {

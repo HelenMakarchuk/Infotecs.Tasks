@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ArticleDetailComponent } from '../../components/article/article-detail/article-detail.component';
 import { ArticleListComponent } from '../../components/article/article-list/article-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PortalModule } from '@angular/cdk/portal';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -48,6 +49,7 @@ import 'src/polyfills'
     ReactiveFormsModule,
     MatInputModule,
     MatSelectModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: ArticleListComponent, pathMatch: 'full' },
       { path: 'articles', component: ArticleListComponent },
