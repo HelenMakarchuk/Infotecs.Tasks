@@ -17,8 +17,8 @@ export class NotificationHubService {
     this.registerOnServerEvents();
   }
 
-  sendMessage(message: string) {
-    this.connection.invoke('send', message);
+  sendMessage() {
+    this.connection.invoke('NotifyOnUpdate');
   }
 
   private createConnection() {
@@ -28,7 +28,7 @@ export class NotificationHubService {
   }
 
   private registerOnServerEvents(): void {
-    this.connection.on('broadcastMessage', message => {
+    this.connection.on('NotifyOnUpdate', message => {
       console.log('Received', message);
       this.message.next(message);
     });

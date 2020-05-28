@@ -70,7 +70,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewInit {
       .subscribe(
         result => {
           this.article = result as ArticleEntity;
-          this.messageService.sendMessage("This article was changed by another user. Refresh this article to get last changes.");
+          this.messageService.sendMessage();
         },
         () => alert('Error while updating article')
       );
