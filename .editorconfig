@@ -13,7 +13,6 @@ tab_width=1
 
 # New line preferences
 end_of_line=crlf
-insert_final_newline=false
 
 #### .NET Coding Conventions ####
 
@@ -199,6 +198,8 @@ dotnet_naming_style.begins_with_i.capitalization=pascal_case
 
 [*]
 charset=utf-8
+insert_final_newline=true
+trim_trailing_whitespace=true
 
 # Microsoft .NET properties
 csharp_new_line_before_members_in_object_initializers=false
@@ -233,12 +234,6 @@ resharper_suggest_var_or_type_simple_types_highlighting=hint
 max_line_length=off
 trim_trailing_whitespace=false
 
-[*.proto]
-indent_style=tab
-indent_size=tab
-tab_width=4
-
 [*.{appxmanifest,asax,ascx,aspx,axml,build,config,cshtml,css,dbml,discomap,dtd,htm,html,js,json,jsproj,jsx,lsproj,master,njsproj,nuspec,proj,props,proto,razor,resjson,resw,resx,skin,StyleCop,targets,tasks,ts,tsx,vb,vbproj,xaml,xamlx,xml,xoml,xsd}]
 indent_style=space
-indent_size=2
-tab_width=2
+indent_size=4

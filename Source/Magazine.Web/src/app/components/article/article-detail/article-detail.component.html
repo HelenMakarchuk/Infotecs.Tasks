@@ -1,33 +1,33 @@
 <div>
-  <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
-    <mat-label *ngIf="!isReadonly">
-      Title
-    </mat-label>
+    <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
+        <mat-label *ngIf="!isReadonly">
+            Title
+        </mat-label>
 
-    <input matInput
-           [(ngModel)]="article.title"
-           [readonly]="isReadonly"
-           placeholder="Ex. ASP.Net Core Web API with Docker Compose, PostgreSQL and EF Core.">
-  </mat-form-field>
+        <input matInput
+               [(ngModel)]="article.title"
+               [readonly]="isReadonly"
+               placeholder="Ex. ASP.Net Core Web API with Docker Compose, PostgreSQL and EF Core.">
+    </mat-form-field>
 
-  <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
-    <mat-label *ngIf="!isReadonly">
-      Content
-    </mat-label>
+    <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
+        <mat-label *ngIf="!isReadonly">
+            Content
+        </mat-label>
 
-    <textarea matInput
-              [readonly]="isReadonly"
-              [(ngModel)]="article.body"
-              placeholder="Ex. In this article .."
-              cdkTextareaAutosize>
+        <textarea matInput
+                  [readonly]="isReadonly"
+                  [(ngModel)]="article.body"
+                  placeholder="Ex. In this article .."
+                  cdkTextareaAutosize>
     </textarea>
-  </mat-form-field>
+    </mat-form-field>
 
-  <div class="menu-panel">
-    <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
-    <button class="btn btn-primary" (click)="createArticle()" *ngIf="article.account === null">Create</button>
-    <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && isReadonly">Edit</button>
-    <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && !isReadonly">Save</button>
-    <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="article.account !== null && isReadonly">Delete</button>
-  </div>
+    <div class="menu-panel">
+        <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
+        <button class="btn btn-primary" (click)="createArticle()" *ngIf="article.account === null">Create</button>
+        <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && isReadonly">Edit</button>
+        <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && !isReadonly">Save</button>
+        <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="article.account !== null && isReadonly">Delete</button>
+    </div>
 </div>

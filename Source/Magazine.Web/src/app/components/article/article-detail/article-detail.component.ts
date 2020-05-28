@@ -2,85 +2,85 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleEntity } from '../../../models/article/article';
 import { ArticleService } from '../../../services/article/article.service';
-import { NotificationHubService } from '../../../services/notification/notification-hub.service';
+import { SignalrService } from '../../../services/server-communication/signalr.service';
 
 @Component({
-  selector: 'app-article-detail',
-  templateUrl: './article-detail.component.html',
-  styleUrls: ['./article-detail.component.less']
+    selector: 'app-article-detail',
+    templateUrl: './article-detail.component.html',
+    styleUrls: ['./article-detail.component.less']
 })
 export class ArticleDetailComponent implements OnInit, AfterViewInit {
 
-  article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0, comments: null };
-  isReadonly = false;
+    article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0, comments: null };
+    isReadonly = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private articleService: ArticleService,
-    private messageService: NotificationHubService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private articleService: ArticleService,
+        private messageService: SignalrService) { }
 
-  ngAfterViewInit() {
-    this.messageService.message.subscribe(message => {
-      alert(message);
-    });
-  }
+    ngAfterViewInit() {
+        this.messageService.message.subscribe(message => {
+            alert(message);
+        });
+    }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(
-      params => {
-        if (params.get('id') !== null) {
-          this.articleService.getArticle(+params.get('id'))
+    ngOnInit() {
+        this.route.paramMap.subscribe(
+            params => {
+                if (params.get('id') !== null) {
+                    this.articleService.getArticle(+params.get('id'))
+                        .subscribe(
+                            result => {
+                                this.article = result as ArticleEntity;
+                                this.isReadonly = true;
+                            },
+                            () => alert('Error while opening article')
+                        );
+                }
+            }
+        );
+    }
+
+    navigateToArticles() {
+        this.router.navigate(['/articles', { id: this.article !== null ? this.article.id : null }]);
+    }
+
+    createArticle() {
+        this.isReadonly = true;
+
+        this.articleService.addArticle(this.article)
             .subscribe(
-              result => {
-                this.article = result as ArticleEntity;
-                this.isReadonly = true;
-              },
-              () => alert('Error while opening article')
+                result => this.article = result as ArticleEntity,
+                response => {
+                    alert(`Error while creating article. ${response.error.Message}`);
+                    this.isReadonly = false;
+                }
             );
-        }
-      }
-    );
-  }
+    }
 
-  navigateToArticles() {
-    this.router.navigate(['/articles', { id: this.article !== null ? this.article.id : null }]);
-  }
+    updateArticle() {
+        this.isReadonly = !this.isReadonly;
 
-  createArticle() {
-    this.isReadonly = true;
+        if (this.isReadonly === false)
+            return;
 
-    this.articleService.addArticle(this.article)
-      .subscribe(
-        result => this.article = result as ArticleEntity,
-        response => {
-          alert(`Error while creating article. ${response.error.Message}`);
-          this.isReadonly = false;
-        }
-      );
-  }
+        this.articleService.updateArticle(this.article)
+            .subscribe(
+                result => {
+                    this.article = result as ArticleEntity;
+                    this.messageService.communicateOnUpdate();
+                },
+                () => alert('Error while updating article')
+            );
+    }
 
-  updateArticle() {
-    this.isReadonly = !this.isReadonly;
-
-    if (this.isReadonly === false)
-      return;
-
-    this.articleService.updateArticle(this.article)
-      .subscribe(
-        result => {
-          this.article = result as ArticleEntity;
-          this.messageService.sendMessage();
-        },
-        () => alert('Error while updating article')
-      );
-  }
-
-  deleteArticle() {
-    this.articleService.deleteArticle(this.article.id)
-      .subscribe(
-        () => this.navigateToArticles(),
-        () => alert('Error while deleting article')
-      );
-  }
+    deleteArticle() {
+        this.articleService.deleteArticle(this.article.id)
+            .subscribe(
+                () => this.navigateToArticles(),
+                () => alert('Error while deleting article')
+            );
+    }
 }

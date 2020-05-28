@@ -34,61 +34,64 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import 'src/polyfills'
+import { SignalrService } from '../../services/server-communication/signalr.service';
+import { ServerCommunicationService } from '../../contracts/services/server-communication.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ArticleDetailComponent,
-    ArticleListComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    MatNativeDateModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatSelectModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot([
-      { path: '', component: ArticleListComponent, pathMatch: 'full' },
-      { path: 'articles', component: ArticleListComponent },
-      { path: 'article/:id', component: ArticleDetailComponent },
-      { path: 'articles/create', component: ArticleDetailComponent }
-    ])
-  ],
-  exports: [
-    CdkStepperModule,
-    MatAutocompleteModule,
-    MatBadgeModule,
-    MatBottomSheetModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatStepperModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatTabsModule,
-    MatToolbarModule,
-    PortalModule,
-    ScrollingModule,
-  ],
-  entryComponents: [AppComponent],
-  bootstrap: [AppComponent],
-  providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
-  ]
+    declarations: [
+        AppComponent,
+        ArticleDetailComponent,
+        ArticleListComponent
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        HttpClientModule,
+        FormsModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatSelectModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot([
+            { path: '', component: ArticleListComponent, pathMatch: 'full' },
+            { path: 'articles', component: ArticleListComponent },
+            { path: 'article/:id', component: ArticleDetailComponent },
+            { path: 'articles/create', component: ArticleDetailComponent }
+        ])
+    ],
+    exports: [
+        CdkStepperModule,
+        MatAutocompleteModule,
+        MatBadgeModule,
+        MatBottomSheetModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        MatStepperModule,
+        MatDialogModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatGridListModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatNativeDateModule,
+        MatPaginatorModule,
+        MatRippleModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatTabsModule,
+        MatToolbarModule,
+        PortalModule,
+        ScrollingModule,
+    ],
+    entryComponents: [AppComponent],
+    bootstrap: [AppComponent],
+    providers: [
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+        { provide: ServerCommunicationService, useClass: SignalrService }
+    ]
 })
 export class AppModule { }

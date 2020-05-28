@@ -22,7 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker-Compose", "Docker-Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magazine.Web", "Magazine.Web", "{FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}"
 	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\.editorconfig = Source\Magazine.Web\.editorconfig
 		Source\Magazine.Web\.gitignore = Source\Magazine.Web\.gitignore
 		Source\Magazine.Web\angular.json = Source\Magazine.Web\angular.json
 		Source\Magazine.Web\browserslist = Source\Magazine.Web\browserslist
@@ -30,14 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Magazine.Web", "Magazine.We
 		Source\Magazine.Web\nginx.conf = Source\Magazine.Web\nginx.conf
 		Source\Magazine.Web\package-lock.json = Source\Magazine.Web\package-lock.json
 		Source\Magazine.Web\package.json = Source\Magazine.Web\package.json
-		Source\Magazine.Web\README.md = Source\Magazine.Web\README.md
 		Source\Magazine.Web\tsconfig.json = Source\Magazine.Web\tsconfig.json
 		Source\Magazine.Web\tslint.json = Source\Magazine.Web\tslint.json
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wwwroot", "wwwroot", "{7FACFF21-2719-4FA1-96E6-85F60D70EC22}"
-	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\wwwroot\favicon.ico = Source\Magazine.Web\wwwroot\favicon.ico
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}"
@@ -70,9 +63,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{70A106B5-96F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{13AEEF9B-6D83-4B44-B1F0-CA0DC671128A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "notification", "notification", "{89137A50-F5A9-4AEB-A070-92E031F579DD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server-communication", "server-communication", "{89137A50-F5A9-4AEB-A070-92E031F579DD}"
 	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\app\services\notification\notification-hub.service.ts = Source\Magazine.Web\src\app\services\notification\notification-hub.service.ts
+		Source\Magazine.Web\src\app\services\server-communication\signalr.service.ts = Source\Magazine.Web\src\app\services\server-communication\signalr.service.ts
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "article", "article", "{9C20C30E-639B-4DB1-B950-1F33E88F1EA4}"
@@ -128,6 +121,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "article-list", "article-lis
 		Source\Magazine.Web\src\app\components\article\article-list\article-list.component.ts = Source\Magazine.Web\src\app\components\article\article-list\article-list.component.ts
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "contracts", "contracts", "{2F48F7C8-0D57-4DC6-BFB7-46849913B333}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{EDE7B333-85E0-4E9E-A1CB-8A489F5B8036}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\contracts\services\server-communication.service.ts = Source\Magazine.Web\src\app\contracts\services\server-communication.service.ts
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,7 +164,6 @@ Global
 		{DDA349D4-483D-4889-9515-895F54261516} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{FE77DDC4-9ABD-408F-8B8A-0CF55C22E835} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
-		{7FACFF21-2719-4FA1-96E6-85F60D70EC22} = {FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}
 		{F26EF410-D52E-4A1D-BD4C-C74E0AB067AA} = {FE77DDC4-9ABD-408F-8B8A-0CF55C22E835}
 		{6FEDCF03-AC46-4438-AB60-D819A162C1E2} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
 		{EC0713CF-33D9-4538-86D0-DD7FE27ECC8E} = {F26EF410-D52E-4A1D-BD4C-C74E0AB067AA}
@@ -183,6 +182,8 @@ Global
 		{685B5812-6FDF-4D99-B49E-124713500DA9} = {78EB9B0D-508B-40A5-83B2-A2E6E82FA80F}
 		{C32BCEED-DFAB-499B-B03E-21D40716EC94} = {685B5812-6FDF-4D99-B49E-124713500DA9}
 		{E4A0192E-EC35-4F4B-8911-E44610B54477} = {685B5812-6FDF-4D99-B49E-124713500DA9}
+		{2F48F7C8-0D57-4DC6-BFB7-46849913B333} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{EDE7B333-85E0-4E9E-A1CB-8A489F5B8036} = {2F48F7C8-0D57-4DC6-BFB7-46849913B333}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {280D25F1-A7B1-4434-AB65-F7118A1E88F9}

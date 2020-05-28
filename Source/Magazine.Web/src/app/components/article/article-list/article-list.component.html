@@ -1,21 +1,21 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <button id="write-article-button" class="btn btn-primary" (click)="navigateToArticle()">Write Article</button>
+    <div class="row">
+        <div class="col">
+            <button id="write-article-button" class="btn btn-primary" (click)="navigateToArticle()">Write Article</button>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <ul class="list-group article-list">
-        <li class="list-group-item list-group-item-action"
-            *ngFor="let article of articles"
-            [class.selected]="article.id === selectedId"
-            (click)="navigateToArticle(article)">
+    <div class="row">
+        <div class="col">
+            <ul class="list-group article-list">
+                <li class="list-group-item list-group-item-action"
+                    *ngFor="let article of articles"
+                    [class.selected]="article.id === selectedId"
+                    (click)="navigateToArticle(article)">
 
-          {{ article.title }}
+                    {{ article.title }}
 
-        </li>
-      </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>

@@ -1,6 +1,6 @@
-export interface CommentEntity {
-  id: number;
-  body: string;
-  articleid: number;
-  accountid: number;
+export class CommentEntity {
+    id: number;
+    body: string;
+    articleid: number;
+    accountid: number;
 }
