@@ -1,4 +1,4 @@
-﻿using Infotecs.Magazine.Domain.Entities;
+using Infotecs.Magazine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

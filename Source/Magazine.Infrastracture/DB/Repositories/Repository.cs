@@ -1,4 +1,4 @@
-﻿using Infotecs.Magazine.Domain.Contracts.Entity;
+using Infotecs.Magazine.Domain.Contracts.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;

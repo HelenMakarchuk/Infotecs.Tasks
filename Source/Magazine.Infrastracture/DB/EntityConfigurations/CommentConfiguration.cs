@@ -20,6 +20,9 @@ namespace Infotecs.Magazine.Infrastracture.DB.EntityConfigurations
             builder.Property(e => e.ArticleId).HasColumnName("articleid").HasColumnType("INT").IsRequired();
             builder.Property(e => e.AccountId).HasColumnName("accountid").HasColumnType("INT").IsRequired();
 
+            builder.HasOne(e => e.Article).WithMany().HasForeignKey(e => e.ArticleId).HasConstraintName("fk_comment_articleid_article_id").OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(e => e.Account).WithMany().HasForeignKey(e => e.AccountId).HasConstraintName("fk_comment_accountid_account_id").OnDelete(DeleteBehavior.NoAction);
+
             builder.HasCheckConstraint("chk_comment_body", "LENGTH(TRIM(body)) > 0");
         }
     }

@@ -35,11 +35,8 @@ namespace Infotecs.Magazine.API
             services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
                      .UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")).Options));
 
+            services.AddControllers();
             services.AddCors();
-
-            services.AddControllers()
-                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
             services.AddSignalR();
         }
 

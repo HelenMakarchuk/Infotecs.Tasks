@@ -1,4 +1,4 @@
-﻿namespace Infotecs.Magazine.Domain.Contracts.Entity
+namespace Infotecs.Magazine.Domain.Contracts.Entity
 {
     /// <summary>
     /// Интерфейс сущности БД.

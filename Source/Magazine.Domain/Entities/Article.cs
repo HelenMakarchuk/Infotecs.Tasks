@@ -41,5 +41,10 @@ namespace Infotecs.Magazine.Domain.Entities
         /// Идентификатор автора статьи.
         /// </summary>
         public int AccountId { get; set; }
+
+        /// <summary>
+        /// Автор статьи.
+        /// </summary>
+        public virtual Account Account { get; set; }
     }
 }

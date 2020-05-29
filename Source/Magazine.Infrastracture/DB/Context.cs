@@ -1,4 +1,4 @@
-﻿using Infotecs.Magazine.Domain.Entities;
+using Infotecs.Magazine.Domain.Entities;
 using Infotecs.Magazine.Infrastracture.DB.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
