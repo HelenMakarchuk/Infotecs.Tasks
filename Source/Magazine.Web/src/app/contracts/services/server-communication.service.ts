@@ -7,8 +7,10 @@ import { Subject } from "rxjs";
 })
 export abstract class ServerCommunicationService {
 
-    /** Событие обновления статьи. */
-    abstract onUpdate: Subject<string>;
+    methodName: string; // Add Enum
+
+    /** Словарь подписок на события. */
+    subscriptions: Map<string, Subject<any>>;
 
     /** Взаимодействие при обновлении статьи. */
     abstract communicateOnUpdate(): void;

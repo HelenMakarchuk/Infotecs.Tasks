@@ -20,7 +20,9 @@ export class ArticleDetailComponent implements OnInit {
         private articleService: ArticleService,
         private serverCommunicationService: ServerCommunicationService) {
 
-        serverCommunicationService.onUpdate.subscribe(message => {
+        serverCommunicationService.subscriptions.get(
+            serverCommunicationService.methodName // enum
+        ).subscribe(message => {
             alert(message);
         });
     }

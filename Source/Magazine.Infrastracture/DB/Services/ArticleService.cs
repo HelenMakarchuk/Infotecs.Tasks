@@ -1,6 +1,7 @@
 using Infotecs.Magazine.Domain.Contracts.Provider;
 using Infotecs.Magazine.Domain.Entities;
 using Infotecs.Magazine.Infrastracture.Contracts.Service;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -23,7 +24,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
 
         public IQueryable<Article> Get()
         {
-            return _unitOfWork.ArticleRepository.AsNoTracking();
+            return _unitOfWork.ArticleRepository.Include(a => a.Account).AsNoTracking();
         }
 
         public Article Get(int id)

@@ -11,10 +11,13 @@ import { ServerCommunicationService } from '../../contracts/services/server-comm
 export class SignalrService implements ServerCommunicationService {
 
     private connection: HubConnection;
-    onUpdate = new Subject<string>();
+
+    subscriptions = new Map<string, Subject<any>>();
+    methodName = 'сommunicateOnUpdate'; 
 
     constructor() {
         this.buildConnection();
+        this.createSubscriptions();
         this.registerOnServerEvents();
         this.connection.start();
     }
@@ -27,11 +30,15 @@ export class SignalrService implements ServerCommunicationService {
             .build();
     }
 
+    private createSubscriptions(): void {
+        this.subscriptions.set(this.methodName, new Subject<string>());
+    }
+
     private registerOnServerEvents(): void {
-        this.connection.on('сommunicateOnUpdate', message => this.onUpdate.next(message));
+        this.connection.on(this.methodName, (...data: any[]) => this.subscriptions.get(this.methodName).next(data)); // Add ForEach
     }
 
     communicateOnUpdate(): void {
-        this.connection.invoke('сommunicateOnUpdate');
+        this.connection.invoke(this.methodName);
     }
 }
