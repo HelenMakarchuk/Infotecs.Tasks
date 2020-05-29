@@ -1,5 +1,4 @@
 import { AccountEntity } from "../account/account";
-import { CommentEntity } from "../comment/comment";
 
 export class ArticleEntity {
     id: number;
@@ -8,5 +7,4 @@ export class ArticleEntity {
     body: string;
     accountId: number;
     account: AccountEntity;
-    comments: CommentEntity[];
 }
