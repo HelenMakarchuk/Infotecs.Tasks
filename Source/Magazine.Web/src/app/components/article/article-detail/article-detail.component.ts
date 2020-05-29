@@ -1,27 +1,26 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleEntity } from '../../../models/article/article';
 import { ArticleService } from '../../../services/article/article.service';
-import { SignalrService } from '../../../services/server-communication/signalr.service';
+import { ServerCommunicationService } from '../../../contracts/services/server-communication.service';
 
 @Component({
     selector: 'app-article-detail',
     templateUrl: './article-detail.component.html',
     styleUrls: ['./article-detail.component.less']
 })
-export class ArticleDetailComponent implements OnInit, AfterViewInit {
+export class ArticleDetailComponent implements OnInit {
 
-    article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0, comments: null };
+    article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0 };
     isReadonly = false;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private articleService: ArticleService,
-        private messageService: SignalrService) { }
+        private serverCommunicationService: ServerCommunicationService) {
 
-    ngAfterViewInit() {
-        this.messageService.message.subscribe(message => {
+        serverCommunicationService.onUpdate.subscribe(message => {
             alert(message);
         });
     }
@@ -70,7 +69,7 @@ export class ArticleDetailComponent implements OnInit, AfterViewInit {
             .subscribe(
                 result => {
                     this.article = result as ArticleEntity;
-                    this.messageService.communicateOnUpdate();
+                    this.serverCommunicationService.communicateOnUpdate();
                 },
                 () => alert('Error while updating article')
             );

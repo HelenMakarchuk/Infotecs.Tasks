@@ -11,7 +11,7 @@ import { ServerCommunicationService } from '../../contracts/services/server-comm
 export class SignalrService implements ServerCommunicationService {
 
     private connection: HubConnection;
-    message = new Subject<string>();
+    onUpdate = new Subject<string>();
 
     constructor() {
         this.buildConnection();
@@ -28,7 +28,7 @@ export class SignalrService implements ServerCommunicationService {
     }
 
     private registerOnServerEvents(): void {
-        this.connection.on('сommunicateOnUpdate', message => this.message.next(message));
+        this.connection.on('сommunicateOnUpdate', message => this.onUpdate.next(message));
     }
 
     communicateOnUpdate(): void {
