@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, LogLevel, HubConnectionBuilder } from '@microsoft/signalr';
-import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ServerCommunicationService } from '../../contracts/services/server-communication.service';
+import { ServerCommunicationService } from '../../contracts/service/server-communication.service';
+import { ApplicationComponentEvent } from '../../contracts/event/application.component.event';
 
 /** Сервис взаимодействия с сервером с использованием библиотеки SignalR. */
 @Injectable({
     providedIn: 'root'
 })
-export class SignalrService implements ServerCommunicationService {
+export class SignalrService extends ServerCommunicationService {
 
     private connection: HubConnection;
 
-    subscriptions = new Map<string, Subject<any>>();
-    methodName = 'сommunicateOnUpdate'; 
-
     constructor() {
+        super();
         this.buildConnection();
-        this.createSubscriptions();
         this.registerOnServerEvents();
         this.connection.start();
     }
@@ -30,15 +27,11 @@ export class SignalrService implements ServerCommunicationService {
             .build();
     }
 
-    private createSubscriptions(): void {
-        this.subscriptions.set(this.methodName, new Subject<string>());
-    }
-
     private registerOnServerEvents(): void {
-        this.connection.on(this.methodName, (...data: any[]) => this.subscriptions.get(this.methodName).next(data)); // Add ForEach
+        this.connection.on(EventType.Update, (event: ApplicationComponentEvent) => this.serverEvent.next(event));
     }
 
-    communicateOnUpdate(): void {
-        this.connection.invoke(this.methodName);
+    communicate(eventType: EventType): void {
+        this.connection.invoke(eventType);
     }
 }

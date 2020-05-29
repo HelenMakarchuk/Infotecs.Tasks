@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleEntity } from '../../../models/article/article';
 import { ArticleService } from '../../../services/article/article.service';
-import { ServerCommunicationService } from '../../../contracts/services/server-communication.service';
+import { ServerCommunicationService } from '../../../contracts/service/server-communication.service';
+import { ApplicationComponent } from '../../../contracts/component/application.component';
 
 @Component({
     selector: 'app-article-detail',
     templateUrl: './article-detail.component.html',
     styleUrls: ['./article-detail.component.less']
 })
-export class ArticleDetailComponent implements OnInit {
+export class ArticleDetailComponent extends ApplicationComponent implements OnInit
+{
 
     article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0 };
     isReadonly = false;
@@ -19,12 +21,9 @@ export class ArticleDetailComponent implements OnInit {
         private router: Router,
         private articleService: ArticleService,
         private serverCommunicationService: ServerCommunicationService) {
+        super();
 
-        serverCommunicationService.subscriptions.get(
-            serverCommunicationService.methodName // enum
-        ).subscribe(message => {
-            alert(message);
-        });
+        serverCommunicationService.subscribe(this);
     }
 
     ngOnInit() {
@@ -71,7 +70,7 @@ export class ArticleDetailComponent implements OnInit {
             .subscribe(
                 result => {
                     this.article = result as ArticleEntity;
-                    this.serverCommunicationService.communicateOnUpdate();
+                    this.serverCommunicationService.communicate(EventType.Update);
                 },
                 () => alert('Error while updating article')
             );

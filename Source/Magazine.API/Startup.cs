@@ -1,4 +1,4 @@
-using Infotecs.Magazine.API.Hubs;
+using Infotecs.Magazine.API.Services;
 using Infotecs.Magazine.Domain.Contracts.Provider;
 using Infotecs.Magazine.Domain.Entities;
 using Infotecs.Magazine.Domain.Providers;

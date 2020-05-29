@@ -123,9 +123,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "article-list", "article-lis
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "contracts", "contracts", "{2F48F7C8-0D57-4DC6-BFB7-46849913B333}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{EDE7B333-85E0-4E9E-A1CB-8A489F5B8036}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "service", "service", "{EDE7B333-85E0-4E9E-A1CB-8A489F5B8036}"
 	ProjectSection(SolutionItems) = preProject
-		Source\Magazine.Web\src\app\contracts\services\server-communication.service.ts = Source\Magazine.Web\src\app\contracts\services\server-communication.service.ts
+		Source\Magazine.Web\src\app\contracts\service\server-communication.service.ts = Source\Magazine.Web\src\app\contracts\service\server-communication.service.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "component", "component", "{35814E3F-EBF5-4A10-BF64-094B9C1B7EE3}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\contracts\component\application.component.ts = Source\Magazine.Web\src\app\contracts\component\application.component.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "event", "event", "{5B1F5031-4BF3-4F55-84D8-A7DD8A425B14}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\contracts\event\application.component.event.ts = Source\Magazine.Web\src\app\contracts\event\application.component.event.ts
+		Source\Magazine.Web\src\app\contracts\event\application.component.event.type.ts = Source\Magazine.Web\src\app\contracts\event\application.component.event.type.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "events", "events", "{6554DBB5-4BF3-4746-AB4D-70B84EA571FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "article", "article", "{254990F5-86C7-4369-B06C-C91DECF8E4FC}"
+	ProjectSection(SolutionItems) = preProject
+		Source\Magazine.Web\src\app\events\article\article.component.event.ts = Source\Magazine.Web\src\app\events\article\article.component.event.ts
 	EndProjectSection
 EndProject
 Global
@@ -184,6 +202,10 @@ Global
 		{E4A0192E-EC35-4F4B-8911-E44610B54477} = {685B5812-6FDF-4D99-B49E-124713500DA9}
 		{2F48F7C8-0D57-4DC6-BFB7-46849913B333} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
 		{EDE7B333-85E0-4E9E-A1CB-8A489F5B8036} = {2F48F7C8-0D57-4DC6-BFB7-46849913B333}
+		{35814E3F-EBF5-4A10-BF64-094B9C1B7EE3} = {2F48F7C8-0D57-4DC6-BFB7-46849913B333}
+		{5B1F5031-4BF3-4F55-84D8-A7DD8A425B14} = {2F48F7C8-0D57-4DC6-BFB7-46849913B333}
+		{6554DBB5-4BF3-4746-AB4D-70B84EA571FE} = {70A106B5-96F6-4ACC-B5FF-A884880925BF}
+		{254990F5-86C7-4369-B06C-C91DECF8E4FC} = {6554DBB5-4BF3-4746-AB4D-70B84EA571FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {280D25F1-A7B1-4434-AB65-F7118A1E88F9}

@@ -35,7 +35,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import 'src/polyfills'
 import { SignalrService } from '../../services/server-communication/signalr.service';
-import { ServerCommunicationService } from '../../contracts/services/server-communication.service';
+import { ServerCommunicationService } from '../../contracts/service/server-communication.service';
 
 @NgModule({
     declarations: [
