@@ -28,10 +28,10 @@ export class ArticleDetailComponent implements OnInit
         this.article = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0 };
 
         this.articleService.onUpdate.subscribe(article => {
-                this.article = article;
+            if (article.id === this.article.id) {
                 this.applicationNotificationService.notify("This article was changed by another user. Refresh this article to get last changes.");
             }
-        );
+        });
 
         this.articleService.onDelete.subscribe(id => {
             if (id === this.article.id) {

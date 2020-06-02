@@ -6,6 +6,7 @@ import { ArticleServiceAddEvent } from "../../events/article/article.service.add
 import { EntityService } from "./entity.service";
 import { ArticleServiceUpdateEvent } from "src/app/events/article/article.service.update.event";
 import { ArticleServiceDeleteEvent } from "src/app/events/article/article.service.delete.event";
+import { CommentServiceAddEvent } from "src/app/events/comment/comment.service.add.event";
 
 /** Сервис взаимодействия с сервером. */
 @Injectable({
@@ -19,12 +20,18 @@ export abstract class ServerCommunicationService {
         'ArticleServiceAddEvent': ArticleServiceAddEvent,
         'ArticleServiceUpdateEvent': ArticleServiceUpdateEvent,
         'ArticleServiceDeleteEvent': ArticleServiceDeleteEvent,
+        'CommentServiceAddEvent': CommentServiceAddEvent,
     };
 
     /** Подписывание на получение событий сервера. */
     subscribe(service: EntityService): void {
         this.onServerEvent
-            .pipe(map(event => Object.assign(new this.entityServiceEventClassMapping[event.className](), event)))
+            .pipe(map(event => {
+                let concreteEvent = new this.entityServiceEventClassMapping[event.className]();
+                Object.assign(concreteEvent, event);
+                
+                return concreteEvent;
+            }))
             .subscribe(event => service.accept(event));
     }
 

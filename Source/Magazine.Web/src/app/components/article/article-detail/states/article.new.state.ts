@@ -18,15 +18,15 @@ export class ArticleNewState extends ArticleState {
 
     create(): void {
         this.articleService.addArticle(this.articleContext.article)
-        .subscribe(
-            result => {
-                this.articleContext.article = result as Article;
-                this.articleContext.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
-            },
-            response => {
-                alert(`Error while creating article. ${response.error.Message}`);
-            }
-        );
+            .subscribe(
+                result => {
+                    this.articleContext.article = result as Article;
+                    this.articleContext.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
+                },
+                response => {
+                    alert(`Error while creating article. ${response.error.Message}`);
+                }
+            );
     }
 
     update(): void {

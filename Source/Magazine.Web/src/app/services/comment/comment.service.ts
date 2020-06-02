@@ -14,9 +14,16 @@ export class CommentService extends EntityService {
 
     private comments: Comment[];
 
+    onAdd: Subject<Comment>;
+
     constructor(private http: HttpClient,
                 private serverCommunicationService: ServerCommunicationService) {
         super();
+        this.onAdd = new Subject<Comment>();
+        this.serverCommunicationService.subscribe(this);
+        this.onAdd.subscribe(comment => {
+            this.comments.push(comment);
+        });
     }
 
     addComment(comment: Comment) {
