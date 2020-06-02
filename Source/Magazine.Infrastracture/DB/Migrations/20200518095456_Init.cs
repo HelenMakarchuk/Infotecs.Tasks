@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infotecs.Magazine.Infrastracture.DB.Migrations
 {
@@ -7,7 +7,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"
-				DROP TABLE IF EXISTS public.comment;
+				            DROP TABLE IF EXISTS public.comment;
                 DROP TABLE IF EXISTS public.article;
                 DROP TABLE IF EXISTS public.account;				
 
@@ -48,20 +48,21 @@ namespace Infotecs.Magazine.Infrastracture.DB.Migrations
 
                 DO $$
                     DECLARE accountId integer := NULL;
+                    DECLARE articleId integer := NULL;
                     begin
-	                    INSERT INTO account (login, password, salt) 
-	                    VALUES (
-		                    'admin',
-		                    '0000000000000000000000000000000000000000000000000000000000000000',
-		                    '000000000000000000000000'
-	                    ) 
-	                    RETURNING id INTO accountId;
+	                       INSERT INTO account (login, password, salt) 
+	                       VALUES (
+		                          'admin',
+		                          '0000000000000000000000000000000000000000000000000000000000000000',
+		                          '000000000000000000000000'
+	                       )
+	                       RETURNING id INTO accountId;
 
-	                    insert into article (title, accountid, body) 
-	                    values (
-		                    'Lorem ipsum', 
-		                    accountId, 
-		                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, '
+	                       INSERT INTO article (title, accountid, body) 
+	                       VALUES (
+		                          'Lorem ipsum', 
+		                          accountId, 
+		                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, '
                             'quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum '
                             'dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum '
                             'dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation '
@@ -78,7 +79,15 @@ namespace Infotecs.Magazine.Infrastracture.DB.Migrations
                             'id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud '
                             'exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. '
                             'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-	                    );
+	                       )
+                        RETURNING id INTO articleId;
+
+                        INSERT INTO comment (body, articleid, accountid) 
+	                       VALUES (
+		                          'Lorem ipsum',
+		                          accountId,
+		                          articleId
+	                       );
                 END $$;
             ");
         }

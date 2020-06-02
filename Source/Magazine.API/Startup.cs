@@ -1,4 +1,4 @@
-using Infotecs.Magazine.API.Services;
+using Infotecs.Magazine.API.Services.ClientCommunicationService;
 using Infotecs.Magazine.Domain.Contracts.Provider;
 using Infotecs.Magazine.Domain.Entities;
 using Infotecs.Magazine.Domain.Providers;
@@ -30,7 +30,9 @@ namespace Infotecs.Magazine.API
             services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
             services.AddSingleton<UnitOfWork, UnitOfWork>();
             services.AddSingleton<IValidateProvider<Article>, ArticleValidateProvider>();
+            services.AddSingleton<IValidateProvider<Comment>, CommentValidateProvider>();
             services.AddSingleton<IEntityService<Article>, ArticleService>();
+            services.AddSingleton<IEntityService<Comment>, CommentService>();
 
             services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
                      .UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")).Options));

@@ -36,12 +36,14 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import 'src/polyfills'
 import { SignalrService } from '../../services/server-communication/signalr.service';
 import { ServerCommunicationService } from '../../contracts/service/server-communication.service';
+import { CommentComponent } from 'src/app/components/comment/comment.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ArticleDetailComponent,
-        ArticleListComponent
+        ArticleListComponent,
+        CommentComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

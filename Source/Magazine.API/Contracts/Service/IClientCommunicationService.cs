@@ -1,4 +1,4 @@
-using Infotecs.Magazine.API.Services;
+using Magazine.API.Contracts.Event;
 using System.Threading.Tasks;
 
 namespace Magazine.API.Contracts.Service

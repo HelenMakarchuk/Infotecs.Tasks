@@ -30,4 +30,6 @@
         <button class="btn btn-primary" (click)="updateArticle()" *ngIf="state.constructor.name === 'ArticleEditableState'">Save</button>
         <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="state.constructor.name === 'ArticleCreatedState'">Delete</button>
     </div>
+
+    <app-comment></app-comment>
 </div>
