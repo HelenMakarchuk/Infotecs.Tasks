@@ -39,7 +39,11 @@ namespace Infotecs.Magazine.API
 
             services.AddControllers();
             services.AddCors();
-            services.AddSignalR();
+
+            services.AddSignalR().AddNewtonsoftJsonProtocol(options =>
+            {
+                options.PayloadSerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

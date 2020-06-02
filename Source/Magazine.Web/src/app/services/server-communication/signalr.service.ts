@@ -32,7 +32,9 @@ export class SignalrService extends ServerCommunicationService {
 
     /** Подписывание на получение события от сервера. */
     private registerOnServerEvents(): void {
-        this.connection.on(`${this.hubClientMethodName}`, (event: EntityServiceEvent) => this.onServerEvent.next(event));
+        this.connection.on(`${this.hubClientMethodName}`, (event: any) => {
+            this.onServerEvent.next(event);
+        });
     }
 
     /** Вызов события сервера. */
