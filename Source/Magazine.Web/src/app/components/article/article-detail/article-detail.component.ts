@@ -1,29 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArticleEntity } from '../../../models/article/article';
+import { Article } from '../../../models/article/article';
 import { ArticleService } from '../../../services/article/article.service';
-import { ServerCommunicationService } from '../../../contracts/service/server-communication.service';
-import { ApplicationComponent } from '../../../contracts/component/application.component';
+import { ApplicationNotificationService } from 'src/app/services/notification/application.notification.service';
+import { ArticleState } from './states/article.state';
+import { ArticleCreatedState } from './states/article.created.state';
+import { ServerCommunicationService } from 'src/app/contracts/service/server-communication.service';
+import { ArticleNewState } from './states/article.new.state';
+import { ArticleEditableState } from './states/article.editable.state';
 
 @Component({
     selector: 'app-article-detail',
     templateUrl: './article-detail.component.html',
     styleUrls: ['./article-detail.component.less']
 })
-export class ArticleDetailComponent extends ApplicationComponent implements OnInit
+export class ArticleDetailComponent implements OnInit
 {
+    state: ArticleState;
+    article: Article;
 
-    article: ArticleEntity = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0 };
-    isReadonly = false;
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private articleService: ArticleService,
+                private applicationNotificationService: ApplicationNotificationService,
+                private serverCommunicationService : ServerCommunicationService) {
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private articleService: ArticleService,
-        private serverCommunicationService: ServerCommunicationService) {
-        super();
+        this.article = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0 };
 
-        serverCommunicationService.subscribe(this);
+        this.articleService.onUpdate.subscribe(article => {
+                this.article = article;
+                this.applicationNotificationService.notify("This article was changed by another user. Refresh this article to get last changes.");
+            }
+        );
+
+        this.articleService.onDelete.subscribe(id => {
+            if (id === this.article.id) {
+                this.applicationNotificationService.notify("This article was deleted by another user.");
+            }
+        });
     }
 
     ngOnInit() {
@@ -33,14 +47,22 @@ export class ArticleDetailComponent extends ApplicationComponent implements OnIn
                     this.articleService.getArticle(+params.get('id'))
                         .subscribe(
                             result => {
-                                this.article = result as ArticleEntity;
-                                this.isReadonly = true;
+                                this.article = result as Article;
+                                this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
                             },
                             () => alert('Error while opening article')
                         );
                 }
+                else {
+                    this.transitionTo(new ArticleNewState(this.articleService, this.serverCommunicationService));
+                }
             }
         );
+    }
+
+    public transitionTo(state: ArticleState): void {
+        this.state = state;
+        this.state.setContext(this);
     }
 
     navigateToArticles() {
@@ -48,39 +70,18 @@ export class ArticleDetailComponent extends ApplicationComponent implements OnIn
     }
 
     createArticle() {
-        this.isReadonly = true;
+        this.state.create();
+    }
 
-        this.articleService.addArticle(this.article)
-            .subscribe(
-                result => this.article = result as ArticleEntity,
-                response => {
-                    alert(`Error while creating article. ${response.error.Message}`);
-                    this.isReadonly = false;
-                }
-            );
+    editArticle() {
+        this.transitionTo(new ArticleEditableState(this.articleService, this.serverCommunicationService));
     }
 
     updateArticle() {
-        this.isReadonly = !this.isReadonly;
-
-        if (this.isReadonly === false)
-            return;
-
-        this.articleService.updateArticle(this.article)
-            .subscribe(
-                result => {
-                    this.article = result as ArticleEntity;
-                    this.serverCommunicationService.communicate(EventType.Update);
-                },
-                () => alert('Error while updating article')
-            );
+        this.state.update();
     }
 
     deleteArticle() {
-        this.articleService.deleteArticle(this.article.id)
-            .subscribe(
-                () => this.navigateToArticles(),
-                () => alert('Error while deleting article')
-            );
+        this.state.delete();
     }
 }

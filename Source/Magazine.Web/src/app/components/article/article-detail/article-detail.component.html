@@ -1,23 +1,23 @@
 <div>
-    <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
-        <mat-label *ngIf="!isReadonly">
+    <mat-form-field [appearance]="state.constructor.name === 'ArticleNewState' || state.constructor.name === 'ArticleEditableState' ? 'standard' : 'none'">
+        <mat-label *ngIf="state.constructor.name === 'ArticleNewState' || state.constructor.name === 'ArticleEditableState'">
             Title
         </mat-label>
 
         <input matInput
                [(ngModel)]="article.title"
-               [readonly]="isReadonly"
+               [readonly]="state.constructor.name === 'ArticleCreatedState' || state.constructor.name === 'ArticleDeletedState'"
                placeholder="Ex. ASP.Net Core Web API with Docker Compose, PostgreSQL and EF Core.">
     </mat-form-field>
 
-    <mat-form-field [appearance]="isReadonly ? 'none' : 'standard'">
-        <mat-label *ngIf="!isReadonly">
+    <mat-form-field [appearance]="state.constructor.name === 'ArticleNewState' || state.constructor.name === 'ArticleEditableState' ? 'standard' : 'none'">
+        <mat-label *ngIf="state.constructor.name === 'ArticleNewState' || state.constructor.name === 'ArticleEditableState'">
             Content
         </mat-label>
 
-        <textarea matInput
-                  [readonly]="isReadonly"
+        <textarea matInput               
                   [(ngModel)]="article.body"
+                  [readonly]="state.constructor.name === 'ArticleCreatedState' || state.constructor.name === 'ArticleDeletedState'"
                   placeholder="Ex. In this article .."
                   cdkTextareaAutosize>
     </textarea>
@@ -25,9 +25,9 @@
 
     <div class="menu-panel">
         <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
-        <button class="btn btn-primary" (click)="createArticle()" *ngIf="article.account === null">Create</button>
-        <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && isReadonly">Edit</button>
-        <button class="btn btn-primary" (click)="updateArticle()" *ngIf="article.account !== null && !isReadonly">Save</button>
-        <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="article.account !== null && isReadonly">Delete</button>
+        <button class="btn btn-primary" (click)="createArticle()" *ngIf="state.constructor.name === 'ArticleNewState'">Create</button>
+        <button class="btn btn-primary" (click)="editArticle()" *ngIf="state.constructor.name === 'ArticleCreatedState'">Edit</button>
+        <button class="btn btn-primary" (click)="updateArticle()" *ngIf="state.constructor.name === 'ArticleEditableState'">Save</button>
+        <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="state.constructor.name === 'ArticleCreatedState'">Delete</button>
     </div>
 </div>

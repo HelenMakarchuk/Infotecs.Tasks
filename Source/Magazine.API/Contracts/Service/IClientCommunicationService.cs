@@ -1,3 +1,4 @@
+using Infotecs.Magazine.API.Services;
 using System.Threading.Tasks;
 
 namespace Magazine.API.Contracts.Service
@@ -8,8 +9,8 @@ namespace Magazine.API.Contracts.Service
     public interface IClientCommunicationService
     {
         /// <summary>
-        /// Взаимодействие при обновлении статьи.
+        /// Вызов события клиента.
         /// </summary>
-        Task СommunicateOnUpdate();
+        Task Send(EntityServiceEvent serviceEvent);
     }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../../../services/article/article.service';
-import { ArticleEntity } from '../../../models/article/article';
+import { Article } from '../../../models/article/article';
+import { ArticleListItem } from './article-list-item';
 
 @Component({
     selector: 'app-article-list',
@@ -9,30 +10,30 @@ import { ArticleEntity } from '../../../models/article/article';
     styleUrls: ['./article-list.component.less']
 })
 export class ArticleListComponent implements OnInit {
-    articles: ArticleEntity[];
+    articles: ArticleListItem[];
     selectedId: number;
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private service: ArticleService
-    ) { }
+    constructor(private route: ActivatedRoute,
+                private router: Router,
+                private articleService: ArticleService) {
+        articleService.onAdd.subscribe(article => this.articles.push(new ArticleListItem(article.id, article.title)));
+    }
 
     ngOnInit() {
         this.route.paramMap.subscribe(
             params => {
                 this.selectedId = +params.get('id');
-                this.service.getArticles()
+                this.articleService.getArticles()
                     .subscribe(
                         result => {
-                            this.articles = result as ArticleEntity[];
+                            this.articles = result.map(article => new ArticleListItem(article.id, article.title));
                         },
-                        () => alert('Error while opening article')
+                        () => alert('Error while fetching articles')
                     )
             });
     }
 
-    navigateToArticle(article: ArticleEntity = null) {
+    navigateToArticle(article: Article = null) {
         if (article !== null) {
             this.router.navigate(['/article', article.id]);
             return;

@@ -1,10 +1,11 @@
-import { AccountEntity } from "../account/account";
+import { Account } from "../account/account";
 
-export class ArticleEntity {
+/** Сущность "Статья" */
+export class Article {
     id: number;
     title: string;
     teaser: [];
     body: string;
     accountId: number;
-    account: AccountEntity;
+    account: Account;
 }

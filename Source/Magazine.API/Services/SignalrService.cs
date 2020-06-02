@@ -1,3 +1,4 @@
+using Infotecs.Magazine.Domain.Entities;
 using Magazine.API.Contracts.Service;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Infotecs.Magazine.API.Services
     /// </summary>
     public interface ISignalrClient
     {
-        Task СommunicateOnUpdate(ClientComponentEvent componentEvent);
+        Task Send(EntityServiceEvent serviceEvent);
     }
 
     /// <summary>
@@ -17,35 +18,36 @@ namespace Infotecs.Magazine.API.Services
     /// </summary>
     public class SignalrService : Hub<ISignalrClient>, IClientCommunicationService
     {
-        public async Task СommunicateOnUpdate()
+        public async Task Send(EntityServiceEvent serviceEvent)
         {
-            var componentEvent = new ArticleComponentEvent();
-            componentEvent.ClassName = componentEvent.GetType().Name;
-            componentEvent.Message = "This article was changed by another user. Refresh this article to get last changes.";
-
-            await Clients.Others.СommunicateOnUpdate(componentEvent);
+            await Clients.Others.Send(serviceEvent);
         }
     }
 
     /// <summary>
-    /// Событие компонента приложения клиента.
+    /// Событие сервиса сущности.
     /// </summary>
-    public abstract class ClientComponentEvent
+    public class EntityServiceEvent
     {
         /// <summary>
-        /// Тип события.
+        /// Название класса сервиса.
         /// </summary>
         public string ClassName { get; set; }
     }
 
     /// <summary>
-    /// Событие компонента "Статья".
+    /// Событие сервиса сущности "Статья".
     /// </summary>
-    public class ArticleComponentEvent : ClientComponentEvent
+    public class ArticleServiceEvent : EntityServiceEvent { }
+
+    /// <summary>
+    /// Событие "Добавление" сервиса сущности "Статья".
+    /// </summary>
+    public class ArticleServiceAddEvent : ArticleServiceEvent
     {
         /// <summary>
-        /// Сообщение.
+        /// Статья.
         /// </summary>
-        public string Message { get; set; }
+        public Article Article { get; set; }
     }
 }

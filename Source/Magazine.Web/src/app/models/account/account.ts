@@ -1,4 +1,5 @@
-export class AccountEntity {
+/** Сущность "Пользователь" */
+export class Account {
     id: number;
     login: string;
     password: string;

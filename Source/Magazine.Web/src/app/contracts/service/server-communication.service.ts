@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Subject, Observable } from "rxjs";
-import { ApplicationComponent } from "../component/application.component";
-import { ApplicationComponentEvent } from "../event/application.component.event";
+import { Subject } from "rxjs";
+import { EntityServiceEvent } from "../event/entity.service.event";
 import { map } from "rxjs/operators";
-import { ArticleComponentEvent } from "../../events/article/article.component.event";
+import { ArticleServiceAddEvent } from "../../events/article/article.service.add.event";
+import { EntityService } from "./entity.service";
+import { ArticleServiceUpdateEvent } from "src/app/events/article/article.service.update.event";
+import { ArticleServiceDeleteEvent } from "src/app/events/article/article.service.delete.event";
 
 /** Сервис взаимодействия с сервером. */
 @Injectable({
@@ -11,19 +13,21 @@ import { ArticleComponentEvent } from "../../events/article/article.component.ev
 })
 export abstract class ServerCommunicationService {
 
-    protected serverEvent = new Subject<ApplicationComponentEvent>();
+    protected onServerEvent = new Subject<EntityServiceEvent>();
 
-    private classMapping = {
-        'ArticleComponentEvent': ArticleComponentEvent,
+    private entityServiceEventClassMapping = {
+        'ArticleServiceAddEvent': ArticleServiceAddEvent,
+        'ArticleServiceUpdateEvent': ArticleServiceUpdateEvent,
+        'ArticleServiceDeleteEvent': ArticleServiceDeleteEvent,
     };
 
     /** Подписывание на получение событий сервера. */
-    subscribe(component: ApplicationComponent): void {
-        this.serverEvent
-            .pipe(map(event => Object.assign(new this.classMapping[event.className](), event)))
-            .subscribe(event => component.accept(event));
+    subscribe(service: EntityService): void {
+        this.onServerEvent
+            .pipe(map(event => Object.assign(new this.entityServiceEventClassMapping[event.className](), event)))
+            .subscribe(event => service.accept(event));
     }
 
     /** Взаимодействие с сервером при наступлении события. */
-    abstract communicate(eventType: EventType): void;
+    abstract send(event: EntityServiceEvent): void;
 }
