@@ -1,15 +1,24 @@
 import { EntityService } from "../service/entity.service";
+import { Serializable, jsonIgnore, jsonName } from "ts-serializable";
 
 /** Событие сервиса сущности. */
-export abstract class EntityServiceEvent {
+export abstract class EntityServiceEvent extends Serializable {
+    
+    @jsonIgnore()
+    protected serverServiceEventClassAssembly = "Infotecs.Magazine.API";
+    
+    @jsonIgnore()
+    protected serverServiceEventClassNamespace = "Magazine.API.Services.ClientCommunicationService.Events";
 
-    $type = "Magazine.API.Services.ClientCommunicationService.Events.ArticleServiceUpdateEvent, Infotecs.Magazine.API";
+    @jsonName("$type")
+    serverFullClassName = "";
 
-    /** Название класса сервиса сущности. */
-    className: string;
+    className = "";
 
     constructor(className: string) {
+        super();
         this.className = className;
+        this.serverFullClassName = `${this.serverServiceEventClassNamespace}.${this.className}, ${this.serverServiceEventClassAssembly}`;
     }
 
     abstract visit(component: EntityService): void;
