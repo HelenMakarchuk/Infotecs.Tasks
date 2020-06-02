@@ -5,8 +5,8 @@ import { Account } from "../account/account";
 export class Comment {
     id: number;
     body: string;
-    articleid: number;
-    accountid: number;
+    articleId: number;
+    accountId: number;
     article: Article;
     account: Account;
 }

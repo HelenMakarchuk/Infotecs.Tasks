@@ -17,7 +17,7 @@ export class CommentComponent implements OnInit {
                 @Inject(ArticleDetailComponent) private articleDetailComponent: ArticleDetailComponent,
                 private serverCommunicationService: ServerCommunicationService) {
         this.commentService.onAdd.subscribe(comment => {
-            if (comment.articleid === this.articleDetailComponent.article.id) {
+            if (comment.articleId === this.articleDetailComponent.article.id) {
                 this.comments.push(comment);
             }
         });
@@ -36,7 +36,7 @@ export class CommentComponent implements OnInit {
     createComment(): void {
         let comment = new Comment();
         comment.body = 'new comment';
-        comment.articleid = this.articleDetailComponent.article.id;
+        comment.articleId = this.articleDetailComponent.article.id;
         this.commentService.addComment(comment)
             .subscribe(
                 result => {
