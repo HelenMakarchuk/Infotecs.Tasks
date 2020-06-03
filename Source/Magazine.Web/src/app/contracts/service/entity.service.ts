@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { EntityServiceEvent } from "../event/entity.service.event";
+import { EntityServiceEvent } from "../../server-communication/contracts/entity.service.event";
 
 /** Сервис сущности. */
 @Injectable({
