@@ -1,7 +1,6 @@
 using Autofac;
-using Infotecs.Magazine.Domain.Providers;
+using Infotecs.Magazine.Domain.Article;
 using Infotecs.Magazine.Infrastracture.DB;
-using Infotecs.Magazine.Infrastracture.DB.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -20,7 +19,6 @@ namespace Infotecs.Magazine.Tests.DI
 
             builder.RegisterType<UnitOfWork>().As<UnitOfWork>().InstancePerLifetimeScope();
 
-            builder.RegisterType<HashProvider>().As<HashProvider>().InstancePerLifetimeScope();
             builder.RegisterType<ArticleValidateProvider>().As<ArticleValidateProvider>().InstancePerLifetimeScope();
 
             builder.Register((c, p) => new LoggerConfiguration()

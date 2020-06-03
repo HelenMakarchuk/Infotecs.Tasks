@@ -1,9 +1,8 @@
 using Infotecs.Magazine.Domain.Contracts.Provider;
-using Infotecs.Magazine.Domain.Entities;
 using System;
 using System.Text.RegularExpressions;
 
-namespace Infotecs.Magazine.Domain.Providers
+namespace Infotecs.Magazine.Domain.Account
 {
     /// <summary>
     /// Валидатор сущности "Аккаунт".

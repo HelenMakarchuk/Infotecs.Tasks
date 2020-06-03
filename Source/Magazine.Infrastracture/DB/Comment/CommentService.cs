@@ -1,38 +1,37 @@
 using Infotecs.Magazine.Domain.Contracts.Provider;
-using Infotecs.Magazine.Domain.Entities;
-using Infotecs.Magazine.Infrastracture.Contracts.Service;
+using Infotecs.Magazine.Infrastracture.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace Infotecs.Magazine.Infrastracture.DB.Services
+namespace Infotecs.Magazine.Infrastracture.DB.Comment
 {
     /// <summary>
     /// Сервис обработки операций CRUD для сущности "Статья".
     /// </summary>
-    public class CommentService : IEntityService<Comment>
+    public class CommentService : IEntityService<Domain.Comment.Comment>
     {
         readonly UnitOfWork _unitOfWork;
-        readonly IValidateProvider<Comment> _commentValidateProvider;
+        readonly IValidateProvider<Domain.Comment.Comment> _commentValidateProvider;
 
         public CommentService(UnitOfWork unitOfWork,
-                              IValidateProvider<Comment> commentValidateProvider)
+                              IValidateProvider<Domain.Comment.Comment> commentValidateProvider)
         {
             _unitOfWork = unitOfWork;
             _commentValidateProvider = commentValidateProvider;
         }
 
-        public IQueryable<Comment> Get()
+        public IQueryable<Domain.Comment.Comment> Get()
         {
             return _unitOfWork.CommentRepository.Include(a => a.Account).AsNoTracking();
         }
 
-        public Comment Get(int id)
+        public Domain.Comment.Comment Get(int id)
         {
             return Get().SingleOrDefault(a => a.Id == id);
         }
 
-        public Comment Add(Comment comment)
+        public Domain.Comment.Comment Add(Domain.Comment.Comment comment)
         {
             _commentValidateProvider.Validate(comment);
 
@@ -53,7 +52,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
             return entry.Entity;
         }
 
-        public Comment Update(Comment comment)
+        public Domain.Comment.Comment Update(Domain.Comment.Comment comment)
         {
             _commentValidateProvider.Validate(comment);
 
@@ -63,7 +62,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
             return entry.Entity;
         }
 
-        public Comment Delete(int id)
+        public Domain.Comment.Comment Delete(int id)
         {
             var entry = _unitOfWork.CommentRepository.Remove(id);
             _unitOfWork.Commit();

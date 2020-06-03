@@ -1,7 +1,7 @@
 using Infotecs.Magazine.Domain.Contracts.Entity;
 using System.Linq;
 
-namespace Infotecs.Magazine.Infrastracture.Contracts.Service
+namespace Infotecs.Magazine.Infrastracture.Contracts
 {
     public interface IEntityService<TEntity> where TEntity : IEntity
     {

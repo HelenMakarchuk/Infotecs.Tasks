@@ -1,15 +1,14 @@
-using Infotecs.Magazine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infotecs.Magazine.Infrastracture.DB.EntityConfigurations
+namespace Infotecs.Magazine.Infrastracture.DB.Article
 {
     /// <summary>
     /// Конфигурация БД сущности "Статья" <see cref="Article"/>.
     /// </summary>
-    public class ArticleConfiguration : IEntityTypeConfiguration<Article>
+    public class ArticleConfiguration : IEntityTypeConfiguration<Domain.Article.Article>
     {
-        public void Configure(EntityTypeBuilder<Article> builder)
+        public void Configure(EntityTypeBuilder<Domain.Article.Article> builder)
         {
             builder.ToTable("article");
 

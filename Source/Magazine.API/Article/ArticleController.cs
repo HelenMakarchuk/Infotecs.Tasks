@@ -1,4 +1,4 @@
-using Infotecs.Magazine.Infrastracture.Contracts.Service;
+using Infotecs.Magazine.Infrastracture.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
@@ -9,10 +9,10 @@ namespace Infotecs.Magazine.API.Article
     [ApiController]
     public class ArticleController : ControllerBase
     {
-        readonly IEntityService<Domain.Entities.Article> _articleService;
+        readonly IEntityService<Domain.Article.Article> _articleService;
         readonly ILogger _logger;
 
-        public ArticleController(IEntityService<Domain.Entities.Article> articleService,
+        public ArticleController(IEntityService<Domain.Article.Article> articleService,
                                  ILogger logger)
         {
             _articleService = articleService;
@@ -51,7 +51,7 @@ namespace Infotecs.Magazine.API.Article
 
         // POST: api/article
         [HttpPost]
-        public IActionResult Add(Domain.Entities.Article article)
+        public IActionResult Add(Domain.Article.Article article)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Infotecs.Magazine.API.Article
 
         // PUT: api/article/4
         [HttpPut("{id}")]
-        public IActionResult Update(Domain.Entities.Article article)
+        public IActionResult Update(Domain.Article.Article article)
         {
             try
             {

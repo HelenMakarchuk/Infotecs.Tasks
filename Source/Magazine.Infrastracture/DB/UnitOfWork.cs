@@ -1,5 +1,3 @@
-using Infotecs.Magazine.Domain.Entities;
-using Infotecs.Magazine.Infrastracture.DB.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -14,9 +12,9 @@ namespace Infotecs.Magazine.Infrastracture.DB
         bool _disposed;
 
         public UnitOfWork(DbContext context,
-                          Repository<Account> userRepository,
-                          Repository<Article> articleRepository,
-                          Repository<Comment> commentRepository)
+                          Repository<Domain.Account.Account> userRepository,
+                          Repository<Domain.Article.Article> articleRepository,
+                          Repository<Domain.Comment.Comment> commentRepository)
         {
             _context = context;
             AccountRepository = userRepository;
@@ -29,9 +27,9 @@ namespace Infotecs.Magazine.Infrastracture.DB
             Dispose(false);
         }
 
-        public Repository<Account> AccountRepository { get; }
-        public Repository<Article> ArticleRepository { get; }
-        public Repository<Comment> CommentRepository { get; }
+        public Repository<Domain.Account.Account> AccountRepository { get; }
+        public Repository<Domain.Article.Article> ArticleRepository { get; }
+        public Repository<Domain.Comment.Comment> CommentRepository { get; }
 
         public void Commit()
         {

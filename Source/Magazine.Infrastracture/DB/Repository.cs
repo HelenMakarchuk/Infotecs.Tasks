@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Infotecs.Magazine.Infrastracture.DB.Repositories
+namespace Infotecs.Magazine.Infrastracture.DB
 {
     /// <summary>
     /// Обобщенный репозиторий для работы с сущностями БД.

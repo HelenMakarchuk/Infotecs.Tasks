@@ -1,6 +1,6 @@
 using Infotecs.Magazine.Domain.Contracts.Entity;
 
-namespace Infotecs.Magazine.Domain.Entities
+namespace Infotecs.Magazine.Domain.Article
 {
     /// <summary>
     /// Модель БД сущности "Статья".
@@ -45,6 +45,6 @@ namespace Infotecs.Magazine.Domain.Entities
         /// <summary>
         /// Автор статьи.
         /// </summary>
-        public virtual Account Account { get; set; }
+        public virtual Account.Account Account { get; set; }
     }
 }

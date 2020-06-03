@@ -1,4 +1,4 @@
-using Infotecs.Magazine.Infrastracture.Contracts.Service;
+using Infotecs.Magazine.Infrastracture.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
@@ -9,10 +9,10 @@ namespace Infotecs.Magazine.API.Comment
     [ApiController]
     public class CommentController : ControllerBase
     {
-        readonly IEntityService<Domain.Entities.Comment> _commentService;
+        readonly IEntityService<Domain.Comment.Comment> _commentService;
         readonly ILogger _logger;
 
-        public CommentController(IEntityService<Domain.Entities.Comment> commentService,
+        public CommentController(IEntityService<Domain.Comment.Comment> commentService,
                                  ILogger logger)
         {
             _commentService = commentService;
@@ -51,7 +51,7 @@ namespace Infotecs.Magazine.API.Comment
 
         // POST: api/comment
         [HttpPost]
-        public IActionResult Add(Domain.Entities.Comment comment)
+        public IActionResult Add(Domain.Comment.Comment comment)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Infotecs.Magazine.API.Comment
 
         // PUT: api/comment/4
         [HttpPut("{id}")]
-        public IActionResult Update(Domain.Entities.Comment comment)
+        public IActionResult Update(Domain.Comment.Comment comment)
         {
             try
             {

@@ -1,38 +1,37 @@
 using Infotecs.Magazine.Domain.Contracts.Provider;
-using Infotecs.Magazine.Domain.Entities;
-using Infotecs.Magazine.Infrastracture.Contracts.Service;
+using Infotecs.Magazine.Infrastracture.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace Infotecs.Magazine.Infrastracture.DB.Services
+namespace Infotecs.Magazine.Infrastracture.DB.Article
 {
     /// <summary>
     /// Сервис обработки операций CRUD для сущности "Статья".
     /// </summary>
-    public class ArticleService : IEntityService<Article>
+    public class ArticleService : IEntityService<Domain.Article.Article>
     {
         readonly UnitOfWork _unitOfWork;
-        readonly IValidateProvider<Article> _articleValidateProvider;
+        readonly IValidateProvider<Domain.Article.Article> _articleValidateProvider;
 
         public ArticleService(UnitOfWork unitOfWork,
-                              IValidateProvider<Article> articleValidateProvider)
+                              IValidateProvider<Domain.Article.Article> articleValidateProvider)
         {
             _unitOfWork = unitOfWork;
             _articleValidateProvider = articleValidateProvider;
         }
 
-        public IQueryable<Article> Get()
+        public IQueryable<Domain.Article.Article> Get()
         {
             return _unitOfWork.ArticleRepository.Include(a => a.Account).AsNoTracking();
         }
 
-        public Article Get(int id)
+        public Domain.Article.Article Get(int id)
         {
             return Get().SingleOrDefault(a => a.Id == id);
         }
 
-        public Article Add(Article article)
+        public Domain.Article.Article Add(Domain.Article.Article article)
         {
             _articleValidateProvider.Validate(article);
 
@@ -58,7 +57,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
             return entry.Entity;
         }
 
-        public Article Update(Article article)
+        public Domain.Article.Article Update(Domain.Article.Article article)
         {
             _articleValidateProvider.Validate(article);
 
@@ -68,7 +67,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Services
             return entry.Entity;
         }
 
-        public Article Delete(int id)
+        public Domain.Article.Article Delete(int id)
         {
             var entry = _unitOfWork.ArticleRepository.Remove(id);
             _unitOfWork.Commit();

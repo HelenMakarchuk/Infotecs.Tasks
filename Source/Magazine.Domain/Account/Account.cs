@@ -1,6 +1,6 @@
 using Infotecs.Magazine.Domain.Contracts.Entity;
 
-namespace Infotecs.Magazine.Domain.Entities
+namespace Infotecs.Magazine.Domain.Account
 {
     /// <summary>
     /// Модель БД сущности "Пользователь".

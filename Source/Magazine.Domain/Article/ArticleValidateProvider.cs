@@ -1,8 +1,7 @@
 using Infotecs.Magazine.Domain.Contracts.Provider;
-using Infotecs.Magazine.Domain.Entities;
 using System;
 
-namespace Infotecs.Magazine.Domain.Providers
+namespace Infotecs.Magazine.Domain.Article
 {
     /// <summary>
     /// Валидатор сущности "Статья".

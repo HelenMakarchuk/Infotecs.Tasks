@@ -1,6 +1,6 @@
 using Infotecs.Magazine.Domain.Contracts.Entity;
 
-namespace Infotecs.Magazine.Domain.Entities
+namespace Infotecs.Magazine.Domain.Comment
 {
     /// <summary>
     /// Модель БД сущности "Комментарий".
@@ -30,11 +30,11 @@ namespace Infotecs.Magazine.Domain.Entities
         /// <summary>
         /// Статья, к которой принадлежит комментарий.
         /// </summary>
-        public virtual Article Article { get; set; }
+        public virtual Article.Article Article { get; set; }
 
         /// <summary>
         /// Автор комментария.
         /// </summary>
-        public virtual Account Account { get; set; }
+        public virtual Account.Account Account { get; set; }
     }
 }

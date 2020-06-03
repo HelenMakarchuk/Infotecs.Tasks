@@ -1,5 +1,6 @@
-using Infotecs.Magazine.Domain.Entities;
-using Infotecs.Magazine.Infrastracture.DB.EntityConfigurations;
+using Infotecs.Magazine.Infrastracture.DB.Account;
+using Infotecs.Magazine.Infrastracture.DB.Article;
+using Infotecs.Magazine.Infrastracture.DB.Comment;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -32,9 +33,9 @@ namespace Infotecs.Magazine.Infrastracture.DB
             }
         }
 
-        public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<Account> Users { get; set; }
-        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Domain.Article.Article> Articles { get; set; }
+        public virtual DbSet<Domain.Account.Account> Users { get; set; }
+        public virtual DbSet<Domain.Comment.Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

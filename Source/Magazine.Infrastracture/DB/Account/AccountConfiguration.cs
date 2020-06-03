@@ -1,15 +1,14 @@
-using Infotecs.Magazine.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infotecs.Magazine.Infrastracture.DB.EntityConfigurations
+namespace Infotecs.Magazine.Infrastracture.DB.Account
 {
     /// <summary>
     /// Конфигурация БД сущности "Пользователь" <see cref="Account"/>.
     /// </summary>
-    public class AccountConfiguration : IEntityTypeConfiguration<Account>
+    public class AccountConfiguration : IEntityTypeConfiguration<Domain.Account.Account>
     {
-        public void Configure(EntityTypeBuilder<Account> builder)
+        public void Configure(EntityTypeBuilder<Domain.Account.Account> builder)
         {
             builder.ToTable("account");
 

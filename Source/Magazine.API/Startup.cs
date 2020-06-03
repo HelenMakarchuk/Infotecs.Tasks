@@ -1,10 +1,11 @@
 using Infotecs.Magazine.API.ClientCommunicationService.Services;
+using Infotecs.Magazine.Domain.Article;
 using Infotecs.Magazine.Domain.Contracts.Provider;
 using Infotecs.Magazine.Domain.Providers;
-using Infotecs.Magazine.Infrastracture.Contracts.Service;
+using Infotecs.Magazine.Infrastracture.Contracts;
 using Infotecs.Magazine.Infrastracture.DB;
-using Infotecs.Magazine.Infrastracture.DB.Repositories;
-using Infotecs.Magazine.Infrastracture.DB.Services;
+using Infotecs.Magazine.Infrastracture.DB.Article;
+using Infotecs.Magazine.Infrastracture.DB.Comment;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +29,10 @@ namespace Infotecs.Magazine.API
         {
             services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
             services.AddSingleton<UnitOfWork, UnitOfWork>();
-            services.AddSingleton<IValidateProvider<Domain.Entities.Article>, ArticleValidateProvider>();
-            services.AddSingleton<IValidateProvider<Domain.Entities.Comment>, CommentValidateProvider>();
-            services.AddSingleton<IEntityService<Domain.Entities.Article>, ArticleService>();
-            services.AddSingleton<IEntityService<Domain.Entities.Comment>, CommentService>();
+            services.AddSingleton<IValidateProvider<Domain.Article.Article>, ArticleValidateProvider>();
+            services.AddSingleton<IValidateProvider<Domain.Comment.Comment>, CommentValidateProvider>();
+            services.AddSingleton<IEntityService<Domain.Article.Article>, ArticleService>();
+            services.AddSingleton<IEntityService<Domain.Comment.Comment>, CommentService>();
 
             services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
                      .UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")).Options));

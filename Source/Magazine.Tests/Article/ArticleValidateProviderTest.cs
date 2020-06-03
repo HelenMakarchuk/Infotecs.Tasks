@@ -1,10 +1,10 @@
-﻿using Autofac;
-using Infotecs.Magazine.Domain.Providers;
+using Autofac;
+using Infotecs.Magazine.Domain.Article;
 using System;
 using System.Text;
 using Xunit;
 
-namespace Infotecs.Magazine.Tests.Providers
+namespace Infotecs.Magazine.Tests.Article
 {
     /// <summary>
     /// Тест валидатора сущности "Статья" <see cref="ArticleValidateProvider"/>.
