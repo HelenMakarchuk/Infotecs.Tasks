@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../../../services/article/article.service';
 import { Article } from '../../../models/article/article';
 import { ArticleListItem } from './article-list-item';
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-article-list',
@@ -16,7 +17,19 @@ export class ArticleListComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private articleService: ArticleService) {
-        articleService.onAdd.subscribe(article => this.articles.push(new ArticleListItem(article.id, article.title)));
+        articleService.onAdd.subscribe(id => {
+            this.articleService.getArticle(id).subscribe(article => {
+                this.articles.push(new ArticleListItem(article.id, article.title));
+            })
+        });
+
+        articleService.onUpdate.subscribe(id => {
+            // update
+        });
+
+        articleService.onDelete.subscribe(id => {
+            // delete
+        });
     }
 
     ngOnInit() {

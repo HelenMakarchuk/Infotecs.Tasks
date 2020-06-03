@@ -9,15 +9,11 @@ import { Article } from "src/app/models/article/article";
 })
 export class ArticleServiceAddEvent extends ArticleServiceEvent {
 
-    /** Статья. */
-    article: Article;
-
-    constructor(article: Article) {
-        super("ArticleServiceAddEvent");
-        this.article = article;
+    constructor(id: number) {
+        super("ArticleServiceAddEvent", id);
     }
 
     visit(service: ArticleService): void {
-        service.onAdd.next(this.article);
+        service.onAdd.next(this.id);
     }
 }

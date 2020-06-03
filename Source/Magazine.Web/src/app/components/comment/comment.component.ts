@@ -4,6 +4,7 @@ import { Comment } from 'src/app/models/comment/comment';
 import { ArticleDetailComponent } from '../article/article-detail/article-detail.component';
 import { ServerCommunicationService } from 'src/app/contracts/service/server-communication.service';
 import { CommentServiceAddEvent } from 'src/app/events/comment/comment.service.add.event';
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-comment',
@@ -16,11 +17,13 @@ export class CommentComponent implements OnInit {
     constructor(private commentService: CommentService, 
                 @Inject(ArticleDetailComponent) private articleDetailComponent: ArticleDetailComponent,
                 private serverCommunicationService: ServerCommunicationService) {
-        this.commentService.onAdd.subscribe(comment => {
-            if (comment.articleId === this.articleDetailComponent.article.id) {
-                this.comments.push(comment);
-            }
-        });
+        this.commentService.onAdd
+            .pipe(filter(id => id === this.articleDetailComponent.article.id))
+            .subscribe(id => {
+                this.commentService.getComment(id).subscribe(comment => {
+                    this.comments.push(comment);
+                });
+            });
      }
 
     ngOnInit() {
@@ -37,15 +40,15 @@ export class CommentComponent implements OnInit {
         let comment = new Comment();
         comment.body = 'new comment';
         comment.articleId = this.articleDetailComponent.article.id;
-        this.commentService.addComment(comment)
-            .subscribe(
-                result => {
-                    this.comments.push(result as Comment);
-                    this.serverCommunicationService.send(new CommentServiceAddEvent(result as Comment));
-                },
-                response => {
-                    alert(`Error while creating comment. ${response.error.Message}`);
-                }
-            );
+
+        this.commentService.addComment(comment).subscribe(
+            (comment: Comment) => {
+                this.comments.push(comment);
+                this.serverCommunicationService.send(new CommentServiceAddEvent(comment.id));
+            },
+            response => {
+                alert(`Error while creating comment. ${response.error.Message}`);
+            }
+        );
     }
 }

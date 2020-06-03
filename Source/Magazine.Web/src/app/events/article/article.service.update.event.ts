@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ArticleService } from "src/app/services/article/article.service";
 import { ArticleServiceEvent } from "./article.service.event";
-import { Article } from "src/app/models/article/article";
 
 /** Событие "Обновление" сервиса сущности "Статья". */
 @Injectable({
@@ -9,15 +8,11 @@ import { Article } from "src/app/models/article/article";
 })
 export class ArticleServiceUpdateEvent extends ArticleServiceEvent {
 
-    /** Статья. */
-    article: Article;
-
-    constructor(article: Article) {
-        super("ArticleServiceUpdateEvent");
-        this.article = article;
+    constructor(id: number) {
+        super("ArticleServiceUpdateEvent", id);
     }
 
     visit(service: ArticleService): void {
-        service.onUpdate.next(this.article);
+        service.onUpdate.next(this.id);
     }
 }

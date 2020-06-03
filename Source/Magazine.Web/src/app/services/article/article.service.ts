@@ -12,40 +12,35 @@ import { EntityService } from 'src/app/contracts/service/entity.service';
 })
 export class ArticleService extends EntityService {
 
-    private articles: Article[];
-
-    onAdd: Subject<Article>;
-    onUpdate: Subject<Article>;
+    onAdd: Subject<number>;
+    onUpdate: Subject<number>;
     onDelete: Subject<number>;
 
     constructor(private http: HttpClient,
                 private serverCommunicationService: ServerCommunicationService) {
         super();
-        this.onAdd = new Subject<Article>();
-        this.onUpdate = new Subject<Article>();
+        this.onAdd = new Subject<number>();
+        this.onUpdate = new Subject<number>();
         this.onDelete = new Subject<number>();
         this.serverCommunicationService.subscribe(this);
-        this.onAdd.subscribe(article => this.articles.push(article));
-        this.onUpdate.subscribe(article => console.log(article));
-        this.onDelete.subscribe(id => console.log(id));
     }
 
-    addArticle(article: Article) {
+    addArticle(article: Article): Observable<Article> {
         return this.http.post<Article>(`${environment.apiUrl}/article`, article)
             .pipe(catchError(this.handleError));
     }
 
-    deleteArticle(id: number) {
+    deleteArticle(id: number): Observable<Article> {
         return this.http.delete<Article>(`${environment.apiUrl}/article/${id}`)
             .pipe(catchError(this.handleError));
     }
 
-    updateArticle(article: Article) {
+    updateArticle(article: Article): Observable<Article> {
         return this.http.put<Article>(`${environment.apiUrl}/article/${article.id}`, article)
             .pipe(catchError(this.handleError));
     }
 
-    getArticle(id: number) {
+    getArticle(id: number): Observable<Article> {
         return this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
             .pipe(catchError(this.handleError));
     }

@@ -24,9 +24,9 @@ export class ArticleEditableState extends ArticleState {
     update(): void {
         this.articleService.updateArticle(this.articleContext.article)
             .subscribe(
-                result => {
-                    this.articleContext.article = result as Article;
-                    this.serverCommunicationService.send(new ArticleServiceUpdateEvent(this.articleContext.article));
+                (article: Article) => {
+                    this.articleContext.article = article;
+                    this.serverCommunicationService.send(new ArticleServiceUpdateEvent(article.id));
                     this.articleContext.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
                 },
                 () => alert('Error while updating article')

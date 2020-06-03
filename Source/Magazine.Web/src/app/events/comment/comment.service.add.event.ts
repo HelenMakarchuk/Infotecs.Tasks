@@ -9,15 +9,11 @@ import { CommentService } from "src/app/services/comment/comment.service";
 })
 export class CommentServiceAddEvent extends CommentServiceEvent {
 
-    /** Статья. */
-    comment: Comment;
-
-    constructor(comment: Comment) {
-        super("CommentServiceAddEvent");
-        this.comment = comment;
+    constructor(id: number) {
+        super("CommentServiceAddEvent", id);
     }
 
     visit(service: CommentService): void {
-        service.onAdd.next(this.comment);
+        service.onAdd.next(this.id);
     }
 }

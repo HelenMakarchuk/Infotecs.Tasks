@@ -8,8 +8,13 @@ import { CommentService } from "src/app/services/comment/comment.service";
 })
 export abstract class CommentServiceEvent extends EntityServiceEvent {
 
-    constructor(className: string) {
+    /** Идентификатор комментария. */
+    id: number;
+
+    constructor(className: string,
+                id: number) {
         super(className);
+        this.id = id;
     }
 
     abstract visit(service: CommentService): void;

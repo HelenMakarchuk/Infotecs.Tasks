@@ -12,37 +12,31 @@ import { Comment } from 'src/app/models/comment/comment';
 })
 export class CommentService extends EntityService {
 
-    private comments: Comment[];
-
-    onAdd: Subject<Comment>;
+    onAdd: Subject<number>;
 
     constructor(private http: HttpClient,
                 private serverCommunicationService: ServerCommunicationService) {
         super();
-        this.comments = [];
-        this.onAdd = new Subject<Comment>();
+        this.onAdd = new Subject<number>();
         this.serverCommunicationService.subscribe(this);
-        this.onAdd.subscribe(comment => {
-            this.comments.push(comment);
-        });
     }
 
-    addComment(comment: Comment) {
+    addComment(comment: Comment): Observable<Comment> {
         return this.http.post<Comment>(`${environment.apiUrl}/comment`, comment)
             .pipe(catchError(this.handleError));
     }
 
-    deleteComment(id: number) {
+    deleteComment(id: number): Observable<Comment> {
         return this.http.delete<Comment>(`${environment.apiUrl}/comment/${id}`)
             .pipe(catchError(this.handleError));
     }
 
-    updateComment(comment: Comment) {
+    updateComment(comment: Comment): Observable<Comment> {
         return this.http.put<Comment>(`${environment.apiUrl}/comment/${comment.id}`, comment)
             .pipe(catchError(this.handleError));
     }
 
-    getComment(id: number) {
+    getComment(id: number): Observable<Comment> {
         return this.http.get<Comment>(`${environment.apiUrl}/comment/${id}`)
             .pipe(catchError(this.handleError));
     }

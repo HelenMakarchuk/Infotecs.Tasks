@@ -3,7 +3,7 @@ namespace Magazine.API.Contracts.Event
     /// <summary>
     /// Событие сервиса сущности.
     /// </summary>
-    public class EntityServiceEvent
+    public abstract class EntityServiceEvent
     {
         /// <summary>
         /// Название класса сервиса.

@@ -9,12 +9,8 @@ import { Article } from "src/app/models/article/article";
 })
 export class ArticleServiceDeleteEvent extends ArticleServiceEvent {
 
-    /** Идентификатор статьи. */
-    id: number;
-
     constructor(id: number) {
-        super("ArticleServiceDeleteEvent");
-        this.id = id;
+        super("ArticleServiceDeleteEvent", id);
     }
 
     visit(service: ArticleService): void {

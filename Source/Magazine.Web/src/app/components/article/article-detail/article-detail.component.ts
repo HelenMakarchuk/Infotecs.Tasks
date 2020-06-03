@@ -8,6 +8,7 @@ import { ArticleCreatedState } from './states/article.created.state';
 import { ServerCommunicationService } from 'src/app/contracts/service/server-communication.service';
 import { ArticleNewState } from './states/article.new.state';
 import { ArticleEditableState } from './states/article.editable.state';
+import { filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-article-detail',
@@ -27,31 +28,31 @@ export class ArticleDetailComponent implements OnInit
 
         this.article = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0 };
 
-        this.articleService.onUpdate.subscribe(article => {
-            if (article.id === this.article.id) {
-                this.applicationNotificationService.notify("This article was changed by another user. Refresh this article to get last changes.");
-            }
-        });
 
-        this.articleService.onDelete.subscribe(id => {
-            if (id === this.article.id) {
+        this.articleService.onUpdate
+            .pipe(filter(id => id === this.article.id))
+            .subscribe(() => {
+                this.applicationNotificationService.notify("This article was changed by another user. Refresh this article to get last changes.");
+            });
+
+        this.articleService.onDelete
+            .pipe(filter(id => id === this.article.id))
+            .subscribe(() => {
                 this.applicationNotificationService.notify("This article was deleted by another user.");
-            }
-        });
+            });
     }
 
     ngOnInit() {
         this.route.paramMap.subscribe(
             params => {
                 if (params.get('id') !== null) {
-                    this.articleService.getArticle(+params.get('id'))
-                        .subscribe(
-                            result => {
-                                this.article = result as Article;
-                                this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
-                            },
-                            () => alert('Error while opening article')
-                        );
+                    this.articleService.getArticle(+params.get('id')).subscribe(
+                        (article: Article) => {
+                            this.article = article;
+                            this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
+                        },
+                        () => alert('Error while opening article')
+                    );
                 }
                 else {
                     this.transitionTo(new ArticleNewState(this.articleService, this.serverCommunicationService));
