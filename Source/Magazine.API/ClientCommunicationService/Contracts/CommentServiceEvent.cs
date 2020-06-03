@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Magazine.API.Contracts.Event
+namespace Magazine.API.ClientCommunicationService.Contracts
 {
     /// <summary>
     /// Событие сервиса сущности "Комментарий".

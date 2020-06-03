@@ -1,9 +1,8 @@
-using Magazine.API.Contracts.Event;
-using Magazine.API.Contracts.Service;
+using Magazine.API.ClientCommunicationService.Contracts;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 
-namespace Infotecs.Magazine.API.Services.ClientCommunicationService
+namespace Infotecs.Magazine.API.ClientCommunicationService.Services
 {
     /// <summary>
     /// Интерфейс клиента библиотеки SignalR.

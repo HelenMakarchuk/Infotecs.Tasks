@@ -1,33 +1,32 @@
-using Infotecs.Magazine.Domain.Entities;
 using Infotecs.Magazine.Infrastracture.Contracts.Service;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
 
-namespace Infotecs.Magazine.API.Controllers
+namespace Infotecs.Magazine.API.Article
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentController : ControllerBase
+    public class ArticleController : ControllerBase
     {
-        readonly IEntityService<Comment> _commentService;
+        readonly IEntityService<Domain.Entities.Article> _articleService;
         readonly ILogger _logger;
 
-        public CommentController(IEntityService<Comment> commentService,
+        public ArticleController(IEntityService<Domain.Entities.Article> articleService,
                                  ILogger logger)
         {
-            _commentService = commentService;
-            _logger = logger.ForContext<CommentController>();
+            _articleService = articleService;
+            _logger = logger.ForContext<ArticleController>();
         }
 
-        // GET: api/comment
+        // GET: api/article
         [HttpGet]
         public IActionResult Get()
         {
             try
             {
                 _logger.Debug("Start get request");
-                return Ok(_commentService.Get());
+                return Ok(_articleService.Get());
             }
             finally
             {
@@ -35,14 +34,14 @@ namespace Infotecs.Magazine.API.Controllers
             }
         }
 
-        // GET: api/comment/4
+        // GET: api/article/4
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             try
             {
                 _logger.Debug("Start get request for id = {id}", id);
-                return Ok(_commentService.Get(id));
+                return Ok(_articleService.Get(id));
             }
             finally
             {
@@ -50,49 +49,49 @@ namespace Infotecs.Magazine.API.Controllers
             }
         }
 
-        // POST: api/comment
+        // POST: api/article
         [HttpPost]
-        public IActionResult Add(Comment comment)
+        public IActionResult Add(Domain.Entities.Article article)
         {
             try
             {
-                _logger.Debug("Start add request for {comment}", comment);
-                return Ok(_commentService.Add(comment));
+                _logger.Debug("Start add request for {article}", article);
+                return Ok(_articleService.Add(article));
             }
             catch (ArgumentException ex)
             {
-                _logger.Warning(ex, "Warning while add request for {comment}", comment);
+                _logger.Warning(ex, "Warning while add request for {article}", article);
                 return BadRequest(ex);
             }
             finally
             {
-                _logger.Debug("Complete add request for {comment}", comment);
+                _logger.Debug("Complete add request for {article}", article);
             }
         }
 
-        // PUT: api/comment/4
+        // PUT: api/article/4
         [HttpPut("{id}")]
-        public IActionResult Update(Comment comment)
+        public IActionResult Update(Domain.Entities.Article article)
         {
             try
             {
-                _logger.Debug("Start update request for {comment}", comment);
-                return Ok(_commentService.Update(comment));
+                _logger.Debug("Start update request for {article}", article);
+                return Ok(_articleService.Update(article));
             }
             finally
             {
-                _logger.Debug("Complete update request for {comment}", comment);
+                _logger.Debug("Complete update request for {article}", article);
             }
         }
 
-        // DELETE: api/comment/4
+        // DELETE: api/article/4
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
             try
             {
                 _logger.Debug("Start delete request for id = {id}", id);
-                return Ok(_commentService.Delete(id));
+                return Ok(_articleService.Delete(id));
             }
             finally
             {

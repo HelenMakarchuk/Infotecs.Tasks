@@ -8,7 +8,7 @@ export abstract class EntityServiceEvent extends Serializable {
     protected serverServiceEventClassAssembly = "Infotecs.Magazine.API";
     
     @jsonIgnore()
-    protected serverServiceEventClassNamespace = "Magazine.API.Services.ClientCommunicationService.Events";
+    protected serverServiceEventClassNamespace = "Magazine.API.ClientCommunicationService.Events";
 
     @jsonName("$type")
     serverFullClassName = "";

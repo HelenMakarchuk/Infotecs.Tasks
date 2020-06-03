@@ -1,6 +1,6 @@
-using Magazine.API.Contracts.Event;
+using Magazine.API.ClientCommunicationService.Contracts;
 
-namespace Magazine.API.Services.ClientCommunicationService.Events
+namespace Magazine.API.ClientCommunicationService.Events
 {
     /// <summary>
     /// Событие "Добавление" сервиса сущности "Комментарий".

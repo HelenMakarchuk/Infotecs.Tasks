@@ -1,7 +1,6 @@
-using Magazine.API.Contracts.Event;
 using System.Threading.Tasks;
 
-namespace Magazine.API.Contracts.Service
+namespace Magazine.API.ClientCommunicationService.Contracts
 {
     /// <summary>
     /// Сервис взаимодействия с клиентом.
