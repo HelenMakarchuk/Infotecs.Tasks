@@ -44,6 +44,14 @@ namespace Infotecs.Magazine.API
             {
                 options.PayloadSerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
             });
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "http://localhost:5082";
+                    options.RequireHttpsMetadata = false;
+                    options.Audience = "api1";
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -54,20 +62,21 @@ namespace Infotecs.Magazine.API
                 app.UseDeveloperExceptionPage();
 
             app.UseRouting();
-            app.UseAuthorization();
-            app.UseAuthentication();
 
             app.UseCors(builder =>
             {
-                builder.WithOrigins("http://localhost:4200")
+                builder.WithOrigins("http://localhost:4200", "http://localhost:5084")
                        .AllowAnyHeader()
                        .AllowAnyMethod()
                        .AllowCredentials();
             });
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireAuthorization();
                 endpoints.MapHub<SignalrService>("/сommunication");
             });
         }
