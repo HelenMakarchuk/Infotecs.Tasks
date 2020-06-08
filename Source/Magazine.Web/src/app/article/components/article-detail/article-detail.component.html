@@ -31,5 +31,5 @@
         <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="state.constructor.name === 'ArticleCreatedState'">Delete</button>
     </div>
 
-    <app-comment></app-comment>
+    <app-comment *ngIf="state.constructor.name !== 'ArticleNewState'"></app-comment>
 </div>

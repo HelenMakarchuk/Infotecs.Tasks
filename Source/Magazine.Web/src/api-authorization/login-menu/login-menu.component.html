@@ -1,16 +1,27 @@
-<ul class="navbar-nav" *ngIf="isAuthenticated | async">
-    <li class="nav-item">
-        <a  class="nav-link text-dark" [routerLink]='["/authentication/profile"]' title="Manage">Hello {{ userName | async }}</a>
-    </li>
-    <li class="nav-item">
-        <a  class="nav-link text-dark" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Logout</a>
-    </li>
-</ul>
-<ul class="navbar-nav" *ngIf="!(isAuthenticated | async)">
-  <li class="nav-item">
-        <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" [routerLink]='["/authentication/login"]'>Login</a>
-    </li>
-</ul>
+<nav class="navbar navbar-expand-sm navbar-light justify-content-end" style="background-color: #eeeeee; box-shadow: 1px 1.5px 2px lightgray;">
+    <a class="navbar-brand" href="#">Infotecs Magazine</a>
+   
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <button [routerLink]='["articles/create"]' class="btn btn-primary ml-auto mr-2">Write Article</button>
+        </ul>
+
+        <ul class="nav navbar-nav" *ngIf="!(isAuthenticated | async)">
+            <li class="nav-item text-center" id="signup-btn">
+                <a [routerLink]='["authentication/register"]' href="#" class="nav-link" data-toggle="modal" data-target="#"><span class="fa fa-user"></span><span class="d-none d-sm-inline d-xl-block px-1">Sign Up</span></a>
+            </li>
+            <li class="nav-item text-center" id="login-btn">
+                <a [routerLink]='["authentication/login"]' href="#" class="nav-link" data-toggle="modal" data-target="#"><span class="fa fa-sign-in"></span><span class="d-none d-sm-inline d-xl-block px-1">Log In</span></a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav" *ngIf="isAuthenticated | async">
+            <li class="nav-item text-center" id="signup-btn">
+                <a [routerLink]='["authentication/profile"]' href="#" class="nav-link" data-toggle="modal" data-target="#"><span class="fa fa-user"></span><span class="d-none d-sm-inline d-xl-block px-1">Hello {{ userName | async }}</span></a>
+            </li>
+            <li class="nav-item text-center" id="login-btn">
+                <a [routerLink]='["authentication/logout"]' href="#" class="nav-link" data-toggle="modal" data-target="#"><span class="fa fa-sign-in"></span><span class="d-none d-sm-inline d-xl-block px-1">Logout</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
