@@ -37,6 +37,8 @@ import { ServerCommunicationService } from '../server-communication/contracts/se
 import { CommentComponent } from '../comment/components/comment.component';
 import { ArticleDetailComponent } from '../article/components/article-detail/article-detail.component';
 import { ArticleListComponent } from '../article/components/article-list/article-list.component';
+import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
+import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 
 @NgModule({
     declarations: [
@@ -54,11 +56,12 @@ import { ArticleListComponent } from '../article/components/article-list/article
         MatInputModule,
         MatSelectModule,
         BrowserAnimationsModule,
+        ApiAuthorizationModule,
         RouterModule.forRoot([
-            { path: '', component: ArticleListComponent, pathMatch: 'full' },
-            { path: 'articles', component: ArticleListComponent },
-            { path: 'article/:id', component: ArticleDetailComponent },
-            { path: 'articles/create', component: ArticleDetailComponent }
+            { path: '', component: ArticleListComponent, pathMatch: 'full', canActivate: [AuthorizeGuard] },
+            { path: 'articles', component: ArticleListComponent, canActivate: [AuthorizeGuard] },
+            { path: 'article/:id', component: ArticleDetailComponent, canActivate: [AuthorizeGuard] },
+            { path: 'articles/create', component: ArticleDetailComponent, canActivate: [AuthorizeGuard] }
         ])
     ],
     exports: [

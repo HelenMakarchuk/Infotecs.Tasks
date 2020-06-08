@@ -39,6 +39,7 @@ namespace IdentityServerAspNetIdentity
                 iis.AutomaticAuthentication = false;
             });
 
+            services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -46,7 +47,7 @@ namespace IdentityServerAspNetIdentity
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            var builder = services.AddIdentityServer(options =>
+            services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
@@ -56,10 +57,10 @@ namespace IdentityServerAspNetIdentity
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients)
-                .AddAspNetIdentity<ApplicationUser>();
+                .AddAspNetIdentity<ApplicationUser>()
 
-            // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+                // not recommended for production - you need to store your key material somewhere secure
+                .AddDeveloperSigningCredential();
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -78,6 +79,14 @@ namespace IdentityServerAspNetIdentity
             }
 
             app.UseStaticFiles();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:4200", "http://localhost:5084")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials();
+            });
 
             app.UseRouting();
             app.UseIdentityServer();

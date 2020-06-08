@@ -50,7 +50,7 @@ namespace Infotecs.Magazine.API
                 {
                     options.Authority = "http://localhost:5082";
                     options.RequireHttpsMetadata = false;
-                    options.Audience = "api1";
+                    options.Audience = "api";
                 });
         }
 

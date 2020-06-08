@@ -31,7 +31,7 @@ namespace MvcClient
 
                     options.SaveTokens = true;
 
-                    options.Scope.Add("api1");
+                    options.Scope.Add("api");
                     options.Scope.Add("offline_access");
                 });
         }

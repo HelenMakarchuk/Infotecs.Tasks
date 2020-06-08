@@ -20,8 +20,8 @@ export class CommentComponent implements OnInit {
         this.commentService.onAdd
             .pipe(filter(id => id === this.articleDetailComponent.article.id))
             .subscribe(id => {
-                this.commentService.getComment(id).subscribe(comment => {
-                    this.comments.push(comment);
+                this.commentService.getComment(id).subscribe(obComment => {
+                    obComment.subscribe(comment => this.comments.push(comment));
                 });
             });
      }
@@ -30,7 +30,7 @@ export class CommentComponent implements OnInit {
         this.commentService.getComments()
             .subscribe(
                 result => {
-                    this.comments = result;
+                    result.subscribe(r => this.comments = r);
                 },
                 () => alert('Error while fetching comments')
             )

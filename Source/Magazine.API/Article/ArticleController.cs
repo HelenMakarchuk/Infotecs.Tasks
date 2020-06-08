@@ -1,4 +1,5 @@
 using Infotecs.Magazine.Infrastracture.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
@@ -6,6 +7,7 @@ using System;
 namespace Infotecs.Magazine.API.Article
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ArticleController : ControllerBase
     {

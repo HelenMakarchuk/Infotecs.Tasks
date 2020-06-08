@@ -17,8 +17,8 @@ export class ArticleListComponent implements OnInit {
                 private router: Router,
                 private articleService: ArticleService) {
         articleService.onAdd.subscribe(id => {
-            this.articleService.getArticle(id).subscribe(article => {
-                this.articles.push(new ArticleListItem(article.id, article.title));
+            this.articleService.getArticle(id).subscribe(obArticle => {
+                obArticle.subscribe(article => this.articles.push(new ArticleListItem(article.id, article.title)));
             })
         });
 
@@ -38,7 +38,7 @@ export class ArticleListComponent implements OnInit {
                 this.articleService.getArticles()
                     .subscribe(
                         result => {
-                            this.articles = result.map(article => new ArticleListItem(article.id, article.title));
+                            result.subscribe(r => this.articles = r.map(article => new ArticleListItem(article.id, article.title)));
                         },
                         () => alert('Error while fetching articles')
                     )

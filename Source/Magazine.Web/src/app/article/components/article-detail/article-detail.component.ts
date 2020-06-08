@@ -9,6 +9,7 @@ import { ArticleNewState } from './states/article.new.state';
 import { ArticleEditableState } from './states/article.editable.state';
 import { filter } from 'rxjs/operators';
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-article-detail',
@@ -27,7 +28,7 @@ export class ArticleDetailComponent implements OnInit
                 private serverCommunicationService : ServerCommunicationService) {
 
         this.article = { id: 0, title: '', body: '', teaser: null, account: null, accountId: 0 };
-
+        this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
 
         this.articleService.onUpdate
             .pipe(filter(id => id === this.article.id))
@@ -46,13 +47,16 @@ export class ArticleDetailComponent implements OnInit
         this.route.paramMap.subscribe(
             params => {
                 if (params.get('id') !== null) {
-                    this.articleService.getArticle(+params.get('id')).subscribe(
-                        (article: Article) => {
-                            this.article = article;
-                            this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
-                        },
-                        () => alert('Error while opening article')
-                    );
+                    this.articleService.getArticle(+params.get('id'))
+                        .subscribe(
+                            (observableArticle: Observable<Article>) => {
+                                observableArticle.subscribe(article => {
+                                    this.article = article;
+                                    this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
+                                })
+                            },
+                            () => alert('Error while opening article')
+                        );
                 }
                 else {
                     this.transitionTo(new ArticleNewState(this.articleService, this.serverCommunicationService));

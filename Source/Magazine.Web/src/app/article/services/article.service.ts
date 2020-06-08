@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Article } from '../models/article';
 import { throwError, Observable, Subject } from 'rxjs';
 import { EntityService } from 'src/app/contracts/service/entity.service';
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
+import { AuthorizeService } from 'src/api-authorization/authorize.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ export class ArticleService extends EntityService {
     onDelete: Subject<number>;
 
     constructor(private http: HttpClient,
+                private authService: AuthorizeService,
                 private serverCommunicationService: ServerCommunicationService) {
         super();
         this.onAdd = new Subject<number>();
@@ -40,14 +42,24 @@ export class ArticleService extends EntityService {
             .pipe(catchError(this.handleError));
     }
 
-    getArticle(id: number): Observable<Article> {
-        return this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
-            .pipe(catchError(this.handleError));
+    getArticle(id: number): Observable<Observable<Article>> {
+        return this.authService.getAuthorizationHeaders()
+            .pipe(
+                map(headers => {
+                    return this.http.get<Article>(`${environment.apiUrl}/article/${id}`, { headers: headers })
+                .pipe(catchError(this.handleError));
+                })
+            );
     }
 
-    getArticles(): Observable<Article[]> {
-        return this.http.get<Article[]>(`${environment.apiUrl}/article`)
-            .pipe(catchError(this.handleError));
+    getArticles(): Observable<Observable<Article[]>> {
+        return this.authService.getAuthorizationHeaders()
+            .pipe(
+                map(headers => {
+                    return this.http.get<Article[]>(`${environment.apiUrl}/article`, { headers: headers })
+                        .pipe(catchError(this.handleError));
+                })
+            );
     }
 
     handleError(error: HttpErrorResponse) {
