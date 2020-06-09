@@ -6,7 +6,7 @@ import { throwError, Observable, Subject, from } from 'rxjs';
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
 import { EntityService } from 'src/app/contracts/service/entity.service';
 import { Comment } from 'src/app/comment/models/comment';
-import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { AuthorizeService } from 'src/app/authorization/authorize.service';
 
 @Injectable({
     providedIn: 'root'

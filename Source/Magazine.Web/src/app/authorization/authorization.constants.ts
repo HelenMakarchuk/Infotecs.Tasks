@@ -23,7 +23,6 @@ export const LoginActions = {
 
 let applicationPaths: ApplicationPathsType = {
   DefaultLoginRedirectPath: '/',
-  ApiAuthorizationClientConfigurationUrl: `http://localhost:5082/_configuration/${ApplicationName}`,
   Login: `authentication/${LoginActions.Login}`,
   LoginFailed: `authentication/${LoginActions.LoginFailed}`,
   LoginCallback: `authentication/${LoginActions.LoginCallback}`,
@@ -57,7 +56,6 @@ applicationPaths = {
 
 interface ApplicationPathsType {
   readonly DefaultLoginRedirectPath: string;
-  readonly ApiAuthorizationClientConfigurationUrl: string;
   readonly Login: string;
   readonly LoginFailed: string;
   readonly LoginCallback: string;

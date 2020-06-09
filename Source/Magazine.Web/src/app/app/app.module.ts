@@ -37,18 +37,24 @@ import { ServerCommunicationService } from '../server-communication/contracts/se
 import { CommentComponent } from '../comment/components/comment.component';
 import { ArticleDetailComponent } from '../article/components/article-detail/article-detail.component';
 import { ArticleListComponent } from '../article/components/article-list/article-list.component';
-import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
-import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
+import { AuthorizeGuard } from '../authorization/authorize.guard';
+import { LoginComponent } from '../authorization/login/login.component';
+import { LogoutComponent } from '../authorization/logout/logout.component';
+import { CommonModule } from '@angular/common';
+import { ApplicationPaths } from '../authorization/authorization.constants';
 
 @NgModule({
     declarations: [
         AppComponent,
         ArticleDetailComponent,
         ArticleListComponent,
-        CommentComponent
+        CommentComponent,
+        LoginComponent,
+        LogoutComponent
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        CommonModule,
         HttpClientModule,
         FormsModule,
         MatNativeDateModule,
@@ -56,12 +62,19 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
         MatInputModule,
         MatSelectModule,
         BrowserAnimationsModule,
-        ApiAuthorizationModule,
         RouterModule.forRoot([
             { path: '', component: ArticleListComponent, pathMatch: 'full', canActivate: [AuthorizeGuard] },
             { path: 'articles', component: ArticleListComponent, canActivate: [AuthorizeGuard] },
             { path: 'article/:id', component: ArticleDetailComponent, canActivate: [AuthorizeGuard] },
-            { path: 'articles/create', component: ArticleDetailComponent, canActivate: [AuthorizeGuard] }
+            { path: 'articles/create', component: ArticleDetailComponent, canActivate: [AuthorizeGuard] },
+            { path: ApplicationPaths.Register, component: LoginComponent },
+            { path: ApplicationPaths.Profile, component: LoginComponent },
+            { path: ApplicationPaths.Login, component: LoginComponent },
+            { path: ApplicationPaths.LoginFailed, component: LoginComponent },
+            { path: ApplicationPaths.LoginCallback, component: LoginComponent },
+            { path: ApplicationPaths.LogOut, component: LogoutComponent },
+            { path: ApplicationPaths.LoggedOut, component: LogoutComponent },
+            { path: ApplicationPaths.LogOutCallback, component: LogoutComponent }
         ])
     ],
     exports: [
@@ -91,6 +104,8 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
         MatToolbarModule,
         PortalModule,
         ScrollingModule,
+        LoginComponent, 
+        LogoutComponent
     ],
     entryComponents: [AppComponent],
     bootstrap: [AppComponent],
