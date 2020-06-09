@@ -27,15 +27,13 @@ namespace Infotecs.Magazine.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(typeof(Repository<>), typeof(Repository<>));
-            services.AddSingleton<UnitOfWork, UnitOfWork>();
-            services.AddSingleton<IValidateProvider<Domain.Article.Article>, ArticleValidateProvider>();
-            services.AddSingleton<IValidateProvider<Domain.Comment.Comment>, CommentValidateProvider>();
-            services.AddSingleton<IEntityService<Domain.Article.Article>, ArticleService>();
-            services.AddSingleton<IEntityService<Domain.Comment.Comment>, CommentService>();
-
-            services.AddSingleton<DbContext>(serviceProvider => new Context(new DbContextOptionsBuilder<Context>()
-                     .UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")).Options));
+            services.AddDbContext<Context>(options => options.UseNpgsql(Configuration.GetConnectionString("InfotecsMagazine")), ServiceLifetime.Scoped);
+            services.AddScoped(typeof(Repository<>), typeof(Repository<>));
+            services.AddScoped<UnitOfWork, UnitOfWork>();
+            services.AddScoped<IEntityService<Domain.Article.Article>, ArticleService>();
+            services.AddScoped<IEntityService<Domain.Comment.Comment>, CommentService>();
+            services.AddScoped<IValidateProvider<Domain.Article.Article>, ArticleValidateProvider>();
+            services.AddScoped<IValidateProvider<Domain.Comment.Comment>, CommentValidateProvider>();
 
             services.AddControllers();
             services.AddCors();

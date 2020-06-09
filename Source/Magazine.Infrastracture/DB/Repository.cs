@@ -17,7 +17,7 @@ namespace Infotecs.Magazine.Infrastracture.DB
         protected DbContext _context;
         protected DbSet<T> _entities;
 
-        public Repository(DbContext context)
+        public Repository(Context context)
         {
             _context = context;
             _entities = _context.Set<T>();

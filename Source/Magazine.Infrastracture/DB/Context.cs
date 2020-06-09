@@ -2,8 +2,7 @@ using Infotecs.Magazine.Infrastracture.DB.Account;
 using Infotecs.Magazine.Infrastracture.DB.Article;
 using Infotecs.Magazine.Infrastracture.DB.Comment;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
+using Serilog;
 
 namespace Infotecs.Magazine.Infrastracture.DB
 {
@@ -12,7 +11,7 @@ namespace Infotecs.Magazine.Infrastracture.DB
     /// </summary>
     public class Context : DbContext
     {
-        //readonly ILogger _logger;
+        readonly ILogger _logger;
 
         /// <summary>
         /// Конструктор требуется при добавлении миграции базы данных
@@ -21,16 +20,12 @@ namespace Infotecs.Magazine.Infrastracture.DB
             : base()
         { }
 
-        public Context(DbContextOptions<Context> options)
+        public Context(DbContextOptions<Context> options, ILogger logger)
             : base(options)
         {
-            var migrator = Database.GetService<IMigrator>();
-            var pendingMigrations = Database.GetPendingMigrations();
+            _logger = logger.ForContext<Context>();
 
-            foreach (var targetMigration in pendingMigrations)
-            {
-                migrator.Migrate(targetMigration);
-            }
+            Database.Migrate();
         }
 
         public virtual DbSet<Domain.Article.Article> Articles { get; set; }

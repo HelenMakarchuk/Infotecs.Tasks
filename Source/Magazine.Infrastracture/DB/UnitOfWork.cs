@@ -11,7 +11,7 @@ namespace Infotecs.Magazine.Infrastracture.DB
         DbContext _context;
         bool _disposed;
 
-        public UnitOfWork(DbContext context,
+        public UnitOfWork(Context context,
                           Repository<Domain.Account.Account> userRepository,
                           Repository<Domain.Article.Article> articleRepository,
                           Repository<Domain.Comment.Comment> commentRepository)
@@ -46,7 +46,6 @@ namespace Infotecs.Magazine.Infrastracture.DB
 
             if (disposing)
             {
-                _context?.Database?.EnsureDeleted();
                 _context?.Dispose();
             }
 
