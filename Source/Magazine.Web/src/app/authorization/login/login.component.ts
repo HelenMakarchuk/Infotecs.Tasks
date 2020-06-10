@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthorizeService, AuthenticationResultStatus } from '../authorize.service';
+import { AuthorizationService, AuthenticationResultStatus } from '../authorization.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { LoginActions, QueryParameterNames, ApplicationPaths, ReturnUrlType } from '../authorization.constants';
+import { environment } from 'src/environments/environment';
 
-// The main responsibility of this component is to handle the user's login process.
-// This is the starting point for the login process. Any component that needs to authenticate
-// a user can simply perform a redirect to this component with a returnUrl query parameter and
-// let the component perform the login and return back to the return url.
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html'
@@ -16,16 +13,19 @@ export class LoginComponent implements OnInit {
     public message = new BehaviorSubject<string>(null);
 
     constructor(
-        private authorizeService: AuthorizeService,
+        private authorizeService: AuthorizationService,
         private activatedRoute: ActivatedRoute,
         private router: Router) { }
 
     async ngOnInit() {
-
         const action = this.activatedRoute.snapshot.url[1];
+
         switch (action.path) {
             case LoginActions.Login:
                 await this.login(this.getReturnUrl());
+                break;
+            case LoginActions.Register:
+                this.redirectToRegister();
                 break;
             case LoginActions.LoginCallback:
                 await this.processLoginCallback();
@@ -34,33 +34,26 @@ export class LoginComponent implements OnInit {
                 const message = this.activatedRoute.snapshot.queryParamMap.get(QueryParameterNames.Message);
                 this.message.next(message);
                 break;
-            case LoginActions.Profile:
-                this.redirectToProfile();
-                break;
-            case LoginActions.Register:
-                this.redirectToRegister();
-                break;
             default:
                 throw new Error(`Invalid action '${action}'`);
         }
     }
 
-
     private async login(returnUrl: string): Promise<void> {
-
         const state: INavigationState = { returnUrl };
         const result = await this.authorizeService.signIn(state);
         this.message.next(undefined);
+
         switch (result.status) {
-            case AuthenticationResultStatus.Redirect:
-                break;
             case AuthenticationResultStatus.Success:
-                await this.navigateToReturnUrl(returnUrl);
+                await this.router.navigateByUrl(returnUrl, {replaceUrl: true});
                 break;
             case AuthenticationResultStatus.Fail:
                 await this.router.navigate(ApplicationPaths.LoginFailedPathComponents, {
                     queryParams: { [QueryParameterNames.Message]: result.message }
                 });
+                break;
+            case AuthenticationResultStatus.Redirect:
                 break;
             default:
                 throw new Error(`Invalid status result ${(result as any).status}.`);
@@ -68,60 +61,31 @@ export class LoginComponent implements OnInit {
     }
 
     private async processLoginCallback(): Promise<void> {
-
         const url = window.location.href;
         const result = await this.authorizeService.completeSignIn(url);
+
         switch (result.status) {
-            case AuthenticationResultStatus.Redirect:
-                // There should not be any redirects as completeSignIn never redirects.
-                throw new Error('Should not redirect.');
             case AuthenticationResultStatus.Success:
-                await this.navigateToReturnUrl(this.getReturnUrl(result.state));
+                let returnUrl = this.getReturnUrl(result.state);
+                await this.router.navigateByUrl(returnUrl, {replaceUrl: true});
+                location.reload();
                 break;
             case AuthenticationResultStatus.Fail:
                 this.message.next(result.message);
                 break;
+            case AuthenticationResultStatus.Redirect:
+                throw new Error('Should not redirect.');
         }
     }
 
-    private redirectToRegister(): any {
-
-        this.redirectToApiAuthorizationPath(
-            `${ApplicationPaths.IdentityRegisterPath}?returnUrl=${encodeURI('/' + ApplicationPaths.Login)}`);
-    }
-
-    private redirectToProfile(): void {
-
-        this.redirectToApiAuthorizationPath(ApplicationPaths.IdentityManagePath);
-    }
-
-    private async navigateToReturnUrl(returnUrl: string) {
-
-        // It's important that we do a replace here so that we remove the callback uri with the
-        // fragment containing the tokens from the browser history.
-        await this.router.navigateByUrl(returnUrl, {
-            replaceUrl: true
-        });
+    private redirectToRegister(): void {
+        window.location.replace(`${environment.identityUrl}/${ApplicationPaths.IdentityRegisterPath}?returnUrl=${encodeURI(location.origin + '/' + ApplicationPaths.Login)}`);
     }
 
     private getReturnUrl(state?: INavigationState): string {
-
         const fromQuery = (this.activatedRoute.snapshot.queryParams as INavigationState).returnUrl;
 
-        // add check on same origin
-
-        return (state && state.returnUrl) ||
-            fromQuery ||
-            ApplicationPaths.DefaultLoginRedirectPath;
-    }
-
-    private redirectToApiAuthorizationPath(apiAuthorizationPath: string) {
-
-        // It's important that we do a replace here so that when the user hits the back arrow on the
-        // browser they get sent back to where it was on the app instead of to an endpoint on this
-        // component.
-        const redirectUrl = `${window.location.origin}${apiAuthorizationPath}`;
-        window.location.replace(redirectUrl);
+        return (state && state.returnUrl) || fromQuery || ApplicationPaths.DefaultLoginRedirectPath;
     }
 }
 

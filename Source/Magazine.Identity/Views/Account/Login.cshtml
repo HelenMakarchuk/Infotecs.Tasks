@@ -1,93 +1,96 @@
-﻿@model LoginViewModel
+@using Infotecs.Identity
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
+@model LoginViewModel
+
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="@(!Model.isRegister ? "active" : "")"><a data-toggle="tab" href="#log-in">Log In</a></li>
+        <li class="@(Model.isRegister ? "active" : "")"><a data-toggle="tab" href="#sign-up">Sign Up</a></li>
+    </ul>
+
+    <div class="error-details">
+        <partial name="_ValidationSummary" />
     </div>
 
-    <partial name="_ValidationSummary" />
-
-    <div class="row">
-
-        @if (Model.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Local Login</h3>
-                    </div>
-                    <div class="panel-body">
-
-                        <form asp-route="Login">
-                            <input type="hidden" asp-for="ReturnUrl" />
-
-                            <fieldset>
-                                <div class="form-group">
-                                    <label asp-for="Username"></label>
-                                    <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                                </div>
-                                @if (Model.AllowRememberLogin)
-                                {
-                                    <div class="form-group login-remember">
-                                        <label asp-for="RememberLogin">
-                                            <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
-                                        </label>
-                                    </div>
-                                }
-
-                                <div>
-                                    <p>The default users are alice/bob, password: Pass123$</p>
-                                </div>
-
-                                <div class="form-group">
-                                    <button class="btn btn-primary" name="button" value="login">Login</button>
-                                    <button class="btn btn-default" name="button" value="cancel">Cancel</button>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+    <div class="tab-content">
+        <div id="log-in" class="tab-pane fade @(!Model.isRegister ? "in active" : "")">
+            <div class="btn-group-vertical btn-group-identity-provider">
+                @foreach (var provider in Model.ExternalProviders)
+                {
+                    <button type="button"
+                            class="btn btn-default"
+                            asp-controller="External"
+                            asp-action="Challenge"
+                            asp-route-provider="@provider.AuthenticationScheme"
+                            asp-route-returnUrl="@Model.ReturnUrl">
+                        Log in with @provider.DisplayName
+                    </button>
+                }
             </div>
-        }
 
-        @if (Model.VisibleExternalProviders.Any())
-        {
-            <div class="col-md-6 col-sm-6 external-providers">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">External Login</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-inline">
-                            @foreach (var provider in Model.VisibleExternalProviders)
-                            {
-                                <li>
-                                    <a class="btn btn-default"
-                                       asp-controller="External"
-                                       asp-action="Challenge"
-                                       asp-route-provider="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.ReturnUrl">
-                                        @provider.DisplayName
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        }
+            <span class="text-divider">OR</span>
 
-        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-        {
-            <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this client.
+            <form asp-action="Login" asp-controller="Account" method="post">
+
+                <input type="hidden" asp-for="ReturnUrl" />
+                <input type="hidden" asp-for="isRegister" />
+
+                <fieldset>
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <input class="form-control" placeholder="Username or email as on github" asp-for="Username" autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-submit" name="button">Log In</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div id="sign-up" class="tab-pane fade @(Model.isRegister ? "in active" : "")">
+            <div class="btn-group-vertical btn-group-identity-provider">
+                @foreach (var provider in Model.ExternalProviders)
+                {
+                    <button type="button"
+                            class="btn btn-default"
+                            asp-controller="External"
+                            asp-action="Challenge"
+                            asp-route-provider="@provider.AuthenticationScheme"
+                            asp-route-returnUrl="@Model.ReturnUrl">
+                        Sign up with @provider.DisplayName
+                    </button>
+                }
             </div>
-        }
+
+            <span class="text-divider">OR</span>
+
+            <form asp-action="Register" asp-controller="Account" method="post">
+
+                <input type="hidden" asp-for="ReturnUrl" />
+                <input type="hidden" asp-for="isRegister" />
+
+                <fieldset>
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <input class="form-control" placeholder="Username or email as on github" asp-for="Username" autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-submit" name="button">Sign Up</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
     </div>
 </div>

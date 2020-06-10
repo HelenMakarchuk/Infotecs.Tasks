@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationResultStatus, AuthorizeService } from '../authorize.service';
+import { AuthenticationResultStatus, AuthorizationService } from '../authorization.service';
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class LogoutComponent implements OnInit {
     public message = new BehaviorSubject<string>(null);
 
     constructor(
-        private authorizeService: AuthorizeService,
+        private authorizeService: AuthorizationService,
         private activatedRoute: ActivatedRoute,
         private router: Router) { }
 

@@ -1,4 +1,4 @@
-﻿body {
+body {
   margin-top: 65px;
 }
 .navbar-header {
@@ -18,6 +18,38 @@
   display: none;
   width: 0;
   height: 0;
+}
+.error-details {
+  margin-top: 2rem;
+}
+.btn-submit {
+  width: 100%;
+}
+.btn-group-identity-provider {
+  margin: 2rem 0px;
+  width: 100%;
+}
+.text-divider {
+  position: relative;
+  display: block;
+  text-align: center;
+  line-height: 2;
+  color: #546e7a;
+}
+.text-divider:before,
+.text-divider:after {
+  border-top: 1px solid #90a4ae;
+  display: block;
+  height: 1px;
+  content: " ";
+  width: 40%;
+  position: absolute;
+  left: 0;
+  top: 1.2em;
+}
+.text-divider:after {
+  right: 0;
+  left: auto;
 }
 .page-consent .client-logo {
   float: left;

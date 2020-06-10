@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace IdentityServer4.Quickstart.UI
+namespace Infotecs.Identity
 {
     public class LoginInputModel
     {
@@ -10,5 +10,6 @@ namespace IdentityServer4.Quickstart.UI
         public string Password { get; set; }
         public bool RememberLogin { get; set; }
         public string ReturnUrl { get; set; }
+        public bool isRegister { get; set; }
     }
 }

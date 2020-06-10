@@ -6,7 +6,7 @@ import { Article } from '../models/article';
 import { throwError, Observable, Subject } from 'rxjs';
 import { EntityService } from 'src/app/contracts/service/entity.service';
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
-import { AuthorizeService } from 'src/app/authorization/authorize.service';
+import { AuthorizationService } from 'src/app/authorization/authorization.service';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +18,7 @@ export class ArticleService extends EntityService {
     onDelete: Subject<number>;
 
     constructor(private http: HttpClient,
-                private authService: AuthorizeService,
+                private authService: AuthorizationService,
                 private serverCommunicationService: ServerCommunicationService) {
         super();
         this.onAdd = new Subject<number>();

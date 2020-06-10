@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Quickstart.UI
+namespace Infotecs.Identity
 {
     [SecurityHeaders]
     [AllowAnonymous]

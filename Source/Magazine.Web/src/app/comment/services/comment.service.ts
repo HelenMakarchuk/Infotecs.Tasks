@@ -6,7 +6,7 @@ import { throwError, Observable, Subject, from } from 'rxjs';
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
 import { EntityService } from 'src/app/contracts/service/entity.service';
 import { Comment } from 'src/app/comment/models/comment';
-import { AuthorizeService } from 'src/app/authorization/authorize.service';
+import { AuthorizationService } from 'src/app/authorization/authorization.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class CommentService extends EntityService {
     onAdd: Subject<number>;
 
     constructor(private http: HttpClient,
-                private authService: AuthorizeService,
+                private authService: AuthorizationService,
                 private serverCommunicationService: ServerCommunicationService) {
         super();
         this.onAdd = new Subject<number>();

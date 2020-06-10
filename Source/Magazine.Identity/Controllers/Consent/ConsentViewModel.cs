@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace IdentityServer4.Quickstart.UI
+namespace Infotecs.Identity
 {
     public class ConsentViewModel : ConsentInputModel
     {

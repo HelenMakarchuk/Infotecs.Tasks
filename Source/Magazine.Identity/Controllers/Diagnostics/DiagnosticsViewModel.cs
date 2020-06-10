@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdentityServer4.Quickstart.UI
+namespace Infotecs.Identity
 {
     public class DiagnosticsViewModel
     {

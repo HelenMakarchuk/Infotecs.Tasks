@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServer4.Quickstart.UI
+namespace Infotecs.Identity
 {
     /// <summary>
     /// This sample controller allows a user to revoke grants given to clients

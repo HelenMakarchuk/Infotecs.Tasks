@@ -1,4 +1,4 @@
-namespace IdentityServer4.Quickstart.UI
+namespace Infotecs.Identity
 {
     public class ConsentOptions
     {

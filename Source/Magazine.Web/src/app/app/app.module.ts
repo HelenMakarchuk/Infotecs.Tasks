@@ -37,7 +37,7 @@ import { ServerCommunicationService } from '../server-communication/contracts/se
 import { CommentComponent } from '../comment/components/comment.component';
 import { ArticleDetailComponent } from '../article/components/article-detail/article-detail.component';
 import { ArticleListComponent } from '../article/components/article-list/article-list.component';
-import { AuthorizeGuard } from '../authorization/authorize.guard';
+import { AuthorizationGuard } from '../authorization/authorization.guard';
 import { LoginComponent } from '../authorization/login/login.component';
 import { LogoutComponent } from '../authorization/logout/logout.component';
 import { CommonModule } from '@angular/common';
@@ -63,10 +63,10 @@ import { ApplicationPaths } from '../authorization/authorization.constants';
         MatSelectModule,
         BrowserAnimationsModule,
         RouterModule.forRoot([
-            { path: '', component: ArticleListComponent, pathMatch: 'full', canActivate: [AuthorizeGuard] },
-            { path: 'articles', component: ArticleListComponent, canActivate: [AuthorizeGuard] },
-            { path: 'article/:id', component: ArticleDetailComponent, canActivate: [AuthorizeGuard] },
-            { path: 'articles/create', component: ArticleDetailComponent, canActivate: [AuthorizeGuard] },
+            { path: '', component: ArticleListComponent, pathMatch: 'full' },
+            { path: 'articles', component: ArticleListComponent },
+            { path: 'article/:id', component: ArticleDetailComponent, canActivate: [AuthorizationGuard] },
+            { path: 'articles/create', component: ArticleDetailComponent, canActivate: [AuthorizationGuard] },
             { path: ApplicationPaths.Register, component: LoginComponent },
             { path: ApplicationPaths.Profile, component: LoginComponent },
             { path: ApplicationPaths.Login, component: LoginComponent },
@@ -104,7 +104,7 @@ import { ApplicationPaths } from '../authorization/authorization.constants';
         MatToolbarModule,
         PortalModule,
         ScrollingModule,
-        LoginComponent, 
+        LoginComponent,
         LogoutComponent
     ],
     entryComponents: [AppComponent],

@@ -1,4 +1,4 @@
-namespace IdentityServer4.Quickstart.UI.Device
+namespace Infotecs.Identity.Device
 {
     public class DeviceAuthorizationViewModel : ConsentViewModel
     {
