@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
             case AuthenticationResultStatus.Redirect:
                 break;
             default:
-                throw new Error(`Invalid status result ${(result as any).status}.`);
+                throw new Error(`Incorrect status result ${(result as any).status}.`);
         }
     }
 
@@ -66,8 +66,8 @@ export class LoginComponent implements OnInit {
 
         switch (result.status) {
             case AuthenticationResultStatus.Success:
-                let returnUrl = this.getReturnUrl(result.state);
-                await this.router.navigateByUrl(returnUrl, {replaceUrl: true});
+                this.authorizeService.isUserAuthenticated = true;
+                await this.router.navigateByUrl(this.getReturnUrl(result.state), {replaceUrl: true});
                 location.reload();
                 break;
             case AuthenticationResultStatus.Fail:

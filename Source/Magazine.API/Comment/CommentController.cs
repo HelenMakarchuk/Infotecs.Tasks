@@ -7,7 +7,6 @@ using System;
 namespace Infotecs.Magazine.API.Comment
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class CommentController : ControllerBase
     {
@@ -23,6 +22,7 @@ namespace Infotecs.Magazine.API.Comment
 
         // GET: api/comment
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Get()
         {
             try
@@ -38,6 +38,7 @@ namespace Infotecs.Magazine.API.Comment
 
         // GET: api/comment/4
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public IActionResult Get(int id)
         {
             try

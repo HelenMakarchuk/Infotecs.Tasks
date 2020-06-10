@@ -42,6 +42,7 @@ import { LoginComponent } from '../authorization/login/login.component';
 import { LogoutComponent } from '../authorization/logout/logout.component';
 import { CommonModule } from '@angular/common';
 import { ApplicationPaths } from '../authorization/authorization.constants';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     declarations: [
@@ -65,7 +66,7 @@ import { ApplicationPaths } from '../authorization/authorization.constants';
         RouterModule.forRoot([
             { path: '', component: ArticleListComponent, pathMatch: 'full' },
             { path: 'articles', component: ArticleListComponent },
-            { path: 'article/:id', component: ArticleDetailComponent, canActivate: [AuthorizationGuard] },
+            { path: 'article/:id', component: ArticleDetailComponent },
             { path: 'articles/create', component: ArticleDetailComponent, canActivate: [AuthorizationGuard] },
             { path: ApplicationPaths.Register, component: LoginComponent },
             { path: ApplicationPaths.Profile, component: LoginComponent },
@@ -78,6 +79,7 @@ import { ApplicationPaths } from '../authorization/authorization.constants';
         ])
     ],
     exports: [
+        NgbDropdownModule,
         CdkStepperModule,
         MatAutocompleteModule,
         MatBadgeModule,

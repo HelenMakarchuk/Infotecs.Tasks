@@ -26,11 +26,14 @@ export class ArticleCreatedState extends ArticleState {
     delete(): void {
         this.articleService.deleteArticle(this.articleContext.article.id)
             .subscribe(
-                () => {
+                article => {
                     this.articleContext.transitionTo(new ArticleDeletedState(this.articleService, this.serverCommunicationService));
                     this.articleContext.navigateToArticles();
                 },
-                () => alert('Error while deleting article')
+                error => {
+                    console.log(error);
+                    alert('Error while deleting article');
+                }
             );
     }
 }

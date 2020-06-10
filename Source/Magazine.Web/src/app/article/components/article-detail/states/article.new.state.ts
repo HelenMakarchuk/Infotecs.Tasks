@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ArticleState } from "./article.state";
 import { ArticleCreatedState } from "./article.created.state";
-import { Article } from "src/app/article/models/article";
 import { ArticleService } from "src/app/article/services/article.service";
 import { ServerCommunicationService } from "src/app/server-communication/contracts/server-communication.service";
 
@@ -18,7 +17,7 @@ export class ArticleNewState extends ArticleState {
 
     create(): void {
         this.articleService.addArticle(this.articleContext.article).subscribe(
-            (article: Article) => {
+            article => {
                 this.articleContext.article = article;
                 this.articleContext.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
             },

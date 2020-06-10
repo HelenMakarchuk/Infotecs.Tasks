@@ -9,7 +9,7 @@ import { ArticleNewState } from './states/article.new.state';
 import { ArticleEditableState } from './states/article.editable.state';
 import { filter } from 'rxjs/operators';
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
-import { Observable } from 'rxjs';
+import { AuthorizationService } from 'src/app/authorization/authorization.service';
 
 @Component({
     selector: 'app-article-detail',
@@ -24,6 +24,7 @@ export class ArticleDetailComponent implements OnInit
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private articleService: ArticleService,
+                public authorizeService: AuthorizationService,
                 private applicationNotificationService: ApplicationNotificationService,
                 private serverCommunicationService : ServerCommunicationService) {
 
@@ -49,13 +50,14 @@ export class ArticleDetailComponent implements OnInit
                 if (params.get('id') !== null) {
                     this.articleService.getArticle(+params.get('id'))
                         .subscribe(
-                            (observableArticle: Observable<Article>) => {
-                                observableArticle.subscribe(article => {
-                                    this.article = article;
-                                    this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
-                                })
+                            article => {
+                                this.article = article;
+                                this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
                             },
-                            () => alert('Error while opening article')
+                            error => {
+                                console.log(error);
+                                alert('Error while opening article');
+                            }
                         );
                 }
                 else {

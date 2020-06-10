@@ -5,7 +5,7 @@
 - [x] Angular
 - [x] WebApi
 - [x] Less
-- [ ] SignalR
+- [x] SignalR
 - [x] Docker
 - [x] Docker Compose
 

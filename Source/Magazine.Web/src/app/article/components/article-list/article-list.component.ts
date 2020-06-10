@@ -16,10 +16,12 @@ export class ArticleListComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private articleService: ArticleService) {
+
         articleService.onAdd.subscribe(id => {
-            this.articleService.getArticle(id).subscribe(obArticle => {
-                obArticle.subscribe(article => this.articles.push(new ArticleListItem(article.id, article.title)));
-            })
+            this.articleService.getArticle(id)
+                .subscribe(article => {
+                    this.articles.push(new ArticleListItem(article.id, article.title));
+                })
         });
 
         articleService.onUpdate.subscribe(id => {
@@ -37,8 +39,8 @@ export class ArticleListComponent implements OnInit {
                 this.selectedId = +params.get('id');
                 this.articleService.getArticles()
                     .subscribe(
-                        result => {
-                            result.subscribe(r => this.articles = r.map(article => new ArticleListItem(article.id, article.title)));
+                        articles => {
+                            this.articles = articles.map(article => new ArticleListItem(article.id, article.title));
                         },
                         () => alert('Error while fetching articles')
                     )

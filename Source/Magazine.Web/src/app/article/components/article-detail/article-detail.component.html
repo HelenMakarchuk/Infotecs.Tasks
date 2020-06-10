@@ -15,7 +15,7 @@
             Content
         </mat-label>
 
-        <textarea matInput               
+        <textarea matInput
                   [(ngModel)]="article.body"
                   [readonly]="state.constructor.name === 'ArticleCreatedState' || state.constructor.name === 'ArticleDeletedState'"
                   placeholder="Ex. In this article .."
@@ -25,10 +25,10 @@
 
     <div class="menu-panel">
         <button class="btn btn-primary" (click)="navigateToArticles()">Back</button>
-        <button class="btn btn-primary" (click)="createArticle()" *ngIf="state.constructor.name === 'ArticleNewState'">Create</button>
-        <button class="btn btn-primary" (click)="editArticle()" *ngIf="state.constructor.name === 'ArticleCreatedState'">Edit</button>
-        <button class="btn btn-primary" (click)="updateArticle()" *ngIf="state.constructor.name === 'ArticleEditableState'">Save</button>
-        <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="state.constructor.name === 'ArticleCreatedState'">Delete</button>
+        <button class="btn btn-primary" (click)="createArticle()" *ngIf="(authorizeService.isUserAuthenticated === true) && (state.constructor.name === 'ArticleNewState')">Create</button>
+        <button class="btn btn-primary" (click)="editArticle()" *ngIf="(authorizeService.isUserAuthenticated === true) && (state.constructor.name === 'ArticleCreatedState')">Edit</button>
+        <button class="btn btn-primary" (click)="updateArticle()" *ngIf="(authorizeService.isUserAuthenticated === true) && (state.constructor.name === 'ArticleEditableState')">Save</button>
+        <button class="btn btn-primary" (click)="deleteArticle()" *ngIf="(authorizeService.isUserAuthenticated === true) && (state.constructor.name === 'ArticleCreatedState')">Delete</button>
     </div>
 
     <app-comment *ngIf="state.constructor.name !== 'ArticleNewState'"></app-comment>

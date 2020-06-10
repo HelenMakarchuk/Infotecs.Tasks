@@ -40,6 +40,13 @@ export interface IUser {
 export class AuthorizationService {
     private userManager: UserManager;
     public userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null);
+    public isUserAuthenticated: boolean;
+
+    constructor() {
+        this.userSubject.subscribe(user => {
+            this.isUserAuthenticated = user !== null;
+        });
+    }
 
     public isAuthenticated(): Observable<boolean> {
         return this.getUser().pipe(map(u => !!u));

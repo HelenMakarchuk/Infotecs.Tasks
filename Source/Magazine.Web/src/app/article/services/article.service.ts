@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Article } from '../models/article';
 import { throwError, Observable, Subject } from 'rxjs';
@@ -28,38 +28,43 @@ export class ArticleService extends EntityService {
     }
 
     addArticle(article: Article): Observable<Article> {
-        return this.http.post<Article>(`${environment.apiUrl}/article`, article)
-            .pipe(catchError(this.handleError));
-    }
-
-    deleteArticle(id: number): Observable<Article> {
-        return this.http.delete<Article>(`${environment.apiUrl}/article/${id}`)
-            .pipe(catchError(this.handleError));
-    }
-
-    updateArticle(article: Article): Observable<Article> {
-        return this.http.put<Article>(`${environment.apiUrl}/article/${article.id}`, article)
-            .pipe(catchError(this.handleError));
-    }
-
-    getArticle(id: number): Observable<Observable<Article>> {
         return this.authService.getAuthorizationHeaders()
             .pipe(
-                map(headers => {
-                    return this.http.get<Article>(`${environment.apiUrl}/article/${id}`, { headers: headers })
-                .pipe(catchError(this.handleError));
-                })
-            );
-    }
-
-    getArticles(): Observable<Observable<Article[]>> {
-        return this.authService.getAuthorizationHeaders()
-            .pipe(
-                map(headers => {
-                    return this.http.get<Article[]>(`${environment.apiUrl}/article`, { headers: headers })
+                mergeMap(headers => {
+                    return this.http.post<Article>(`${environment.apiUrl}/article`, article, { headers: headers })
                         .pipe(catchError(this.handleError));
                 })
             );
+    }
+
+    deleteArticle(id: number): Observable<Article> {
+        return this.authService.getAuthorizationHeaders()
+            .pipe(
+                mergeMap(headers => {
+                    return this.http.delete<Article>(`${environment.apiUrl}/article/${id}`, { headers: headers })
+                        .pipe(catchError(this.handleError));
+                })
+            );
+    }
+
+    updateArticle(article: Article): Observable<Article> {
+        return this.authService.getAuthorizationHeaders()
+            .pipe(
+                mergeMap(headers => {
+                    return this.http.put<Article>(`${environment.apiUrl}/article/${article.id}`, article, { headers: headers })
+                        .pipe(catchError(this.handleError));
+                })
+            );
+    }
+
+    getArticle(id: number): Observable<Article> {
+        return this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
+            .pipe(catchError(this.handleError));
+    }
+
+    getArticles(): Observable<Article[]> {
+        return this.http.get<Article[]>(`${environment.apiUrl}/article`)
+            .pipe(catchError(this.handleError));
     }
 
     handleError(error: HttpErrorResponse) {

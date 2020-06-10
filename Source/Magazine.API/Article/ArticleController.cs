@@ -7,7 +7,6 @@ using System;
 namespace Infotecs.Magazine.API.Article
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class ArticleController : ControllerBase
     {
@@ -23,6 +22,7 @@ namespace Infotecs.Magazine.API.Article
 
         // GET: api/article
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Get()
         {
             try
@@ -38,6 +38,7 @@ namespace Infotecs.Magazine.API.Article
 
         // GET: api/article/4
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public IActionResult Get(int id)
         {
             try
