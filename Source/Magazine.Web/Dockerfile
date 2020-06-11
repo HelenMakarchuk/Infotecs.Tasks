@@ -6,7 +6,6 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 COPY *.json ./
-COPY *.editorconfig ./
 COPY browserslist ./
 COPY src/ src/
 COPY e2e/ e2e/

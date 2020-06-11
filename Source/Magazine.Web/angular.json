@@ -42,14 +42,14 @@
                                     "with": "src/environments/environment.production.ts"
                                 }
                             ],
-                            "optimization": true,
+                            "optimization": false,
                             "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
+                            "sourceMap": true,
+                            "extractCss": false,
+                            "namedChunks": true,
                             "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true
+                            "vendorChunk": true,
+                            "buildOptimizer": false
                         },
                         "development": {
                             "fileReplacements": [
