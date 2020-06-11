@@ -1,7 +1,7 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light" style="background-color: #eeeeee; box-shadow: 1px 1.5px 2px lightgray;">
 
-        <span class="navbar-brand">Infotecs Magazine</span>
+        <span [routerLink]='["/"]' class="navbar-brand">Infotecs Magazine</span>
         <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed"
             aria-label="Toggle navigation" (click)="collapsed = !collapsed">
             <span class="navbar-toggler-icon"></span>
