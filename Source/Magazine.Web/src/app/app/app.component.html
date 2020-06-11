@@ -8,7 +8,7 @@
         </button>
 
         <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
-            <button [routerLink]='["articles/create"]' type="button" class="btn btn-outline-primary">Write Article</button>
+            <button [routerLink]='["articles/create"]' type="button" class="btn btn-outline-primary" *ngIf="authorizeService.isUserAuthenticated">Write Article</button>
 
             <ul class="navbar-nav ml-auto" *ngIf="!(isAuthenticated | async)">
                 <li class="nav-item text-center" id="signup-btn">

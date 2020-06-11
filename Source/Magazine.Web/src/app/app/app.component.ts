@@ -11,7 +11,7 @@ export class AppComponent  implements OnInit {
     public isAuthenticated: Observable<boolean>;
     public userName: Observable<string>;
 
-    constructor(private authorizeService: AuthorizationService) { }
+    constructor(public authorizeService: AuthorizationService) { }
 
     ngOnInit() {
       this.isAuthenticated = this.authorizeService.isAuthenticated();
