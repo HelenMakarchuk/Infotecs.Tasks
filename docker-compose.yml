@@ -39,3 +39,17 @@ services:
             - POSTGRES_PASSWORD=1        
         ports:
             - 5436:5432
+
+      # MVC Application "Infotecs Identity"
+    infotecs.identity:
+        image: ${DOCKER_REGISTRY-}infotecs-identity-image
+        container_name: infotecs-identity-container
+        restart: always
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=http://*:5082
+        build:
+            context: ./Source
+            dockerfile: Magazine.Identity/Dockerfile
+        ports:
+            - 5084:5082
