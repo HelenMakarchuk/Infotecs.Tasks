@@ -42,14 +42,15 @@
                                     "with": "src/environments/environment.production.ts"
                                 }
                             ],
-                            "optimization": false,
+                            "optimization": true,
                             "outputHashing": "all",
-                            "sourceMap": true,
+                            "sourceMap": false,
                             "extractCss": false,
-                            "namedChunks": true,
+                            "namedChunks": false,
                             "extractLicenses": true,
-                            "vendorChunk": true,
-                            "buildOptimizer": false
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "aot": true
                         },
                         "development": {
                             "fileReplacements": [
@@ -125,21 +126,26 @@
                         "tsConfig": "src/tsconfig.server.json"
                     },
                     "configurations": {
-                        "development": {
-                            "optimization": false,
-                            "outputHashing": "all",
-                            "sourceMap": true,
-                            "namedChunks": true,
-                            "extractLicenses": true,
-                            "vendorChunk": true
-                        },
                         "production": {
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
+                            "extractCss": false,
                             "namedChunks": false,
                             "extractLicenses": true,
-                            "vendorChunk": false
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "aot": true
+                        },
+                        "development": {
+                            "optimization": false,
+                            "outputHashing": "all",
+                            "sourceMap": true,
+                            "extractCss": false,
+                            "namedChunks": true,
+                            "extractLicenses": true,
+                            "vendorChunk": true,
+                            "buildOptimizer": false
                         }
                     }
                 }
