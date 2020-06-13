@@ -10,6 +10,7 @@ import { AuthorizationService } from '../authorization/authorization.service';
 export class AppComponent  implements OnInit {
     public isAuthenticated: Observable<boolean>;
     public userName: Observable<string>;
+    public collapsed: boolean;
 
     constructor(public authorizeService: AuthorizationService) { }
 
