@@ -11,7 +11,40 @@
 
 #### Run
 
-Run application using Docker or Docker Compose.
+Run application using Docker Compose or Docker.
+
+<details>
+  <summary>Docker Compose</summary>
+  <p>
+ 
+  `docker-compose stop && docker-compose rm -f && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans`
+
+  <details>
+    <summary>For docker compose offline use</summary>
+
+    On machine with internet access:
+    
+    docker-compose stop && docker-compose rm -f && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans
+
+    docker save postgres -o postgres.tar
+    docker save magazine-api-image -o magazine-api-image.tar
+    docker save infotecs-identity-image -o infotecs-identity-image.tar
+    docker save magazine-web-image -o magazine-web-image.tar
+
+    Copy and paste image files to docker host
+
+    On docker host:
+
+    docker load -i postgres.tar
+    docker load -i magazine-api-image.tar
+    docker load -i infotecs-identity-image.tar
+    docker load -i magazine-web-image.tar
+
+    docker-compose -f docker-compose.offline.yml stop && docker-compose -f docker-compose.offline.yml rm && docker-compose -f docker-compose.offline.yml build --no-cache && docker-compose -f docker-compose.offline.yml up -d --force-recreate --remove-orphans
+
+  </details>
+  </p>
+</details>
 
 <details>
   <summary>Docker</summary>
@@ -22,8 +55,6 @@ Run application using Docker or Docker Compose.
  `docker build ./Database -t db-image` 
  
  `docker run -d --name db-container -p 5436:5432 db-image`
- 
-  ###### API ######
 
   ###### Web ######
  
@@ -33,23 +64,7 @@ Run application using Docker or Docker Compose.
   </p>
 </details>
 
-<details>
-  <summary>Docker Compose</summary>
-  <p>
- 
-  `docker-compose stop && docker-compose rm -f && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans`
-
-  </p>
-</details>
-
 #### Debug
-
-<details>
-  <summary>PostgreSQL Database</summary>
-  <p>
-  
-  </p>
-</details>
 
 <details>
   <summary>ASPNET Core Web API</summary>
@@ -65,7 +80,7 @@ Run application using Docker or Docker Compose.
  
   `cd Source/Magazine.API`
 
-  ###### Run project and serve at http://localhost:5080/api. ######
+  ###### Run project and serve at http://localhost:5080. ######
  
   `dotnet run -c Release`
 
