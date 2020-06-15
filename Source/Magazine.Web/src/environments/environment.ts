@@ -2,6 +2,6 @@ export const environment = {
     production: false,
     apiUrl: '/api',
     hubUrl: '/',
-    identityUrl: '/',
+    identityUrl: '/identity',
     baseUrl: '/'
 };

@@ -18,6 +18,7 @@ namespace Infotecs.Identity
 {
     [SecurityHeaders]
     [AllowAnonymous]
+    [Area("Identity")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

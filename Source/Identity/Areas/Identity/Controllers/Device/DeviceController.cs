@@ -14,6 +14,7 @@ namespace Infotecs.Identity.Device
 {
     [Authorize]
     [SecurityHeaders]
+    [Area("Identity")]
     public class DeviceController : Controller
     {
         private readonly IDeviceFlowInteractionService _interaction;

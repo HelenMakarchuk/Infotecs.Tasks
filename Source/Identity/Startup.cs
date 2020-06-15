@@ -27,6 +27,8 @@ namespace IdentityServerAspNetIdentity
         {
             services.AddControllersWithViews();
 
+            services.AddMvc(o => o.EnableEndpointRouting = false);
+
             // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
             services.Configure<IISOptions>(iis =>
             {
@@ -55,6 +57,8 @@ namespace IdentityServerAspNetIdentity
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
+                    options.UserInteraction.LoginUrl = "/identity/account/login";
+                    options.UserInteraction.LogoutUrl = "/identity/account/logout";
                 })
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
@@ -70,8 +74,8 @@ namespace IdentityServerAspNetIdentity
                             RequirePkce = true,
                             RequireClientSecret = false,
                             AllowedScopes = new List<string> {"openid", "profile", "api"},
-                            RedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/authentication/login-callback" },
-                            PostLogoutRedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/authentication/logout-callback" },
+                            RedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/" },
+                            PostLogoutRedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/" },
                             AllowedCorsOrigins = new List<string> { Configuration["Clients:angular:Url"] },
                             AllowAccessTokensViaBrowser = true
                         }
@@ -81,6 +85,12 @@ namespace IdentityServerAspNetIdentity
 
                 // not recommended for production - you need to store your key material somewhere secure
                 .AddDeveloperSigningCredential();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/identity/account/login";
+                options.LogoutPath = "/identity/account/logout";
+            });
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -111,9 +121,18 @@ namespace IdentityServerAspNetIdentity
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
+
+            app.UseMvc(routes =>
             {
-                endpoints.MapDefaultControllerRoute();
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }

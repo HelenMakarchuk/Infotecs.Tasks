@@ -8,6 +8,7 @@ namespace Infotecs.Identity
 {
     [SecurityHeaders]
     [Authorize]
+    [Area("Identity")]
     public class DiagnosticsController : Controller
     {
         public async Task<IActionResult> Index()

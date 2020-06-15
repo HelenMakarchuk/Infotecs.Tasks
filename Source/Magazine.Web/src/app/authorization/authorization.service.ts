@@ -178,8 +178,8 @@ export class AuthorizationService {
             client_id: "angular",
             client_secret: "secret",
             response_type: "code",
-            redirect_uri: `${environment.baseUrl}/authentication/login-callback`,
-            post_logout_redirect_uri: `${environment.baseUrl}/authentication/logout-callback`,
+            redirect_uri: `${environment.baseUrl}/`,
+            post_logout_redirect_uri: `${environment.baseUrl}/`,
             scope: "openid profile api",
             automaticSilentRenew: true,
             includeIdTokenInSilentRenew: true
