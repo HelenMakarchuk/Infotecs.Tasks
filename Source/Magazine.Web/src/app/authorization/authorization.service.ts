@@ -41,6 +41,7 @@ export class AuthorizationService {
     private userManager: UserManager;
     public userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null);
     public isUserAuthenticated: boolean;
+    public message = new BehaviorSubject<string>(null);
 
     constructor() {
         this.userSubject.subscribe(user => {
