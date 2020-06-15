@@ -18,7 +18,7 @@ RUN ng build --configuration=production --output-path=dist
 # NGINX
 
 FROM nginx
-EXPOSE 8080 8094
+EXPOSE 5498 5490
 
 RUN rm etc/nginx/conf.d/default.conf
 COPY nginx.conf etc/nginx
