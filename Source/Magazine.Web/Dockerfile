@@ -6,11 +6,12 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 COPY *.json ./
+
+RUN npm install
+
 COPY browserslist ./
 COPY src/ src/
 COPY e2e/ e2e/
-
-RUN npm install
 
 RUN ng build --configuration=production --output-path=dist
 
