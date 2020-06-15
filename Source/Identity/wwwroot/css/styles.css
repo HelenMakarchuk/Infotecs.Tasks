@@ -1,6 +1,3 @@
-body {
-  margin-top: 65px;
-}
 .navbar-header {
   position: relative;
   top: -4px;
@@ -18,6 +15,16 @@ body {
   display: none;
   width: 0;
   height: 0;
+}
+.navbar {
+  padding: 10px 10px 20px 10px;
+  background: #0086d9;
+}
+.navbar-fixed-top {
+  border: 0px;
+}
+.body-content {
+  margin-top: 100px;
 }
 .error-details {
   margin-top: 2rem;

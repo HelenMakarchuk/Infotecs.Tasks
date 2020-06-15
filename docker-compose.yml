@@ -30,14 +30,14 @@ services:
             dockerfile: Magazine.API/Dockerfile
         depends_on:
             - magazine.db
- 
+
     # PostgreSQL Database "Infotecs Magazine Database"
     magazine.db:
         image: postgres
         container_name: magazine-db-container
         restart: always
         environment:
-            - POSTGRES_PASSWORD=1        
+            - POSTGRES_PASSWORD=1
         ports:
             - 5436:5432
 
@@ -47,10 +47,10 @@ services:
         container_name: infotecs-identity-container
         restart: always
         environment:
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Production
             - ASPNETCORE_URLS=http://*:5082
         build:
             context: ./Source
-            dockerfile: Magazine.Identity/Dockerfile
+            dockerfile: Identity/Dockerfile
         ports:
-            - 5084:5082
+            - 5082:5082

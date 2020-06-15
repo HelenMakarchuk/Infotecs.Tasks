@@ -2,5 +2,6 @@ export const environment = {
     production: true,
     apiUrl: '/api',
     hubUrl: '/',
-    identityUrl: '/identity'
+    identityUrl: 'http://localhost:5082',
+    baseUrl: 'http://localhost:5498'
 };

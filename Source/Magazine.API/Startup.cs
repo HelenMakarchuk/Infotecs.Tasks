@@ -46,7 +46,7 @@ namespace Infotecs.Magazine.API
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://localhost:5082";
+                    options.Authority = Configuration["Identity:Url"];
                     options.RequireHttpsMetadata = false;
                     options.Audience = "api";
                 });
@@ -63,7 +63,7 @@ namespace Infotecs.Magazine.API
 
             app.UseCors(builder =>
             {
-                builder.WithOrigins("http://localhost:4200", "http://localhost:5084")
+                builder.WithOrigins(Configuration["Client:Url"])
                        .AllowAnyHeader()
                        .AllowAnyMethod()
                        .AllowCredentials();

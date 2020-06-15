@@ -64,9 +64,6 @@ namespace Infotecs.Identity
                     var user = await _userManager.FindByNameAsync(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.ClientId));
 
-                    if (!Url.IsLocalUrl(model.ReturnUrl))
-                        throw new Exception("Return URL is not local");
-
                     return Redirect(model.ReturnUrl);
                 }
 

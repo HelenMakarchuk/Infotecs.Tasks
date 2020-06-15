@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker-Compose", "Docker-Co
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Magazine.Identity", "Source\Magazine.Identity\Magazine.Identity.csproj", "{C5157FAA-4A40-4653-B6B9-911DDCD4F96F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity", "Source\Identity\Identity.csproj", "{C5157FAA-4A40-4653-B6B9-911DDCD4F96F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,7 +54,6 @@ Global
 		{082705F0-6EFD-406D-9682-FD497A6FCBBC} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{5D4B7C25-40B7-4565-A8E6-F19F90E1829A} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 		{7B1C1FB6-324E-4E17-B4C1-216E6AE1D5FA} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
-		{C5157FAA-4A40-4653-B6B9-911DDCD4F96F} = {898F2281-BC27-4BA3-BE02-19A263FC0085}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {280D25F1-A7B1-4434-AB65-F7118A1E88F9}

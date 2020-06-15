@@ -46,6 +46,7 @@ let applicationPaths: ApplicationPathsType = {
 applicationPaths = {
     ...applicationPaths,
     LoginPathComponents: applicationPaths.Login.split('/'),
+    LoginCallbackPathComponents: applicationPaths.LoginCallback.split('/'),
     LoginFailedPathComponents: applicationPaths.LoginFailed.split('/'),
     RegisterPathComponents: applicationPaths.Register.split('/'),
     ProfilePathComponents: applicationPaths.Profile.split('/'),

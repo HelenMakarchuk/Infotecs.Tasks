@@ -1,3 +1,4 @@
+using IdentityServer4.Models;
 using IdentityServerAspNetIdentity.Data;
 using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
 
 namespace IdentityServerAspNetIdentity
 {
@@ -56,7 +58,25 @@ namespace IdentityServerAspNetIdentity
                 })
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryClients(
+                    new List<Client>
+                    {
+                        new Client
+                        {
+                            ClientId = "angular",
+                            ClientName = "Angular Client",
+                            ClientSecrets = { new Secret("secret".Sha256()) },
+                            AllowedGrantTypes = GrantTypes.Code,
+                            RequirePkce = true,
+                            RequireClientSecret = false,
+                            AllowedScopes = new List<string> {"openid", "profile", "api"},
+                            RedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/authentication/login-callback" },
+                            PostLogoutRedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/authentication/logout-callback" },
+                            AllowedCorsOrigins = new List<string> { Configuration["Clients:angular:Url"] },
+                            AllowAccessTokensViaBrowser = true
+                        }
+                    }
+                )
                 .AddAspNetIdentity<ApplicationUser>()
 
                 // not recommended for production - you need to store your key material somewhere secure
@@ -82,7 +102,7 @@ namespace IdentityServerAspNetIdentity
 
             app.UseCors(builder =>
             {
-                builder.WithOrigins("http://localhost:4200", "http://localhost:5084")
+                builder.WithOrigins(Configuration["Clients:angular:Url"])
                        .AllowAnyHeader()
                        .AllowAnyMethod()
                        .AllowCredentials();

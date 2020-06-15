@@ -1,8 +1,11 @@
 **/bin
+**/Logs
 **/.gitignore
 **/.git
 **/Dockerfile
 **/obj
+**/node_modules
+**/InfotecsIdentity.db
 Magazine.Web
 .dockerignore
 LICENSE
