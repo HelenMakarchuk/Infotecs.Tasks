@@ -15,7 +15,6 @@ namespace Infotecs.Identity
     /// </summary>
     [SecurityHeaders]
     [Authorize]
-    [Area("Identity")]
     public class GrantsController : Controller
     {
         private readonly IIdentityServerInteractionService _interaction;

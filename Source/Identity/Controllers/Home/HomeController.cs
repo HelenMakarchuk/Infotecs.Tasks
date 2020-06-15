@@ -9,7 +9,6 @@ namespace Infotecs.Identity
 {
     [SecurityHeaders]
     [AllowAnonymous]
-    [Area("Identity")]
     public class HomeController : Controller
     {
         private readonly IIdentityServerInteractionService _interaction;

@@ -19,7 +19,6 @@ namespace Infotecs.Identity
 {
     [SecurityHeaders]
     [AllowAnonymous]
-    [Area("Identity")]
     public class ExternalController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

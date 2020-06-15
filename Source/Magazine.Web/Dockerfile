@@ -5,10 +5,11 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY *.json ./
+COPY package.json ./
 
 RUN npm install
 
+COPY *.json ./
 COPY browserslist ./
 COPY src/ src/
 COPY e2e/ e2e/

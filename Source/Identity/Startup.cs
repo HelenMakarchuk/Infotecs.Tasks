@@ -27,7 +27,7 @@ namespace IdentityServerAspNetIdentity
         {
             services.AddControllersWithViews();
 
-            services.AddMvc(o => o.EnableEndpointRouting = false);
+            //services.AddMvc(o => o.EnableEndpointRouting = false);
 
             // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
             services.Configure<IISOptions>(iis =>
@@ -57,8 +57,8 @@ namespace IdentityServerAspNetIdentity
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
-                    options.UserInteraction.LoginUrl = "/identity/account/login";
-                    options.UserInteraction.LogoutUrl = "/identity/account/logout";
+                    //options.UserInteraction.LoginUrl = "/identity/account/login";
+                    //options.UserInteraction.LogoutUrl = "/identity/account/logout";
                 })
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
@@ -86,11 +86,11 @@ namespace IdentityServerAspNetIdentity
                 // not recommended for production - you need to store your key material somewhere secure
                 .AddDeveloperSigningCredential();
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/identity/account/login";
-                options.LogoutPath = "/identity/account/logout";
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath = "/identity/account/login";
+            //    options.LogoutPath = "/identity/account/logout";
+            //});
 
             services.AddAuthentication()
                 .AddGoogle(options =>
@@ -122,17 +122,9 @@ namespace IdentityServerAspNetIdentity
             app.UseIdentityServer();
             app.UseAuthorization();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                );
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
-                );
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
