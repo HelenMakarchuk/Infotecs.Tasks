@@ -14,8 +14,7 @@ services:
             - magazine.api
             - infotecs.identity
         ports:
-            - 5498:5498    #        http://localhost:5498
-            - 5490:5490    # ssl    https://localhost:5490
+            - 5498:5498    # ssl    https://localhost:5498
 
     # Web API "Infotecs Magazine API"
     magazine.api:
