@@ -26,24 +26,8 @@ namespace IdentityServerAspNetIdentity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            //services.AddMvc(o => o.EnableEndpointRouting = false);
-
-            // configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
-            services.Configure<IISOptions>(iis =>
-            {
-                iis.AuthenticationDisplayName = "Windows";
-                iis.AutomaticAuthentication = false;
-            });
-
-            // configures IIS in-proc settings
-            services.Configure<IISServerOptions>(iis =>
-            {
-                iis.AuthenticationDisplayName = "Windows";
-                iis.AutomaticAuthentication = false;
-            });
-
             services.AddCors();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -57,8 +41,6 @@ namespace IdentityServerAspNetIdentity
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
-                    //options.UserInteraction.LoginUrl = "/identity/account/login";
-                    //options.UserInteraction.LogoutUrl = "/identity/account/logout";
                 })
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
@@ -85,12 +67,6 @@ namespace IdentityServerAspNetIdentity
 
                 // not recommended for production - you need to store your key material somewhere secure
                 .AddDeveloperSigningCredential();
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = "/identity/account/login";
-            //    options.LogoutPath = "/identity/account/logout";
-            //});
 
             services.AddAuthentication()
                 .AddGoogle(options =>
