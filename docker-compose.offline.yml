@@ -21,7 +21,7 @@ services:
         restart: always
         environment:
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=http://*:5000
+            - ASPNETCORE_URLS=http://*:5080
         depends_on:
             - magazine.db
 
@@ -43,5 +43,3 @@ services:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - ASPNETCORE_URLS=http://*:5082
-        ports:
-            - 5082:5082

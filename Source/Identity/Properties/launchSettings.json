@@ -1,28 +1,39 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:5082",
-      "sslPort": 0
-    }
-  },
-  "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "http://localhost:5082",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Production"
+    "iisSettings": {
+        "windowsAuthentication": false,
+        "anonymousAuthentication": true,
+        "iisExpress": {
+            "applicationUrl": "http://localhost:5082/Identity",
+            "sslPort": 0
         }
     },
-    "SelfHost": {
-      "commandName": "Project",
-      "launchBrowser": true,
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Production"
+    "profiles": {
+        "IIS Express Development": {
+            "commandName": "IISExpress",
+            "launchBrowser": true,
+            "launchUrl": "http://localhost:5082/Identity",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://*:5082"
+            }
         },
-      "applicationUrl": "http://localhost:5082"
+        "SelfHost Development": {
+            "commandName": "Project",
+            "launchBrowser": true,
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://*:5082"
+            },
+            "applicationUrl": "http://localhost:5082/Identity"
+        },
+        "SelfHost Production": {
+            "commandName": "Project",
+            "launchBrowser": true,
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Production",
+                "ASPNETCORE_URLS": "http://*:5082"
+            },
+            "applicationUrl": "http://localhost:5082/Identity"
+        }
     }
-  }
 }

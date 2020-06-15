@@ -41,7 +41,6 @@ export class AuthorizationService {
     private userManager: UserManager;
     public userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null);
     public isUserAuthenticated: boolean;
-    public message = new BehaviorSubject<string>(null);
 
     constructor() {
         this.userSubject.subscribe(user => {
@@ -179,8 +178,8 @@ export class AuthorizationService {
             client_id: "angular",
             client_secret: "secret",
             response_type: "code",
-            redirect_uri: `${environment.baseUrl}/`,
-            post_logout_redirect_uri: `${environment.baseUrl}/`,
+            redirect_uri: `${environment.baseUrl}/authentication/login-callback`,
+            post_logout_redirect_uri: `${environment.baseUrl}/authentication/logout-callback`,
             scope: "openid profile api",
             automaticSilentRenew: true,
             includeIdTokenInSilentRenew: true

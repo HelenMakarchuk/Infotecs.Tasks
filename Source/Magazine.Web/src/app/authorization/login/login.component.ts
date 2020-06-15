@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService, AuthenticationResultStatus } from '../authorization.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { LoginActions, QueryParameterNames, ApplicationPaths, ReturnUrlType } from '../authorization.constants';
 import { environment } from 'src/environments/environment';
 
@@ -9,6 +10,7 @@ import { environment } from 'src/environments/environment';
     templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
+    public message = new BehaviorSubject<string>(null);
 
     constructor(
         private authorizeService: AuthorizationService,
@@ -30,7 +32,7 @@ export class LoginComponent implements OnInit {
                 break;
             case LoginActions.LoginFailed:
                 const message = this.activatedRoute.snapshot.queryParamMap.get(QueryParameterNames.Message);
-                this.authorizeService.message.next(message);
+                this.message.next(message);
                 break;
             default:
                 throw new Error(`Invalid action '${action}'`);
@@ -40,7 +42,7 @@ export class LoginComponent implements OnInit {
     private async login(returnUrl: string): Promise<void> {
         const state: INavigationState = { returnUrl };
         const result = await this.authorizeService.signIn(state);
-        this.authorizeService.message.next(undefined);
+        this.message.next(undefined);
 
         switch (result.status) {
             case AuthenticationResultStatus.Success:
@@ -69,7 +71,7 @@ export class LoginComponent implements OnInit {
                 location.reload();
                 break;
             case AuthenticationResultStatus.Fail:
-                this.authorizeService.message.next(result.message);
+                this.message.next(result.message);
                 break;
             case AuthenticationResultStatus.Redirect:
                 throw new Error('Should not redirect.');

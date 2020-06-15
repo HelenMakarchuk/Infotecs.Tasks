@@ -1,5 +1,6 @@
 dist
 node_modules
 Dockerfile
+nginx.development.conf
 .dockerignore
 .gitignore

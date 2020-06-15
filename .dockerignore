@@ -6,4 +6,5 @@ Out
 .gitattributes
 .gitignore
 docker-compose.yml
+docker-compose.offline.yml
 README.md

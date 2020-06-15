@@ -74,8 +74,8 @@ namespace IdentityServerAspNetIdentity
                             RequirePkce = true,
                             RequireClientSecret = false,
                             AllowedScopes = new List<string> {"openid", "profile", "api"},
-                            RedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/" },
-                            PostLogoutRedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/" },
+                            RedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/authentication/login-callback" },
+                            PostLogoutRedirectUris = new List<string> { $"{Configuration["Clients:angular:Url"]}/authentication/logout-callback" },
                             AllowedCorsOrigins = new List<string> { Configuration["Clients:angular:Url"] },
                             AllowAccessTokensViaBrowser = true
                         }

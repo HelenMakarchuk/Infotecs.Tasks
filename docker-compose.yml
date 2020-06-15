@@ -24,7 +24,7 @@ services:
         restart: always
         environment:
             - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=http://*:5000
+            - ASPNETCORE_URLS=http://*:5080
         build:
             context: ./Source
             dockerfile: Magazine.API/Dockerfile
@@ -52,5 +52,3 @@ services:
         build:
             context: ./Source
             dockerfile: Identity/Dockerfile
-        ports:
-            - 5082:5082

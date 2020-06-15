@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
 import { ArticleListItem } from './article-list-item';
-import { AuthorizationService, AuthenticationResultStatus } from 'src/app/authorization/authorization.service';
-import { ReturnUrlType } from 'src/app/authorization/authorization.constants';
 
 @Component({
     selector: 'app-article-list',
@@ -17,8 +15,7 @@ export class ArticleListComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
-                private articleService: ArticleService,
-                private authorizeService: AuthorizationService) {
+                private articleService: ArticleService) {
 
         articleService.onAdd.subscribe(id => {
             this.articleService.getArticle(id)
@@ -36,25 +33,18 @@ export class ArticleListComponent implements OnInit {
         });
     }
 
-    async ngOnInit() {
-        try {
-            await this.processLoginCallback();
-
-            this.route.paramMap.subscribe(
-                params => {
-                    this.selectedId = +params.get('id');
-                    this.articleService.getArticles()
-                        .subscribe(
-                            articles => {
-                                this.articles = articles.map(article => new ArticleListItem(article.id, article.title));
-                            },
-                            () => alert('Error while fetching articles')
-                        )
-                });
-        }
-        catch(error) {
-            console.log(error)
-        }
+    ngOnInit() {
+        this.route.paramMap.subscribe(
+            params => {
+                this.selectedId = +params.get('id');
+                this.articleService.getArticles()
+                    .subscribe(
+                        articles => {
+                            this.articles = articles.map(article => new ArticleListItem(article.id, article.title));
+                        },
+                        () => alert('Error while fetching articles')
+                    )
+            });
     }
 
     navigateToArticle(article: Article = null) {
@@ -64,23 +54,5 @@ export class ArticleListComponent implements OnInit {
         }
 
         this.router.navigate(['/articles/create']);
-    }
-
-    private async processLoginCallback(): Promise<void> {
-        const url = window.location.href;
-
-        const result = await this.authorizeService.completeSignIn(url);
-
-        switch (result.status) {
-            case AuthenticationResultStatus.Success:
-                this.authorizeService.isUserAuthenticated = true;
-                location.reload();
-                break;
-            case AuthenticationResultStatus.Fail:
-                this.authorizeService.message.next(result.message);
-                break;
-            case AuthenticationResultStatus.Redirect:
-                throw new Error('Should not redirect.');
-        }
     }
 }
