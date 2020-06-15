@@ -1,6 +1,6 @@
 # NODE
 
-FROM node AS build
+FROM node:12.18.0 AS build
 WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
@@ -17,7 +17,7 @@ RUN ng build --configuration=production --output-path=dist
 
 # NGINX
 
-FROM nginx
+FROM nginx:1.18.0
 EXPOSE 5498 5490
 
 RUN rm etc/nginx/conf.d/default.conf
