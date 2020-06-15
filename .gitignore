@@ -352,3 +352,4 @@ healthchecksdb
 /Source/Magazine.Web/src/environments/environment.dev.js
 /Source/Magazine.Web/src/environments/environment.dev.js.map
 Logs
+/Source/Identity/InfotecsIdentity.db
