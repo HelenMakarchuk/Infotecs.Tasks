@@ -41,6 +41,6 @@ services:
         restart: always
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
-            - ASPNETCORE_URLS=http://*:5082
+            - ASPNETCORE_URLS=https://*:5082
         ports:
             - 5082:5082

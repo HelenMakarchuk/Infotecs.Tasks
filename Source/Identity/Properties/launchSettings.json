@@ -3,7 +3,7 @@
         "windowsAuthentication": false,
         "anonymousAuthentication": true,
         "iisExpress": {
-            "applicationUrl": "http://localhost:5082",
+            "applicationUrl": "https://localhost:5082",
             "sslPort": 0
         }
     },
@@ -11,10 +11,10 @@
         "IIS Express Development": {
             "commandName": "IISExpress",
             "launchBrowser": true,
-            "launchUrl": "http://localhost:5082",
+            "launchUrl": "https://localhost:5082",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://*:5082"
+                "ASPNETCORE_URLS": "https://*:5082"
             }
         },
         "SelfHost Development": {
@@ -22,9 +22,9 @@
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://*:5082"
+                "ASPNETCORE_URLS": "https://*:5082"
             },
-            "applicationUrl": "http://localhost:5082"
+            "applicationUrl": "https://localhost:5082"
         },
         "SelfHost Production": {
             "commandName": "Project",
