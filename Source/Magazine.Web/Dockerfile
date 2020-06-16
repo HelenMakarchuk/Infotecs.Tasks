@@ -27,4 +27,6 @@ COPY content var/www/html
 COPY certificates/ etc/ssl/certs
 COPY --from=build app/dist var/www/html
 
+RUN ["update-ca-certificates"]
+
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

@@ -29,6 +29,8 @@ services:
             dockerfile: Magazine.API/Dockerfile
         depends_on:
             - magazine.db
+        extra_hosts:
+            - "localhost:172.17.0.1"
 
     # PostgreSQL Database "Infotecs Magazine Database"
     magazine.db:
