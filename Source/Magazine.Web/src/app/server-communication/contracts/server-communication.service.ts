@@ -29,7 +29,7 @@ export abstract class ServerCommunicationService {
             .pipe(map(event => {
                 let concreteEvent = new this.entityServiceEventClassMapping[event.className]();
                 Object.assign(concreteEvent, event);
-                
+
                 return concreteEvent;
             }))
             .subscribe(event => service.accept(event));

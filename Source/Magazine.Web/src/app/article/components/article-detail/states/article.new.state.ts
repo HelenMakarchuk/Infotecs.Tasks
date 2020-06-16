@@ -3,6 +3,7 @@ import { ArticleState } from "./article.state";
 import { ArticleCreatedState } from "./article.created.state";
 import { ArticleService } from "src/app/article/services/article.service";
 import { ServerCommunicationService } from "src/app/server-communication/contracts/server-communication.service";
+import { ArticleServiceAddEvent } from "src/app/server-communication/events/article/article.service.add.event";
 
 /** Новая статья */
 @Injectable({
@@ -19,6 +20,7 @@ export class ArticleNewState extends ArticleState {
         this.articleService.addArticle(this.articleContext.article).subscribe(
             article => {
                 this.articleContext.article = article;
+                this.serverCommunicationService.send(new ArticleServiceAddEvent(article.id));
                 this.articleContext.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
             },
             response => {
