@@ -42,15 +42,14 @@
                                     "with": "src/environments/environment.production.ts"
                                 }
                             ],
-                            "optimization": true,
+                            "optimization": false,
                             "outputHashing": "all",
-                            "sourceMap": false,
+                            "sourceMap": true,
                             "extractCss": false,
-                            "namedChunks": false,
+                            "namedChunks": true,
                             "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "aot": true
+                            "vendorChunk": true,
+                            "buildOptimizer": false
                         },
                         "development": {
                             "fileReplacements": [
@@ -127,15 +126,14 @@
                     },
                     "configurations": {
                         "production": {
-                            "optimization": true,
+                            "optimization": false,
                             "outputHashing": "all",
-                            "sourceMap": false,
+                            "sourceMap": true,
                             "extractCss": false,
-                            "namedChunks": false,
+                            "namedChunks": true,
                             "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "aot": true
+                            "vendorChunk": true,
+                            "buildOptimizer": false
                         },
                         "development": {
                             "optimization": false,
