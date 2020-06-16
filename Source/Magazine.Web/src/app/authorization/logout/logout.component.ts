@@ -21,11 +21,7 @@ export class LogoutComponent implements OnInit {
         const action = this.activatedRoute.snapshot.url[1];
         switch (action.path) {
             case LogoutActions.Logout:
-                if (!!window.history.state.local) {
-                    await this.logout(this.getReturnUrl());
-                } else {
-                    this.message.next('The logout was not initiated from within the page.');
-                }
+                await this.logout(this.getReturnUrl());
                 break;
             case LogoutActions.LogoutCallback:
                 await this.processLogoutCallback();
@@ -39,11 +35,13 @@ export class LogoutComponent implements OnInit {
     }
 
     private async logout(returnUrl: string): Promise<void> {
+        this.message.next('The logout was not initiated from within the page.');
         const state: INavigationState = { returnUrl };
         const isauthenticated = await this.authorizeService.isAuthenticated().pipe(take(1)).toPromise();
 
         if (isauthenticated) {
             const result = await this.authorizeService.signOut(state);
+
             switch (result.status) {
                 case AuthenticationResultStatus.Redirect:
                     break;
@@ -64,6 +62,7 @@ export class LogoutComponent implements OnInit {
     private async processLogoutCallback(): Promise<void> {
         const url = window.location.href;
         const result = await this.authorizeService.completeSignOut(url);
+
         switch (result.status) {
             case AuthenticationResultStatus.Redirect:
                 throw new Error('Should not redirect.');
