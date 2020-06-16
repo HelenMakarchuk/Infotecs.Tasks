@@ -69,6 +69,11 @@ namespace Infotecs.Magazine.Infrastracture.DB.Article
 
         public Domain.Article.Article Delete(int id)
         {
+            var commentIds = _unitOfWork.CommentRepository.Where(c => c.ArticleId == id).Select(c => c.Id).ToArray();
+
+            foreach (var commentId in commentIds)
+                _unitOfWork.CommentRepository.Remove(commentId);
+
             var entry = _unitOfWork.ArticleRepository.Remove(id);
             _unitOfWork.Commit();
 

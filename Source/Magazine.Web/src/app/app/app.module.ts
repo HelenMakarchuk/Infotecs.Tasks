@@ -67,7 +67,7 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
             { path: '', component: ArticleListComponent, pathMatch: 'full' },
             { path: 'articles', component: ArticleListComponent },
             { path: 'article/:id', component: ArticleDetailComponent },
-            { path: 'articles/create', component: ArticleDetailComponent, canActivate: [AuthorizationGuard] },
+            { path: 'articles/create', component: ArticleDetailComponent },
             { path: ApplicationPaths.Register, component: LoginComponent },
             { path: ApplicationPaths.Profile, component: LoginComponent },
             { path: ApplicationPaths.Login, component: LoginComponent },

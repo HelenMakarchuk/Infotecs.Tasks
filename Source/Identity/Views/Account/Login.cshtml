@@ -17,14 +17,13 @@
             <div class="btn-group-vertical btn-group-identity-provider">
                 @foreach (var provider in Model.ExternalProviders)
                 {
-                    <button type="button"
-                            class="btn btn-default"
-                            asp-controller="External"
-                            asp-action="Challenge"
-                            asp-route-provider="@provider.AuthenticationScheme"
-                            asp-route-returnUrl="@Model.ReturnUrl">
+                    <a class="btn btn-default"
+                        asp-controller="External"
+                        asp-action="Challenge"
+                        asp-route-provider="@provider.AuthenticationScheme"
+                        asp-route-returnUrl="@Model.ReturnUrl">
                         Log in with @provider.DisplayName
-                    </button>
+                    </a>
                 }
             </div>
 
@@ -57,14 +56,13 @@
             <div class="btn-group-vertical btn-group-identity-provider">
                 @foreach (var provider in Model.ExternalProviders)
                 {
-                    <button type="button"
-                            class="btn btn-default"
-                            asp-controller="External"
-                            asp-action="Challenge"
-                            asp-route-provider="@provider.AuthenticationScheme"
-                            asp-route-returnUrl="@Model.ReturnUrl">
-                        Sign up with @provider.DisplayName
-                    </button>
+                    <a class="btn btn-default"
+                       asp-controller="External"
+                       asp-action="Challenge"
+                       asp-route-provider="@provider.AuthenticationScheme"
+                       asp-route-returnUrl="@Model.ReturnUrl">
+                       Sign up with @provider.DisplayName
+                    </a>
                 }
             </div>
 

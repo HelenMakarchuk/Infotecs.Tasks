@@ -93,7 +93,7 @@ namespace Infotecs.Identity
 
                 var email = claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value ?? claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
 
-                user = new ApplicationUser(userName, email);
+                user = new ApplicationUser(userName.Replace(" ", ""), email.Trim());
                 var createUserResult = await _userManager.CreateAsync(user);
 
                 if (!createUserResult.Succeeded)
