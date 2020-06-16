@@ -68,6 +68,7 @@ export class LogoutComponent implements OnInit {
                 throw new Error('Should not redirect.');
             case AuthenticationResultStatus.Success:
                 await this.navigateToReturnUrl(this.getReturnUrl(result.state));
+                location.reload();
                 break;
             case AuthenticationResultStatus.Fail:
                 this.message.next(result.message);
