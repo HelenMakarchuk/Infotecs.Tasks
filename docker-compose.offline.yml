@@ -23,6 +23,8 @@ services:
             - ASPNETCORE_URLS=http://*:5080
         depends_on:
             - magazine.db
+        extra_hosts:
+            - "localhost:172.17.0.1"
 
     # PostgreSQL Database "Infotecs Magazine Database"
     magazine.db:
@@ -40,7 +42,11 @@ services:
         container_name: infotecs-identity-container
         restart: always
         environment:
-            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_ENVIRONMENT=Production
             - ASPNETCORE_URLS=https://*:5082
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/localhost.pfx
+        volumes:
+            - ~/.aspnet/https:/https:ro
         ports:
             - 5082:5082
