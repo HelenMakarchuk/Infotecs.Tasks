@@ -24,11 +24,11 @@ EXPOSE 5498
 RUN rm etc/nginx/conf.d/default.conf
 COPY nginx.conf etc/nginx
 COPY content var/www/html
-COPY certificates/certificate.pem etc/ssl/certs
-COPY certificates/certificate.key etc/ssl/certs
 COPY --from=build app/dist var/www/html
 
-COPY certificates/localhost.crt /etc/ssl/certs/myroot.crt
+COPY certificates/localhost.pem /etc/ssl/certs
+COPY certificates/localhost.key /etc/ssl/certs
+COPY certificates/localhost.crt /etc/ssl/certs
 
 RUN ["update-ca-certificates"]
 

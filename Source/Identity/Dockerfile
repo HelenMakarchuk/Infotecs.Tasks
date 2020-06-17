@@ -2,7 +2,9 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
 EXPOSE 5082
 
-COPY certificates/localhost.crt /etc/ssl/certs/myroot.crt
+COPY certificates/localhost.pem /etc/ssl/certs
+COPY certificates/localhost.key /etc/ssl/certs
+COPY certificates/localhost.crt /etc/ssl/certs
 
 RUN ["update-ca-certificates"]
 
