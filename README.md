@@ -16,7 +16,15 @@ Run application using Docker Compose or Docker.
 <details>
   <summary>Docker Compose</summary>
   <p>
- 
+
+  Run in cmd on Windows docker host to get default certificate location:
+  echo %USERPROFILE%
+
+  Copy and paste ${HOME}/.aspnet/https/localhost.pfx to location obtained above
+
+  Run in cmd on Windows docker host to trust certificate
+  dotnet dev-certs https --trust
+
   `docker-compose stop && docker-compose rm -f && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans`
 
   <details>
