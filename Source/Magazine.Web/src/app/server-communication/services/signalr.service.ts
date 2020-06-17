@@ -11,7 +11,6 @@ import { EntityServiceEvent } from '../contracts/entity.service.event';
 export class SignalrService extends ServerCommunicationService {
 
     private connection: HubConnection;
-    private hubName = "сommunication";
     private hubServerMethodName = "send";
     private hubClientMethodName = "send";
 
@@ -24,7 +23,7 @@ export class SignalrService extends ServerCommunicationService {
 
     private buildConnection() {
         this.connection = new HubConnectionBuilder()
-            .withUrl(`${environment.hubUrl}/${this.hubName}`)
+            .withUrl(environment.hubUrl)
             .configureLogging(LogLevel.Information)
             .withAutomaticReconnect()
             .build();

@@ -75,7 +75,7 @@ namespace Infotecs.Magazine.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers().RequireAuthorization();
-                endpoints.MapHub<SignalrService>("/сommunication");
+                endpoints.MapHub<SignalrService>("/communication");
             });
         }
     }
