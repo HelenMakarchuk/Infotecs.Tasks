@@ -25,6 +25,10 @@ Run application using Docker Compose or Docker.
   Run in cmd on Windows docker host to trust certificate
   dotnet dev-certs https --trust
 
+  P.S. Output should be "The HTTPS developer certificate was generated successfully."
+  If development certificate already exists delete it by running a command "dotnet dev-certs https --clean"
+  and then run "dotnet dev-certs https --trust" again.
+
   `docker-compose stop && docker-compose rm -f && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans`
 
   <details>
