@@ -5,6 +5,7 @@ EXPOSE 5080
 COPY certificates/localhost.pem /etc/ssl/certs/certificate.pem
 COPY certificates/localhost.key /etc/ssl/certs/certificate.key
 COPY certificates/localhost.crt /etc/ssl/certs/localhost.crt
+COPY certificates/localhost.pfx /etc/ssl/certs/localhost.pfx
 
 RUN ["update-ca-certificates"]
 

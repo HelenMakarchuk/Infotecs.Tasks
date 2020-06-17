@@ -42,7 +42,7 @@ services:
         ports:
             - 5436:5432
 
-      # MVC Application "Infotecs Identity"
+    # MVC Application "Infotecs Identity"
     infotecs.identity:
         image: ${DOCKER_REGISTRY-}infotecs-identity-image
         container_name: infotecs-identity-container
