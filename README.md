@@ -101,8 +101,8 @@ Run application using Docker Compose or Docker.
   ###### Compile the application, a new 'dist' folder will be created. ######
   `ng build --configuration=development`
   
-  ###### Serve the application at http://localhost:4200. ######
-  `ng serve --configuration=development --open`
+  ###### Serve the application at http://localhost:5498. ######
+  `ng serve --configuration=development --port=5498 --open`
 
   </p>
 </details>

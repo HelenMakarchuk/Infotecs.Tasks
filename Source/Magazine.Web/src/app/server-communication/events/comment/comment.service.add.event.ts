@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CommentServiceEvent } from "./comment.service.event";
-import { Comment } from "src/app/comment/models/comment";
 import { CommentService } from "src/app/comment/services/comment.service";
+import { CommentEventArgument } from "./comment-event-argument";
 
 /** Событие "Добавление" сервиса сущности "Статья". */
 @Injectable({
@@ -9,11 +9,11 @@ import { CommentService } from "src/app/comment/services/comment.service";
 })
 export class CommentServiceAddEvent extends CommentServiceEvent {
 
-    constructor(id: number) {
-        super("CommentServiceAddEvent", id);
+    constructor(eventArgument: CommentEventArgument) {
+        super("CommentServiceAddEvent", eventArgument);
     }
 
     visit(service: CommentService): void {
-        service.onAdd.next(this.id);
+        service.onAdd.next(this.eventArgument);
     }
 }

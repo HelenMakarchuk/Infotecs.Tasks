@@ -1,3 +1,4 @@
+using Magazine.API.ClientCommunicationService.Events;
 using Newtonsoft.Json;
 
 namespace Magazine.API.ClientCommunicationService.Contracts
@@ -9,8 +10,8 @@ namespace Magazine.API.ClientCommunicationService.Contracts
     {
         [JsonProperty]
         /// <summary>
-        /// Идентификатор комментария.
+        /// Аргумент события.
         /// </summary>
-        protected int Id { get; set; }
+        protected CommentEventArgument EventArgument { get; set; }
     }
 }

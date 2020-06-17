@@ -7,19 +7,20 @@ import { ServerCommunicationService } from 'src/app/server-communication/contrac
 import { EntityService } from 'src/app/contracts/service/entity.service';
 import { Comment } from 'src/app/comment/models/comment';
 import { AuthorizationService } from 'src/app/authorization/authorization.service';
+import { CommentEventArgument } from 'src/app/server-communication/events/comment/comment-event-argument';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CommentService extends EntityService {
 
-    onAdd: Subject<number>;
+    onAdd: Subject<CommentEventArgument>;
 
     constructor(private http: HttpClient,
                 private authService: AuthorizationService,
                 private serverCommunicationService: ServerCommunicationService) {
         super();
-        this.onAdd = new Subject<number>();
+        this.onAdd = new Subject<CommentEventArgument>();
         this.serverCommunicationService.subscribe(this);
     }
 

@@ -5,6 +5,7 @@ import { ArticleDetailComponent } from '../../article/components/article-detail/
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
 import { filter } from 'rxjs/operators';
 import { CommentServiceAddEvent } from 'src/app/server-communication/events/comment/comment.service.add.event';
+import { CommentEventArgument } from 'src/app/server-communication/events/comment/comment-event-argument';
 
 @Component({
     selector: 'app-comment',
@@ -19,9 +20,9 @@ export class CommentComponent implements OnInit {
                 private serverCommunicationService: ServerCommunicationService) {
 
         this.commentService.onAdd
-            .pipe(filter(id => id === this.articleDetailComponent.article.id))
-            .subscribe(id => {
-                this.commentService.getComment(id).subscribe(comment => {
+            .pipe(filter(eventArgument => eventArgument.articleId === this.articleDetailComponent.article.id))
+            .subscribe(eventArgument => {
+                this.commentService.getComment(eventArgument.id).subscribe(comment => {
                     this.comments.push(comment);
                 });
             });
@@ -49,7 +50,7 @@ export class CommentComponent implements OnInit {
             .subscribe(
                 comment => {
                     this.comments.push(comment);
-                    this.serverCommunicationService.send(new CommentServiceAddEvent(comment.id));
+                    this.serverCommunicationService.send(new CommentServiceAddEvent(new CommentEventArgument(comment.id, comment.articleId)));
                 },
                 error => {
                     console.log(error);

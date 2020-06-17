@@ -1,4 +1,5 @@
 using Magazine.API.ClientCommunicationService.Contracts;
+using Newtonsoft.Json;
 
 namespace Magazine.API.ClientCommunicationService.Events
 {
@@ -16,4 +17,22 @@ namespace Magazine.API.ClientCommunicationService.Events
     /// Событие "Удаление" сервиса сущности "Комментарий".
     /// </summary>
     public class CommentServiceDeleteEvent : CommentServiceEvent { }
+
+    /// <summary>
+    /// Аргумент события комментария.
+    /// </summary>
+    public class CommentEventArgument
+    {
+        [JsonProperty]
+        /// <summary>
+        /// Идентификатор комментария.
+        /// </summary>
+        protected int Id { get; set; }
+
+        [JsonProperty]
+        /// <summary>
+        /// Идентификатор статьи.
+        /// </summary>
+        protected int ArticleId { get; set; }
+    }
 }

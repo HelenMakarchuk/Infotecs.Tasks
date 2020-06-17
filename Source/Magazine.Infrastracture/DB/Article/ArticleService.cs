@@ -77,7 +77,7 @@ namespace Infotecs.Magazine.Infrastracture.DB.Article
             var entry = _unitOfWork.ArticleRepository.Remove(id);
             _unitOfWork.Commit();
 
-            return Get(entry.Entity.Id);
+            return entry.Entity;
         }
     }
 }

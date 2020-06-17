@@ -3,6 +3,7 @@ import { ArticleState } from "./article.state";
 import { ArticleService } from "src/app/article/services/article.service";
 import { ArticleDeletedState } from "./article.deleted.state";
 import { ServerCommunicationService } from "src/app/server-communication/contracts/server-communication.service";
+import { ArticleServiceDeleteEvent } from "src/app/server-communication/events/article/article.service.delete.event";
 
 /** Статья создана */
 @Injectable({
@@ -28,6 +29,7 @@ export class ArticleCreatedState extends ArticleState {
             .subscribe(
                 article => {
                     this.articleContext.transitionTo(new ArticleDeletedState(this.articleService, this.serverCommunicationService));
+                    this.serverCommunicationService.send(new ArticleServiceDeleteEvent(article.id));
                     this.articleContext.navigateToArticles();
                 },
                 error => {

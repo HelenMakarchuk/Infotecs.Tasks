@@ -25,11 +25,15 @@ export class ArticleListComponent implements OnInit {
         });
 
         articleService.onUpdate.subscribe(id => {
-            // update
+            this.articleService.getArticle(id)
+                .subscribe(article => {
+                    let index = this.articles.findIndex((a => a.id == id));
+                    this.articles[index].title = article.title
+                })
         });
 
         articleService.onDelete.subscribe(id => {
-            // delete
+            this.articles = this.articles.filter(a => a.id !== id);
         });
     }
 

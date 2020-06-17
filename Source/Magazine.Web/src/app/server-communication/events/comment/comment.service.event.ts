@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CommentService } from "src/app/comment/services/comment.service";
 import { EntityServiceEvent } from "../../contracts/entity.service.event";
+import { CommentEventArgument } from "./comment-event-argument";
 
 /** Событие сервиса сущности "Комментарий". */
 @Injectable({
@@ -8,13 +9,12 @@ import { EntityServiceEvent } from "../../contracts/entity.service.event";
 })
 export abstract class CommentServiceEvent extends EntityServiceEvent {
 
-    /** Идентификатор комментария. */
-    id: number;
+    eventArgument: CommentEventArgument;
 
     constructor(className: string,
-                id: number) {
+                eventArgument: CommentEventArgument) {
         super(className);
-        this.id = id;
+        this.eventArgument = eventArgument;
     }
 
     abstract visit(service: CommentService): void;
