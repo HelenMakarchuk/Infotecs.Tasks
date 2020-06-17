@@ -26,9 +26,9 @@ COPY nginx.conf etc/nginx
 COPY content var/www/html
 COPY --from=build app/dist var/www/html
 
-COPY certificates/localhost.pem /etc/ssl/certs
-COPY certificates/localhost.key /etc/ssl/certs
-COPY certificates/localhost.crt /etc/ssl/certs
+COPY certificates/localhost.pem /etc/ssl/certs/certificate.pem
+COPY certificates/localhost.key /etc/ssl/certs/certificate.key
+COPY certificates/localhost.crt /etc/ssl/certs/localhost.crt
 
 RUN ["update-ca-certificates"]
 
