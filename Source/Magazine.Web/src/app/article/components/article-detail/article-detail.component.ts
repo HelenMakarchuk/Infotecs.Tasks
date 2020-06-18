@@ -41,7 +41,6 @@ export class ArticleDetailComponent implements OnInit
         this.articleService.onDelete
             .pipe(filter(id => id === this.article.id))
             .subscribe(() => {
-                this.applicationNotificationService.notify("This article was deleted by another user.");
                 this.transitionTo(new ArticleDeletedState(this.articleService, this.serverCommunicationService));
             });
     }
