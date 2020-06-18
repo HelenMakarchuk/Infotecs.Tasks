@@ -10,6 +10,7 @@ import { ArticleEditableState } from './states/article.editable.state';
 import { filter } from 'rxjs/operators';
 import { ServerCommunicationService } from 'src/app/server-communication/contracts/server-communication.service';
 import { AuthorizationService } from 'src/app/authorization/authorization.service';
+import { ArticleDeletedState } from './states/article.deleted.state';
 
 @Component({
     selector: 'app-article-detail',
@@ -41,6 +42,7 @@ export class ArticleDetailComponent implements OnInit
             .pipe(filter(id => id === this.article.id))
             .subscribe(() => {
                 this.applicationNotificationService.notify("This article was deleted by another user.");
+                this.transitionTo(new ArticleDeletedState(this.articleService, this.serverCommunicationService));
             });
     }
 
@@ -51,17 +53,24 @@ export class ArticleDetailComponent implements OnInit
                     this.articleService.getArticle(+params.get('id'))
                         .subscribe(
                             article => {
+                                if (article === null) {
+                                    alert('Article was deleted.');
+                                    this.navigateToArticles();
+                                    return;
+                                }
+
                                 this.article = article;
                                 this.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
                             },
                             error => {
                                 console.log(error);
                                 alert('Error while opening article');
+                                this.navigateToArticles();
                             }
                         );
                 }
                 else {
-                    this.transitionTo(new ArticleNewState(this.articleService, this.serverCommunicationService));
+                    this.transitionTo(new ArticleNewState(this.articleService, this.serverCommunicationService, this.router));
                 }
             }
         );
@@ -73,7 +82,7 @@ export class ArticleDetailComponent implements OnInit
     }
 
     navigateToArticles() {
-        this.router.navigate(['/articles', { id: this.article !== null ? this.article.id : null }]);
+        this.router.navigate(['/articles']);
     }
 
     createArticle() {

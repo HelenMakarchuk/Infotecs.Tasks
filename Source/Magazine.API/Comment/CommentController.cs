@@ -54,6 +54,7 @@ namespace Infotecs.Magazine.API.Comment
 
         // POST: api/comment
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Add(Domain.Comment.Comment comment)
         {
             try

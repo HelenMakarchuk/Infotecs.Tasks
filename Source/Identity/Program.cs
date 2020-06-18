@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using Serilog.Sinks.SystemConsole.Themes;
 using System;
 
 namespace IdentityServerAspNetIdentity
@@ -11,26 +10,21 @@ namespace IdentityServerAspNetIdentity
     {
         public static int Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
-                .MinimumLevel.Override("System", LogEventLevel.Debug)
-                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Debug)
-                .Enrich.FromLogContext()
-                .WriteTo.File(path: "Logs/logfile.txt", restrictedToMinimumLevel: LogEventLevel.Debug)
-                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Literate)
-                .CreateLogger();
-
             try
             {
-                var host = CreateHostBuilder(args).Build();
-                Log.Information("Starting host...");
-                host.Run();
+                CreateHostBuilder(args).Build().Run();
                 return 0;
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "Host terminated unexpectedly.");
+                // Конфигурация логирования независимо от основной конфигурации приложения при возникновении исключения при запуске приложения.
+                if (Log.Logger == null || Log.Logger.GetType().Name == "SilentLogger")
+                    Log.Logger = new LoggerConfiguration()
+                                         .MinimumLevel.Verbose()
+                                         .WriteTo.File("Logs/.log", LogEventLevel.Verbose, rollingInterval: RollingInterval.Hour)
+                                         .CreateLogger();
+
+                Log.Fatal(ex, "Infotecs Identity terminated unexpectedly");
                 return 1;
             }
             finally
@@ -44,7 +38,7 @@ namespace IdentityServerAspNetIdentity
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseSerilog();
+                    webBuilder.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
                 });
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Infotecs.Identity
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IClientStore _clientStore;
         private readonly IEventService _events;
-        private readonly ILogger<ExternalController> _logger;
+        readonly ILogger _logger;
 
         public ExternalController(
             UserManager<ApplicationUser> userManager,
@@ -34,23 +34,20 @@ namespace Infotecs.Identity
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IEventService events,
-            ILogger<ExternalController> logger)
+            ILogger logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
             _clientStore = clientStore;
             _events = events;
-            _logger = logger;
+            _logger = logger.ForContext<ExternalController>();
         }
 
         [HttpGet]
         public async Task<IActionResult> Challenge(string provider, string returnUrl)
         {
             if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
-
-            if (Url.IsLocalUrl(returnUrl) == false && _interaction.IsValidReturnUrl(returnUrl) == false)
-                throw new Exception("invalid return URL");
 
             var props = new AuthenticationProperties
             {
@@ -68,6 +65,8 @@ namespace Infotecs.Identity
         public async Task<IActionResult> Callback()
         {
             var result = await HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme);
+
+            _logger.Information("Result: {result}", result);
 
             if (result?.Succeeded != true)
                 throw new Exception("External authentication error");
@@ -119,6 +118,8 @@ namespace Infotecs.Identity
             var returnUrl = result.Properties.Items["returnUrl"] ?? "~/";
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
             await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, name, true, context?.ClientId));
+
+            _logger.Information("Return URL: {returnUrl}", returnUrl);
 
             return Redirect(returnUrl);
         }

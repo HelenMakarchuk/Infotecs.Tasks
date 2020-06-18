@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { ArticleState } from "./article.state";
-import { ArticleCreatedState } from "./article.created.state";
 import { ArticleService } from "src/app/article/services/article.service";
 import { ServerCommunicationService } from "src/app/server-communication/contracts/server-communication.service";
 import { ArticleServiceAddEvent } from "src/app/server-communication/events/article/article.service.add.event";
+import { Router } from "@angular/router";
 
 /** Новая статья */
 @Injectable({
@@ -12,7 +12,8 @@ import { ArticleServiceAddEvent } from "src/app/server-communication/events/arti
 export class ArticleNewState extends ArticleState {
 
     constructor(protected articleService: ArticleService,
-                protected serverCommunicationService: ServerCommunicationService) {
+                protected serverCommunicationService: ServerCommunicationService,
+                private router: Router) {
         super(articleService, serverCommunicationService);
     }
 
@@ -21,7 +22,7 @@ export class ArticleNewState extends ArticleState {
             article => {
                 this.articleContext.article = article;
                 this.serverCommunicationService.send(new ArticleServiceAddEvent(article.id));
-                this.articleContext.transitionTo(new ArticleCreatedState(this.articleService, this.serverCommunicationService));
+                this.router.navigate(['/article', article.id], { replaceUrl:true });
             },
             response => {
                 alert(`Error while creating article. ${response.error.Message}`);

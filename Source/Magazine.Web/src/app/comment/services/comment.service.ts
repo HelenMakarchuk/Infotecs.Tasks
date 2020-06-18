@@ -25,13 +25,8 @@ export class CommentService extends EntityService {
     }
 
     addComment(comment: Comment): Observable<Comment> {
-        return this.authService.getAuthorizationHeaders()
-            .pipe(
-                mergeMap(headers => {
-                    return this.http.post<Comment>(`${environment.apiUrl}/comment`, comment, { headers: headers })
-                    .pipe(catchError(this.handleError));
-                })
-            );
+        return this.http.post<Comment>(`${environment.apiUrl}/comment`, comment)
+            .pipe(catchError(this.handleError));
     }
 
     deleteComment(id: number): Observable<Comment> {

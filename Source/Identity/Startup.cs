@@ -1,14 +1,15 @@
-using IdentityServer4.Models;
-using IdentityServerAspNetIdentity.Data;
-using IdentityServerAspNetIdentity.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
+using IdentityServerAspNetIdentity.Models;
+using IdentityServerAspNetIdentity.Data;
+using IdentityServer4.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace IdentityServerAspNetIdentity
 {
@@ -78,6 +79,8 @@ namespace IdentityServerAspNetIdentity
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseSerilogRequestLogging();
+
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

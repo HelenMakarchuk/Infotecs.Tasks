@@ -46,7 +46,7 @@ export class LogoutComponent implements OnInit {
                 case AuthenticationResultStatus.Redirect:
                     break;
                 case AuthenticationResultStatus.Success:
-                    await this.navigateToReturnUrl(returnUrl);
+                    await this.router.navigateByUrl(returnUrl, { replaceUrl: true });
                     break;
                 case AuthenticationResultStatus.Fail:
                     this.message.next(result.message);
@@ -67,7 +67,7 @@ export class LogoutComponent implements OnInit {
             case AuthenticationResultStatus.Redirect:
                 throw new Error('Should not redirect.');
             case AuthenticationResultStatus.Success:
-                await this.navigateToReturnUrl(this.getReturnUrl(result.state));
+                this.router.navigate(['/articles']);
                 location.reload();
                 break;
             case AuthenticationResultStatus.Fail:
@@ -76,12 +76,6 @@ export class LogoutComponent implements OnInit {
             default:
                 throw new Error('Incorrect authentication result status.');
         }
-    }
-
-    private async navigateToReturnUrl(returnUrl: string) {
-        await this.router.navigateByUrl(returnUrl, {
-            replaceUrl: true
-        });
     }
 
     private getReturnUrl(state?: INavigationState): string {

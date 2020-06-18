@@ -53,10 +53,10 @@ export class ArticleListComponent implements OnInit {
 
     navigateToArticle(article: Article = null) {
         if (article !== null) {
-            this.router.navigate(['/article', article.id]);
+            this.router.navigate(['/article', article.id], { replaceUrl:true });
             return;
         }
 
-        this.router.navigate(['/articles/create']);
+        this.router.navigate(['/articles/create'], { replaceUrl:true });
     }
 }

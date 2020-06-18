@@ -2,13 +2,33 @@
    "version": "0.2.0",
    "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": "Identity",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build Identity",
             "program": "${workspaceFolder}/Out/Debug/Identity/netcoreapp3.1/Infotecs.Identity.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Source/Identity",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Magazine.API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build Magazine.API",
+            "program": "${workspaceFolder}/Out/Debug/Magazine.API/netcoreapp3.1/Infotecs.Magazine.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/Source/Magazine.API",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
