@@ -29,14 +29,14 @@ Run application using Docker Compose or Docker.
   If development certificate already exists delete it by running a command "dotnet dev-certs https --clean"
   and then run "dotnet dev-certs https --trust" again.
 
-  `docker-compose stop && docker-compose rm -f && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans`
+  `docker-compose stop && docker-compose rm -f && docker-compose build && docker-compose up -d --force-recreate --remove-orphans`
 
   <details>
     <summary>For docker compose offline use</summary>
 
     On machine with internet access:
     
-    docker-compose stop && docker-compose rm -f && docker-compose build --no-cache && docker-compose up -d --force-recreate --remove-orphans
+    docker-compose stop && docker-compose rm -f && docker-compose build && docker-compose up -d --force-recreate --remove-orphans
 
     docker save postgres -o postgres.tar
     docker save magazine-api-image -o magazine-api-image.tar

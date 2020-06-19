@@ -34,7 +34,7 @@ services:
 
     # PostgreSQL Database "Infotecs Magazine Database"
     magazine.db:
-        image: postgres
+        image: postgres:12
         container_name: magazine-db-container
         restart: always
         environment:
