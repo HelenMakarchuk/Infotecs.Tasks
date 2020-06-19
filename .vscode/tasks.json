@@ -1,18 +1,51 @@
 {
     "version": "2.0.0",
     "tasks": [
+
+        // Run "Identity" project without debugging. Run this task from terminal.
         {
-            "label": "build Identity",
+            "label": "Start \"Identity\" without debugging",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "run",
+                "--launch-profile=SelfHost Development",
+                "--configuration=Release",
+                "--project=${workspaceFolder}/Source/Identity/Identity.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "dependsOn": {
+                "command": "dotnet",
+                "type": "process",
+                "args": [
+                    "build",
+                    "--configuration=Release",
+                    "${workspaceFolder}/Source/Identity/Identity.csproj",
+                    "/property:GenerateFullPaths=true",
+                    "/consoleloggerparameters:NoSummary"
+                ],
+                "problemMatcher": "$msCompile"
+            }
+        },
+
+        // Debug "Identity" project. Choose "Identity" configuration in Debug Menu.
+        {
+            "label": "Debug \"Identity\"",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
+                "--configuration=Debug",
                 "${workspaceFolder}/Source/Identity/Identity.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
+
+        // Publish "Identity" project.
         {
             "label": "publish Identity",
             "command": "dotnet",
@@ -25,50 +58,57 @@
             ],
             "problemMatcher": "$msCompile"
         },
+
+        // Run "Magazine.API" project without debugging. Run this task from terminal.
         {
-            "label": "watch Identity",
+            "label": "Start \"Magazine.API\" without debugging",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "watch",
                 "run",
-                "${workspaceFolder}/Source/Identity/Identity.csproj",
+                "--launch-profile=SelfHost Development",
+                "--configuration=Release",
+                "--project=${workspaceFolder}/Source/Magazine.API/Magazine.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "dependsOn": {
+                "command": "dotnet",
+                "type": "process",
+                "args": [
+                    "build",
+                    "--configuration=Release",
+                    "${workspaceFolder}/Source/Magazine.API/Magazine.API.csproj",
+                    "/property:GenerateFullPaths=true",
+                    "/consoleloggerparameters:NoSummary"
+                ],
+                "problemMatcher": "$msCompile"
+            }
         },
+
+        // Debug "Magazine.API" project. Choose "Magazine.API" configuration in Debug Menu.
         {
-            "label": "build Magazine.API",
+            "label": "Debug \"Magazine.API\"",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
+                "--configuration=Debug",
                 "${workspaceFolder}/Source/Magazine.API/Magazine.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
+
+        // Publish "Magazine.API" project.
         {
             "label": "publish Magazine.API",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Source/Magazine.API/Magazine.API.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "watch Magazine.API",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
                 "${workspaceFolder}/Source/Magazine.API/Magazine.API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"

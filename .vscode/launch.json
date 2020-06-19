@@ -1,51 +1,25 @@
 {
    "version": "0.2.0",
    "configurations": [
+
+        // Конфигурация проекта "Identity".
         {
             "name": "Identity",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build Identity",
+            "preLaunchTask": "Debug \"Identity\"",
             "program": "${workspaceFolder}/Out/Debug/Identity/netcoreapp3.1/Infotecs.Identity.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Source/Identity",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
+            "cwd": "${workspaceFolder}/Source/Identity"
         },
+
+        // Конфигурация проекта "Magazine.API".
         {
             "name": "Magazine.API",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build Magazine.API",
+            "preLaunchTask": "Debug \"Magazine.API\"",
             "program": "${workspaceFolder}/Out/Debug/Magazine.API/netcoreapp3.1/Infotecs.Magazine.API.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/Source/Magazine.API",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "cwd": "${workspaceFolder}/Source/Magazine.API"
         }
     ]
 }
