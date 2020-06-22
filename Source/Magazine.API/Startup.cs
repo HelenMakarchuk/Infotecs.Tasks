@@ -1,7 +1,7 @@
 using Infotecs.Magazine.API.ClientCommunicationService.Services;
 using Infotecs.Magazine.Domain.Article;
+using Infotecs.Magazine.Domain.Comment;
 using Infotecs.Magazine.Domain.Contracts.Provider;
-using Infotecs.Magazine.Domain.Providers;
 using Infotecs.Magazine.Infrastracture.Contracts;
 using Infotecs.Magazine.Infrastracture.DB;
 using Infotecs.Magazine.Infrastracture.DB.Article;

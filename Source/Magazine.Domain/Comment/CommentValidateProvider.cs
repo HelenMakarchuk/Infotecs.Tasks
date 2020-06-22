@@ -1,18 +1,18 @@
 using Infotecs.Magazine.Domain.Contracts.Provider;
 using System;
 
-namespace Infotecs.Magazine.Domain.Providers
+namespace Infotecs.Magazine.Domain.Comment
 {
     /// <summary>
     /// Валидатор сущности "Комментарий".
     /// </summary>
-    public class CommentValidateProvider : IValidateProvider<Domain.Comment.Comment>
+    public class CommentValidateProvider : IValidateProvider<Comment>
     {
         /// <summary>
         /// Валидация статьи.
         /// </summary>
         /// <param name="comment">Экземпляр статьи.</param>
-        public void Validate(Domain.Comment.Comment comment)
+        public void Validate(Comment comment)
         {
             ValidateBody(comment.Body);
         }
